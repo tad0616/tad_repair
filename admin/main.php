@@ -1,0 +1,106 @@
+<?php
+//  ------------------------------------------------------------------------ //
+// 本模組由 tad 製作
+// 製作日期：2013-02-21
+// $Id:$
+// ------------------------------------------------------------------------- //
+
+/*-----------引入檔案區--------------*/
+$xoopsOption['template_main'] = "tad_repair_adm_main.html";
+include_once "header.php";
+include_once "../function.php";
+
+
+/*-----------function區--------------*/
+
+//列出所有tad_repair資料
+function list_tad_repair(){
+	global $xoopsDB , $xoopsModule , $isAdmin , $xoopsUser , $xoopsTpl;
+
+	//取得使用者編號
+	$uid=($xoopsUser)?$xoopsUser->getVar('uid'):"";
+	$sql = "select * from `".$xoopsDB->prefix("tad_repair")."` order by `repair_date` desc";
+
+  //取得各單位的管理員陣列
+  $unit_admin_arr=unit_admin_arr();
+
+	//getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+	$PageBar=getPageBar($sql,20,10);
+	$bar=$PageBar['bar'];
+	$sql=$PageBar['sql'];
+	$total=$PageBar['total'];
+
+	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+
+	$all_content="";
+  $i=0;
+	while($all=$xoopsDB->fetchArray($result)){
+		//以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
+		foreach($all as $k=>$v){
+			$$k=$v;
+		}
+
+  	$repair_name=XoopsUser::getUnameFromId($repair_uid,1);
+  	if(empty($repair_name))$$repair_name=XoopsUser::getUnameFromId($repair_uid,0);
+
+    $fixed_name="";
+    if($fixed_uid!=0){
+    	$fixed_name=XoopsUser::getUnameFromId($fixed_uid,1);
+    	if(empty($fixed_name))$fixed_name=XoopsUser::getUnameFromId($fixed_uid,0);
+    }
+
+    $fixed_date=($fixed_date=="0000-00-00 00:00:00")?"":$fixed_date;
+
+    $unit=get_tad_repair_unit($unit_sn);
+
+		$all_content[$i]['repair_sn']=$repair_sn;
+		$all_content[$i]['repair_date']=$repair_date;
+		$all_content[$i]['prefix']=$prefix;
+		$all_content[$i]['repair_title']=$repair_title;
+		$all_content[$i]['repair_name']=$repair_name;
+		$all_content[$i]['unit_title']=$unit['unit_title'];
+		$all_content[$i]['repair_status']=$repair_status;
+		$all_content[$i]['fixed_name']=$fixed_name;
+		$all_content[$i]['fixed_date']=$fixed_date;
+		$all_content[$i]['fixed_status']=$fixed_status;
+		$i++;
+	}
+
+	//if(empty($all_content))return "";
+
+
+	$xoopsTpl->assign("bar",$bar );
+	$xoopsTpl->assign("all_content", $all_content);
+}
+
+
+//刪除tad_repair某筆資料資料
+function delete_tad_repair($repair_sn=""){
+	global $xoopsDB , $isAdmin;
+	$sql = "delete from `".$xoopsDB->prefix("tad_repair")."` where `repair_sn` = '{$repair_sn}'";
+	$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+}
+/*-----------執行動作判斷區----------*/
+$op = empty($_REQUEST['op'])? "":$_REQUEST['op'];
+$repair_sn=empty($_REQUEST['repair_sn'])?"":intval($_REQUEST['repair_sn']);
+$unit_sn=empty($_REQUEST['unit_sn'])?"":intval($_REQUEST['unit_sn']);
+
+
+switch($op){
+	/*---判斷動作請貼在下方---*/
+  //刪除資料
+  case "delete_tad_repair":
+  delete_tad_repair($repair_sn);
+  header("location: {$_SERVER['PHP_SELF']}");
+  break;
+
+	default:
+	$main=list_tad_repair();
+	break;
+	
+	/*---判斷動作請貼在上方---*/
+}
+
+/*-----------秀出結果區--------------*/
+include_once 'footer.php';
+?>
