@@ -88,13 +88,17 @@ function list_tad_repair($show_function=0){
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 
 	$all_repair_ym="";
-  $i=0;
+
 	while(list($repair_date)=$xoopsDB->fetchRow($result)){
     $ym=substr($repair_date,0,7);
     $repair_ym[$ym]=$ym;
-		$all_repair_ym[$i]['ym']=$ym;
   }
 
+  $i=0;
+  foreach($repair_ym as $ym){
+    $all_repair_ym[$i]['ym']=$ym;
+    $i++;
+  }
 
   $xoopsTpl->assign( "repair_ym" , $all_repair_ym) ;
   $xoopsTpl->assign( "content" , $all_content) ;
