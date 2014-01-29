@@ -13,7 +13,7 @@ function wait_to_repair($options){
 
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 
-	$all_content="";
+	$block="";
   $i=0;
 	while($all=$xoopsDB->fetchArray($result)){
 		//以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
@@ -36,8 +36,6 @@ function wait_to_repair($options){
 		$block[$i]['repair_name']=$repair_name;
     $i++;
 	}
-
-
 
 	return $block;
 }

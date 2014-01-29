@@ -15,53 +15,53 @@ include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
 
 
 function SendEmail($uid="",$title="",$content="") {
-	global $xoopsConfig,$xoopsDB,$xoopsModuleConfig,$xoopsModule;
+  global $xoopsConfig,$xoopsDB,$xoopsModuleConfig,$xoopsModule;
   $member_handler =& xoops_gethandler('member');
   $user =& $member_handler->getUser($uid);
   $email=$user->email();
 
-	$xoopsMailer =& getMailer();
-	$xoopsMailer->multimailer->ContentType="text/html";
-	$xoopsMailer->addHeaders("MIME-Version: 1.0");
+  $xoopsMailer =& getMailer();
+  $xoopsMailer->multimailer->ContentType="text/html";
+  $xoopsMailer->addHeaders("MIME-Version: 1.0");
 
-	$msg.=($xoopsMailer->sendMail($email,$title, $content,$headers))?sprintf(_MD_TADREPAIR_MAIL_OK,$title,$email):sprintf(_MD_TADREPAIR_MAIL_FAIL,$title,$email);
-	return $msg;
+  $msg.=($xoopsMailer->sendMail($email,$title, $content,$headers))?sprintf(_MD_TADREPAIR_MAIL_OK,$title,$email):sprintf(_MD_TADREPAIR_MAIL_FAIL,$title,$email);
+  return $msg;
 }
 
 //取得各單位的管理員陣列
 function unit_admin_arr(){
-	global $xoopsDB;
-	$sql = "select * from `".$xoopsDB->prefix("tad_repair_unit")."`";
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-	$unit_admin_arr=array();
-	while($data=$xoopsDB->fetchArray($result)){
+  global $xoopsDB;
+  $sql = "select * from `".$xoopsDB->prefix("tad_repair_unit")."`";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+  $unit_admin_arr=array();
+  while($data=$xoopsDB->fetchArray($result)){
     foreach($data as $k=>$v){
-			$$k=$v;
-		}
+      $$k=$v;
+    }
     $unit_admin_arr[$unit_sn]=explode(',',$unit_admin);
   }
-	return $unit_admin_arr;
+  return $unit_admin_arr;
 }
 
 
 //以流水號取得某筆tad_repair資料
 function get_tad_repair($repair_sn=""){
-	global $xoopsDB;
-	if(empty($repair_sn))return;
-	$sql = "select * from `".$xoopsDB->prefix("tad_repair")."` where `repair_sn` = '{$repair_sn}'";
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-	$data=$xoopsDB->fetchArray($result);
-	return $data;
+  global $xoopsDB;
+  if(empty($repair_sn))return;
+  $sql = "select * from `".$xoopsDB->prefix("tad_repair")."` where `repair_sn` = '{$repair_sn}'";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+  $data=$xoopsDB->fetchArray($result);
+  return $data;
 }
 
 //以流水號取得某筆tad_repair_unit資料
 function get_tad_repair_unit($unit_sn=""){
-	global $xoopsDB;
-	if(empty($unit_sn))return;
-	$sql = "select * from `".$xoopsDB->prefix("tad_repair_unit")."` where `unit_sn` = '{$unit_sn}'";
-	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-	$data=$xoopsDB->fetchArray($result);
-	return $data;
+  global $xoopsDB;
+  if(empty($unit_sn))return;
+  $sql = "select * from `".$xoopsDB->prefix("tad_repair_unit")."` where `unit_sn` = '{$unit_sn}'";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+  $data=$xoopsDB->fetchArray($result);
+  return $data;
 }
 
 //把模組設定項目轉為選項
@@ -72,7 +72,7 @@ function mc2arr($name="",$def="",$v_as_k=true,$type='option',$other="",$nl=true)
     }else{
       $arr=explode(";",$xoopsModuleConfig[$name]);
     }
-    
+
     if(is_array($arr)){
       foreach($arr as $item){
         if(empty($item))continue;
@@ -150,19 +150,5 @@ function arr2radio($name,$arr,$def="",$v_as_k=false,$other=""){
 }
 
 /********************* 預設函數 *********************/
-//圓角文字框
-function div_3d($title="",$main="",$kind="raised",$style="",$other=""){
-	$main="<table style='width:auto;{$style}'><tr><td>
-	<div class='{$kind}'>
-	<h1>$title</h1>
-	$other
-	<b class='b1'></b><b class='b2'></b><b class='b3'></b><b class='b4'></b>
-	<div class='boxcontent'>
- 	$main
-	</div>
-	<b class='b4b'></b><b class='b3b'></b><b class='b2b'></b><b class='b1b'></b>
-	</div>
-	</td></tr></table>";
-	return $main;
-}
+
 ?>
