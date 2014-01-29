@@ -15,7 +15,7 @@
  * @subpackage:: admin
  * @since:       2.5.0
  * @author::     Magic.Shao <magic.shao@gmail.com> - Susheng Yang <ezskyyoung@gmail.com>
- * @version::	 $Id $
+ * @version::  $Id $
 **/
 
 echo "<div align=\"center\"><a href=\"http://www.xoops.org\" target=\"_blank\"><img src=\"../images/admin/xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a></div>";
