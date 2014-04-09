@@ -1,14 +1,6 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 tad 製作
-// 製作日期：2013-02-21
-// $Id:$
-// ------------------------------------------------------------------------- //
-
 //需加入模組語系
 define("_TAD_NEED_TADTOOLS"," 需要 tadtools 模組，可至<a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad教材網</a>下載。");
-
-define("_MD_TADREPAIR_SMNAME1", "維修通報總覽");
 define("_MD_TADREPAIR_SMNAME2", "填寫維修單");
 define("_MD_TADREPAIR_DL_REPORT", "下載月報表");
 define("_MD_TADREPAIR_REPORT", "月報表");
@@ -49,6 +41,7 @@ define("_MD_TADREPAIR_MAIL_FIXED_CONTENT","您好：<p>%s 於 %s 針對您的維修通報「%
 define("_MD_TADREPAIR_NEED_UNIT","管理員尚未設定維修管理單位，請通知管理員至後台進行「單位設定」！");
 
 define("_MD_TADREPAIR_EMPTY","恭喜！目前沒有任何通報！<a href='repair.php' class='btn btn-info'>我來當第一個通報的人</a>");
+
 
 
 ?>
