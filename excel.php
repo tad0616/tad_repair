@@ -28,9 +28,10 @@ $objActSheet->getColumnDimension('F')->setWidth(15);
 $objActSheet->getColumnDimension('G')->setWidth(15);
 $objActSheet->getColumnDimension('H')->setWidth(20);
 $objActSheet->getColumnDimension('I')->setWidth(15);
+$objActSheet->getColumnDimension('J')->setWidth(40);
 
 
-$objActSheet-> getStyle('A1:I1')-> getFill()-> setFillType(PHPExcel_Style_Fill:: FILL_SOLID)-> getStartColor()-> setARGB('FFC9E3F3');
+$objActSheet-> getStyle('A1:J1')-> getFill()-> setFillType(PHPExcel_Style_Fill:: FILL_SOLID)-> getStartColor()-> setARGB('FFC9E3F3');
 
 
 $objActSheet->setCellValue("A1", _MD_TADREPAIR_REPAIR_SN)
@@ -41,7 +42,8 @@ $objActSheet->setCellValue("A1", _MD_TADREPAIR_REPAIR_SN)
             ->setCellValue("F1", _MD_TADREPAIR_REPAIR_STATUS2)
             ->setCellValue("G1", _MD_TADREPAIR_FIXED_UID)
             ->setCellValue("H1", _MD_TADREPAIR_FIXED_DATE)
-            ->setCellValue("I1", _MD_TADREPAIR_FIXED_STATUS2);
+            ->setCellValue("I1", _MD_TADREPAIR_FIXED_STATUS2)
+            ->setCellValue("J1", _MD_TADREPAIR_FIXED_CONTENT);
 
 
 
@@ -79,17 +81,20 @@ while($all=$xoopsDB->fetchArray($result)){
               ->setCellValue("F{$i}", $repair_status)
               ->setCellValue("G{$i}", $fixed_name)
               ->setCellValue("H{$i}", $fixed_date)
-              ->setCellValue("I{$i}", $fixed_status);
+              ->setCellValue("I{$i}", $fixed_status)
+              ->setCellValue("J{$i}", $fixed_content);
   $i++;
 }
 
 $n=$i-1;
-$objActSheet->mergeCells("A{$i}:I{$i}")->setCellValue("A{$i}", "=CONCATENATE(\""._MD_TADREPAIR_REPORT_TOTAL." \" , COUNTA(A2:A{$n}) , \" "._MD_TADREPAIR_REPORT_TOTAL2."\")");
+$objActSheet->mergeCells("A{$i}:J{$i}")->setCellValue("A{$i}", "=CONCATENATE(\""._MD_TADREPAIR_REPORT_TOTAL." \" , COUNTA(A2:A{$n}) , \" "._MD_TADREPAIR_REPORT_TOTAL2."\")");
 
-
+$title=$ym._MD_TADREPAIR_REPORT;
+$title=(_CHARSET=='UTF-8')?iconv("UTF-8","Big5",$title):$title;
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename='.iconv("UTF-8","Big5",$ym._MD_TADREPAIR_REPORT).'.xls');
+header("Content-Disposition: attachment;filename={$title}.xls");
 header('Cache-Control: max-age=0');
+
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->setPreCalculateFormulas(false);
 $objWriter->save('php://output');

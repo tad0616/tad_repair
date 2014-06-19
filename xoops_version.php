@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADREPAIR_NAME;
-$modversion['version'] = 2.02;
+$modversion['version'] = 2.1;
 $modversion['description'] = _MI_TADREPAIR_DESC;
 $modversion['author'] = _MI_TADREPAIR_AUTHOR;
 $modversion['credits'] = _MI_TADREPAIR_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2014/02/17';
+$modversion['release_date'] = '2014/06/15';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -36,6 +36,11 @@ $modversion['system_menu'] = 1;//---資料表架構---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][1] = "tad_repair";
 $modversion['tables'][2] = "tad_repair_unit";
+
+//---安裝設定---//
+$modversion['onInstall'] = "include/onInstall.php";
+$modversion['onUpdate'] = "include/onUpdate.php";
+$modversion['onUninstall'] = "include/onUninstall.php";
 
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;

@@ -4,7 +4,7 @@ CREATE TABLE `tad_repair` (
   `repair_content` text NOT NULL default '' COMMENT '詳細說明',
   `repair_date` datetime NOT NULL default '0000-00-00 00:00:00' COMMENT '報修日期',
   `repair_status` varchar(255) NOT NULL default '' COMMENT '嚴重status程度',
-  `repair_uid` smallint(6) unsigned NOT NULL default '0' COMMENT '報修者',
+  `repair_uid` mediumint(8) unsigned NOT NULL default '0' COMMENT '報修者',
   `unit_sn` smallint(6) unsigned NOT NULL default '0' COMMENT '通知單位',
   `fixed_uid` varchar(255) NOT NULL default '' COMMENT '回覆者',
   `fixed_date` datetime NOT NULL default '0000-00-00 00:00:00' COMMENT '回覆日期',
