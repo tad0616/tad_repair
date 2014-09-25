@@ -70,7 +70,7 @@ function tad_repair_form($repair_sn=""){
   if(empty($unit_menu_options)){
     redirect_header("index.php",3,_MD_TADREPAIR_NEED_UNIT);
   }
-  
+
   $xoopsTpl->assign( "formValidator_code" , $formValidator_code) ;
   $xoopsTpl->assign( "PHP_SELF" , $_SERVER['PHP_SELF']) ;
   $xoopsTpl->assign( "unit_sn_menu_options" , $unit_menu_options) ;
@@ -117,8 +117,8 @@ function insert_tad_repair(){
   $today=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
 
 	$sql = "insert into `".$xoopsDB->prefix("tad_repair")."`
-	(`repair_title` , `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status`)
-	values('{$_POST['repair_title']}' , '{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status}')";
+	(`repair_title` , `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)
+	values('{$_POST['repair_title']}' , '{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status}' , '')";
 	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 
 	//取得最後新增資料的流水編號
@@ -158,7 +158,7 @@ function update_tad_repair($repair_sn=""){
 	 `repair_date` = '{$today}' ,
 	 `repair_status` = '{$_POST['repair_status']}' ,
 	 `repair_uid` = '{$uid}' ,
-	 `unit_sn` = '{$_POST['unit_sn']}' 
+	 `unit_sn` = '{$_POST['unit_sn']}'
 	where `repair_sn` = '$repair_sn'";
 	$xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
 
@@ -298,7 +298,7 @@ function update_tad_fixed($repair_sn=""){
 
   $title=sprintf(_MD_TADREPAIR_MAIL_FIXED_TITLE,$today,$DBV['repair_title']);
   $content=sprintf(_MD_TADREPAIR_MAIL_FIXED_CONTENT,$fixed_name,$today,$DBV['repair_title'],"<a href='".XOOPS_URL."/modules/tad_repair/index.php?repair_sn={$repair_sn}'>".XOOPS_URL."/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
-  
+
   $msg=SendEmail($DBV['repair_uid'],$title,$content);
 
   redirect_header("index.php?repair_sn=$repair_sn",3, $msg);
