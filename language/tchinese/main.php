@@ -10,6 +10,8 @@ define("_MD_TADREPAIR_REPORT_TOTAL2", "筆");
 define("_MD_TADREPAIR_REPAIR_SN","編號");
 define("_MD_TADREPAIR_REPAIR_TITLE","報修內容");
 define("_MD_TADREPAIR_REPAIR_CONTENT","詳細說明");
+define("_MD_TADREPAIR_REPAIR_CONTENT_PLACE","地點：");
+define("_MD_TADREPAIR_REPAIR_CONTENT_DOC","描述：");
 define("_MD_TADREPAIR_REPAIR_DATE","報修日期");
 define("_MD_TADREPAIR_REPAIR_STATUS","嚴重程度");
 define("_MD_TADREPAIR_REPAIR_STATUS2","等級");

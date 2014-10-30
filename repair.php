@@ -36,6 +36,8 @@ function tad_repair_form($repair_sn=""){
 
 	//設定「repair_content」欄位預設值
 	$repair_content=(!isset($DBV['repair_content']))?"":$DBV['repair_content'];
+	if (!$repair_content)   $repair_content=_MD_TADREPAIR_REPAIR_CONTENT_PLACE ."\n". _MD_TADREPAIR_REPAIR_CONTENT_DOC ;
+
 
 	//設定「repair_date」欄位預設值
 	$repair_date=(!isset($DBV['repair_date']))?date("Y-m-d H:i:s"):$DBV['repair_date'];
