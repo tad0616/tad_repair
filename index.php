@@ -49,7 +49,7 @@ function list_tad_repair($show_function=0){
 
 	$uid=($xoopsUser)?$xoopsUser->getVar('uid'):"";
 	$sql = "select * from `".$xoopsDB->prefix("tad_repair")."`   where 1   $where_fixed    $where_unit    order by `repair_date` desc";
- echo $sql ;
+// echo $sql ;
   //取得各單位的管理員陣列
   $unit_admin_arr=unit_admin_arr();
 
