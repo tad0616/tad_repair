@@ -26,7 +26,7 @@ function tad_repair_form($repair_sn=""){
 	}
 
 	//預設值設定
-
+ 
 
 	//設定「repair_sn」欄位預設值
 	$repair_sn=(!isset($DBV['repair_sn']))?$repair_sn:$DBV['repair_sn'];
@@ -36,7 +36,7 @@ function tad_repair_form($repair_sn=""){
 
 	//設定「repair_content」欄位預設值
 	$repair_content=(!isset($DBV['repair_content']))?"":$DBV['repair_content'];
-	if (!$repair_content)   $repair_content=_MD_TADREPAIR_REPAIR_CONTENT_PLACE ."\n". _MD_TADREPAIR_REPAIR_CONTENT_DOC ;
+	if (!$repair_content)   $repair_content=_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT ;
 
 
 	//設定「repair_date」欄位預設值
@@ -72,7 +72,7 @@ function tad_repair_form($repair_sn=""){
   if(empty($unit_menu_options)){
     redirect_header("index.php",3,_MD_TADREPAIR_NEED_UNIT);
   }
-
+ 
   $xoopsTpl->assign( "formValidator_code" , $formValidator_code) ;
   $xoopsTpl->assign( "PHP_SELF" , $_SERVER['PHP_SELF']) ;
   $xoopsTpl->assign( "unit_sn_menu_options" , $unit_menu_options) ;
