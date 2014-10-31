@@ -31,7 +31,9 @@ function list_tad_repair($show_function=0){
   //$fixed_status_list[0]='全部狀態' ;
  
   $unit_menu =get_tad_repair_unit_list();
-  array_unshift($unit_menu, _MD_TADREPAIR_REPAIR_UNIT_FILTER) ;
+  $unit_menu[0]= _MD_TADREPAIR_REPAIR_UNIT_FILTER ;
+  //array_unshift($unit_menu, _MD_TADREPAIR_REPAIR_UNIT_FILTER) ;
+
 
 //顯示條件
   $fixed_status_id = intval($_POST['fixed_status_id'] ) ;
@@ -47,7 +49,7 @@ function list_tad_repair($show_function=0){
 
 	$uid=($xoopsUser)?$xoopsUser->getVar('uid'):"";
 	$sql = "select * from `".$xoopsDB->prefix("tad_repair")."`   where 1   $where_fixed    $where_unit    order by `repair_date` desc";
- 
+ echo $sql ;
   //取得各單位的管理員陣列
   $unit_admin_arr=unit_admin_arr();
 
