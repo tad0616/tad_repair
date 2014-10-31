@@ -28,6 +28,20 @@ function SendEmail($uid="",$title="",$content="") {
   return $msg;
 }
 
+//取得tad_repair_unit  
+function get_tad_repair_unit_list(){
+ 
+  global $xoopsDB,$xoopsModule;
+  $sql = "select `unit_sn` , `unit_title` from `".$xoopsDB->prefix("tad_repair_unit")."` order by `unit_sn`";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+
+  while(list($unit_sn , $unit_title)=$xoopsDB->fetchRow($result)){
+     $list[$unit_sn]=$unit_title;
+  }
+  return $list ;
+ 
+}
+
 //取得各單位的管理員陣列
 function unit_admin_arr(){
   global $xoopsDB;

@@ -15,7 +15,7 @@ include_once XOOPS_ROOT_PATH."/header.php";
 
 //列出所有tad_repair資料
 function list_tad_repair($show_function=0){
-	global $xoopsDB , $xoopsModule , $isAdmin , $xoopsUser , $xoopsTpl;
+	global $xoopsDB , $xoopsModule , $isAdmin , $xoopsUser , $xoopsTpl ,$xoopsModuleConfig;
 
   if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php")){
     include_once XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php";
@@ -23,12 +23,31 @@ function list_tad_repair($show_function=0){
     $FooTable = new FooTable();
     $FooTableJS=$FooTable->render();
   }
+ 
 
+  //
+  $fixed_status_list = preg_split('/;/' ,$xoopsModuleConfig['fixed_status']) ;
+  array_unshift($fixed_status_list, _MD_TADREPAIR_REPAIR_FIXED_FILTER) ;
+  //$fixed_status_list[0]='全部狀態' ;
+ 
+  $unit_menu =get_tad_repair_unit_list();
+  array_unshift($unit_menu, _MD_TADREPAIR_REPAIR_UNIT_FILTER) ;
 
-	//取得使用者編號
+//顯示條件
+  $fixed_status_id = intval($_POST['fixed_status_id'] ) ;
+  if ( $fixed_status_id >0 ) 
+      $show_fixed_status = $fixed_status_list[$fixed_status_id]   ;
+  if ($show_fixed_status) 
+      $where_fixed = "  and  fixed_status = '$show_fixed_status'  "  ;
+
+  $unit_menu_id = intval($_POST['unit_menu_id']) ;
+  if ($unit_menu_id >0)
+      $where_unit = "  and  unit_sn = $unit_menu_id   " ;
+ 
+
 	$uid=($xoopsUser)?$xoopsUser->getVar('uid'):"";
-	$sql = "select * from `".$xoopsDB->prefix("tad_repair")."` order by `repair_date` desc";
-
+	$sql = "select * from `".$xoopsDB->prefix("tad_repair")."`   where 1   $where_fixed    $where_unit    order by `repair_date` desc";
+ 
   //取得各單位的管理員陣列
   $unit_admin_arr=unit_admin_arr();
 
@@ -106,6 +125,11 @@ function list_tad_repair($show_function=0){
   $xoopsTpl->assign( "bar" , $bar) ;
   $xoopsTpl->assign( "mode" , 'list') ;
   $xoopsTpl->assign( "FooTableJS" , $FooTableJS) ;
+
+  $xoopsTpl->assign( "fixed_status_list" , $fixed_status_list) ;
+  $xoopsTpl->assign( "unit_menu" , $unit_menu) ;
+  $xoopsTpl->assign( "fixed_status_id" , $fixed_status_id) ;
+  $xoopsTpl->assign( "unit_menu_id" , $unit_menu_id) ;
 
 
 	//return $main;
