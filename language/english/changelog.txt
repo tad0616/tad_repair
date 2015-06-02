@@ -1,47 +1,47 @@
-《Tad Repair 2.1 正式版》功能項目（2014-06-15釋出）
+"Tad Repair 2.1 official version of" functional items (release 2014-06-15)
 ================================================
- 1.下載檔案加上回覆內容
- 2.修正uid欄位為 mediumint(8) 格式
+ 1. Download the file contents plus Reply
+ 2. Fixed uid field is mediumint (8) Format
 
 
-《Tad Repair 2.02 正式版》功能項目（2014-02-17釋出）
+"Tad Repair 2.02 official version" feature project (2014-02-17 release)
 ================================================
- 1.精簡不必要的函數
- 2.修正維修通報的後台箭頭沒看到的bug
- 3.修正維修報裡面有兩個報修者的bug
- 4.刪除不必要的module.css
- 5.精簡不必要的語系
- 6.微調版面
+ 1. streamline unnecessary functions
+ 2. Fixed Service Bulletins background arrows did not see the bug
+ 3. Fixed service reported there are two repair persons bug
+ 4. Remove unnecessary module.css
+ 5. streamline unnecessary language
+ 6. trimming forum
 
 
-《Tad Repair 2.01 正式版》功能項目（2013-10-14釋出）
+"Tad Repair 2.01 official version" feature project (2013-10-14 release)
 ================================================
- 1.修正下載月報表月份無法選擇的問題。
+ 1. Fixed download problem can not be selected in January monthly report.
 
 
-《Tad Repair 2.0 正式版》功能項目（2013-07-27釋出）
+"Tad Repair 2.0 official version of" functional items (release 2013-07-27)
 ================================================
- 1.修改為標準 XOOPS 2.5 模組格式
- 2.細緻化樣板，可線上自由改造版面
- 3.支援BootStrap
- 4.移除不存在的選項
+ 1. Modify the standard format XOOPS 2.5 modules
+ 2. detailed oriented model, can transform online free forum
+ 3. Support BootStrap
+ 4. Remove option does not exist
 
 
-《Tad Repair 1.2 正式版》功能項目（2013-02-24釋出）
+"Tad Repair 1.2 official version of" functional items (release 2013-02-24)
 ================================================
- 1.修正後台單位設定人員無法設定的問題（看不到箭頭圖片可以按）
- 2.加入月報表下載功能（需搭配 TadTools 1.13 版以上）
+ 1. Fix the problem set back unit personnel can not be set (see arrow image can)
+ 2. Add the monthly report download function (to be with the TadTools Version 1.13 or more)
 
 
-《Tad Repair 1.1 正式版》功能項目（2013-02-22釋出）
+"Tad Repair 1.1 official version of" functional items (release 2013-02-22)
 ================================================
- 1.修正一些小問題
- 2.加入自動通知功能，通報後會寄發通知信給負責單位所有人員。人員處理完也會寄發通知信給原通報者。
- 3.修改樣板檔為精細樣板，開發者可更容易自定畫面
+ 1. Fixed some minor issues
+ 2. Add automatic notification feature, the notification letter will be sent after the notification to all personnel responsible for the unit. Who finished with the notification letter will be sent to the original notifier.
+ 3. Modify the template file as a fine model, developers can more easily customize the screen
 
 
-《Tad Repair 1.0 正式版功能》項目（2013-02-21釋出）
+"Tad Repair 1.0 official version features" item (2013-02-21 release)
 ================================================
- 1.設定多個維修單位，每個單位下還可以設定數個管理人員
- 2.可以從偏好設定去設定一些選項，例如處理狀況、嚴重程度...等。
- 3.可搜尋
+ 1. Set the number of service units, each unit can also be set at a number of management staff
+ 2. You can go to set some options from the preferences, such as processing status, the severity ... and so on.
+ 3. Can Search

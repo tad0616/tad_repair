@@ -1,21 +1,28 @@
 <?php
-include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
+include_once XOOPS_ROOT_PATH . "/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 
-define("_MI_TADREPAIR_NAME", "Service Bulletins");
-define("_MI_TADREPAIR_AUTHOR", "Service Bulletins");
-define("_MI_TADREPAIR_CREDITS", "Tad");
-define("_MI_TADREPAIR_DESC", "Maintenance Notification System");
-define("_MI_TADREPAIR_ADMENU1", "Repair management");
-define("_MI_TADREPAIR_ADMENU2", "Unit Settings");
-define("_MI_TADREPAIR_SMNAME1", "Service Bulletins Overview");
-define("_MI_TADREPAIR_SMNAME2", "Fill in the repair order");
-define("_MI_TADREPAIR_BNAME1", "to be repaired Bulletin");
-define("_MI_TADREPAIR_BDESC1", "to be repaired Bulletin (wait_to_repair)");
+define('_MI_TADREPAIR_NAME', 'Tad Repair');
+define('_MI_TADREPAIR_AUTHOR', 'Tad');
+define('_MI_TADREPAIR_CREDITS', 'Tad');
+define('_MI_TADREPAIR_DESC', 'Maintenance Notification System');
+define('_MI_TADREPAIR_ADMENU1', 'Repair Management');
+define('_MI_TADREPAIR_ADMENU2', 'Department Settings');
+define('_MI_TADREPAIR_SMNAME1', 'Service Bulletins Overview');
+define('_MI_TADREPAIR_SMNAME2', 'Submit Repair order');
+define('_MI_TADREPAIR_BNAME1', 'Open Repairs');
+define('_MI_TADREPAIR_BDESC1', 'To be repaired Bulletin (wait_to_repair)');
 
-define("_MI_TADREPAIR_REPAIR_STATUS", "Severity");
-define("_MI_TADREPAIR_REPAIR_STATUS_DESC", 'Set options" severity "is, please"; "separated (first item is the default)');
-define("_MI_TADREPAIR_REPAIR_STATUS_VAL", "mild; moderate; severe");
+define('_MI_TADREPAIR_REPAIR_STATUS', 'Severity');
+define('_MI_TADREPAIR_REPAIR_STATUS_DESC', 'Set options for "severity", please use ";" as separator (first item is the default)');
+define('_MI_TADREPAIR_REPAIR_STATUS_VAL', 'Low; Moderate; Severe');
 
-define("_MI_TADREPAIR_FIXED_STATUS", "Processing status");
-define("_MI_TADREPAIR_FIXED_STATUS_DESC", 'Set" process status "option, please"; "separated (first item is the default)," has been fixed. "Do not remove or modify the options, because the program will be used. ');
-define("_MI_TADREPAIR_FIXED_STATUS_VAL", "Pending; Processing; has been fixed");
+define('_MI_TADREPAIR_FIXED_STATUS', 'Processing status');
+define('_MI_TADREPAIR_FIXED_STATUS_DESC', 'Set "process status" option, please use ";" as separator (first item is the default). <br/>Once set, do NOT remove or modify the options, because the program will be used for fixed repairs. ');
+define('_MI_TADREPAIR_FIXED_STATUS_VAL', 'Pending; Processing; Fixed');
+
+define('_MI_TADREPAIR_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_TADREPAIR_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADREPAIR_BACK_2_ADMIN', 'Back to Administration of ');
+
+//help
+define('_MI_TADREPAIR_HELP_OVERVIEW', 'Overview');
