@@ -1,3 +1,9 @@
+"Tad Repair 2.2 official version of" functional items (release 2015-07-12)
+=================================================
+ 1. Add the English language
+ 2. Add BootStrap3 support
+ 3. Fix PHP syntax to conform to PSR2
+
 "Tad Repair 2.1 official version of" functional items (release 2014-06-15)
 ================================================
  1. Download the file contents plus Reply
