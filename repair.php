@@ -133,9 +133,9 @@ function insert_tad_repair()
     }
 
     $title   = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $_POST['repair_title']);
-    //把填報詳細內容也放入 MAIL 
-    $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $_POST['repair_title'], nl2br($_POST['repair_content'])   ,
-     "<a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
+    //把填報詳細內容也放入 MAIL
+    $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $_POST['repair_title'], nl2br($_POST['repair_content'])  .
+     "<br /> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content);
     }
