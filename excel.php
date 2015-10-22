@@ -28,17 +28,18 @@ $objActSheet->getColumnDimension('J')->setWidth(40);
 $objActSheet->getStyle('A1:J1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
 
 $objActSheet->setCellValue("A1", _MD_TADREPAIR_REPAIR_SN)
-            ->setCellValue("B1", _MD_TADREPAIR_REPAIR_DATE)
-            ->setCellValue("C1", _MD_TADREPAIR_REPAIR_TITLE)
-            ->setCellValue("D1", _MD_TADREPAIR_REPAIR_UID)
-            ->setCellValue("E1", _MD_TADREPAIR_UNIT)
-            ->setCellValue("F1", _MD_TADREPAIR_REPAIR_STATUS2)
-            ->setCellValue("G1", _MD_TADREPAIR_FIXED_UID)
-            ->setCellValue("H1", _MD_TADREPAIR_FIXED_DATE)
-            ->setCellValue("I1", _MD_TADREPAIR_FIXED_STATUS2)
-            ->setCellValue("J1", _MD_TADREPAIR_FIXED_CONTENT);
+    ->setCellValue("B1", _MD_TADREPAIR_REPAIR_DATE)
+    ->setCellValue("C1", _MD_TADREPAIR_REPAIR_TITLE)
+    ->setCellValue("D1", _MD_TADREPAIR_REPAIR_UID)
+    ->setCellValue("E1", _MD_TADREPAIR_UNIT)
+    ->setCellValue("F1", _MD_TADREPAIR_REPAIR_STATUS2)
+    ->setCellValue("G1", _MD_TADREPAIR_FIXED_UID)
+    ->setCellValue("H1", _MD_TADREPAIR_FIXED_DATE)
+    ->setCellValue("I1", _MD_TADREPAIR_FIXED_STATUS2)
+    ->setCellValue("J1", _MD_TADREPAIR_FIXED_CONTENT)
+    ->setCellValue("K1", _MD_TADREPAIR_REPAIR_CONTENT);
 
-$sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
+$sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
 $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
 $i = 2;
@@ -63,22 +64,23 @@ while ($all = $xoopsDB->fetchArray($result)) {
     }
 
     $repair_date = substr($repair_date, 0, 10);
-    $fixed_date  = ($fixed_date == "0000-00-00 00:00:00") ? "" : substr($fixed_date, 0, 10);
+    $fixed_date = ($fixed_date == "0000-00-00 00:00:00") ? "" : substr($fixed_date, 0, 10);
 
     $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
 
     $unit = get_tad_repair_unit($unit_sn);
 
     $objActSheet->setCellValue("A{$i}", $repair_sn)
-                ->setCellValue("B{$i}", $repair_date)
-                ->setCellValue("C{$i}", $repair_title)
-                ->setCellValue("D{$i}", $repair_name)
-                ->setCellValue("E{$i}", $unit['unit_title'])
-                ->setCellValue("F{$i}", $repair_status)
-                ->setCellValue("G{$i}", $fixed_name)
-                ->setCellValue("H{$i}", $fixed_date)
-                ->setCellValue("I{$i}", $fixed_status)
-                ->setCellValue("J{$i}", $fixed_content);
+        ->setCellValue("B{$i}", $repair_date)
+        ->setCellValue("C{$i}", $repair_title)
+        ->setCellValue("D{$i}", $repair_name)
+        ->setCellValue("E{$i}", $unit['unit_title'])
+        ->setCellValue("F{$i}", $repair_status)
+        ->setCellValue("G{$i}", $fixed_name)
+        ->setCellValue("H{$i}", $fixed_date)
+        ->setCellValue("I{$i}", $fixed_status)
+        ->setCellValue("J{$i}", $fixed_content)
+        ->setCellValue("K{$i}", $repair_content);
     $i++;
 }
 
