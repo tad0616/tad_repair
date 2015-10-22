@@ -24,8 +24,8 @@ $objActSheet->getColumnDimension('G')->setWidth(15);
 $objActSheet->getColumnDimension('H')->setWidth(20);
 $objActSheet->getColumnDimension('I')->setWidth(15);
 $objActSheet->getColumnDimension('J')->setWidth(40);
-
-$objActSheet->getStyle('A1:J1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
+$objActSheet->getColumnDimension('K')->setWidth(60);
+$objActSheet->getStyle('A1:K1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
 
 $objActSheet->setCellValue("A1", _MD_TADREPAIR_REPAIR_SN)
     ->setCellValue("B1", _MD_TADREPAIR_REPAIR_DATE)
@@ -85,7 +85,7 @@ while ($all = $xoopsDB->fetchArray($result)) {
 }
 
 $n = $i - 1;
-$objActSheet->mergeCells("A{$i}:J{$i}")->setCellValue("A{$i}", "=CONCATENATE(\"" . _MD_TADREPAIR_REPORT_TOTAL . " \" , COUNTA(A2:A{$n}) , \" " . _MD_TADREPAIR_REPORT_TOTAL2 . "\")");
+$objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", "=CONCATENATE(\"" . _MD_TADREPAIR_REPORT_TOTAL . " \" , COUNTA(A2:A{$n}) , \" " . _MD_TADREPAIR_REPORT_TOTAL2 . "\")");
 
 $title = $ym . _MD_TADREPAIR_REPORT;
 $title = (_CHARSET == 'UTF-8') ? iconv("UTF-8", "Big5", $title) : $title;
