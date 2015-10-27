@@ -1,7 +1,7 @@
 <?php
 
 include_once $GLOBALS['xoops']->path("modules/tadtools/language/{$xoopsConfig['language']}/admin_common.php");
-define('_TAD_NEED_TADTOOLS', "This module needs TadTools module. You can download TadTools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
+define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
 
 define('_AND', ',');
 
