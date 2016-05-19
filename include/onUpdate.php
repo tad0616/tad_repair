@@ -72,7 +72,7 @@ function go_update_uid()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_repair") . "` CHANGE `repair_uid` `repair_uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     return true;
 }
 
@@ -90,7 +90,7 @@ return true;
 function go_update1(){
 global $xoopsDB;
 $sql="ALTER TABLE ".$xoopsDB->prefix("資料表")." ADD `欄位` smallint(5) NOT NULL";
-$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  $xoopsDB->error());
 
 return true;
 }

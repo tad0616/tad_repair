@@ -6,7 +6,7 @@ function wait_to_repair($options)
 
     $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' order by `repair_date` desc";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $block   = "";
     $i       = 0;
@@ -34,11 +34,7 @@ function wait_to_repair($options)
         $content[$i]['repair_name']   = $repair_name;
         $i++;
     }
-    $block['content']           = $content;
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
-    $block['mini']              = $_SESSION['bootstrap'] == '3' ? 'xs' : 'mini';
+    $block['content'] = $content;
 
     return $block;
 }
@@ -54,7 +50,7 @@ if (!function_exists('get_tad_repair_unit')) {
         }
 
         $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
-        $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $result = $xoopsDB->query($sql) or web_error($sql);
         $data   = $xoopsDB->fetchArray($result);
         return $data;
     }

@@ -40,7 +40,7 @@ function tad_repair_unit_form($unit_sn = "")
 
     $option = $option2 = "";
     $sql    = "select uid,uname,name from " . $xoopsDB->prefix("users") . " order by name";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
         $name = empty($name) ? $uname : $name;
@@ -78,7 +78,7 @@ function insert_tad_repair_unit()
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair_unit") . "`
 	(`unit_title` , `unit_admin`)
 	values('{$_POST['unit_title']}' , '{$unit_admin}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql);
 
     //取得最後新增資料的流水編號
     $unit_sn = $xoopsDB->getInsertId();
@@ -103,7 +103,7 @@ function update_tad_repair_unit($unit_sn = "")
 	 `unit_title` = '{$_POST['unit_title']}' ,
 	 `unit_admin` = '{$unit_admin}'
 	where `unit_sn` = '$unit_sn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return $unit_sn;
 }
 
@@ -113,7 +113,7 @@ function list_tad_repair_unit()
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
     $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` ";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_content = "";
     $i           = 0;
@@ -150,7 +150,7 @@ function delete_tad_repair_unit($unit_sn = "")
 {
     global $xoopsDB, $isAdmin;
     $sql = "delete from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 /*-----------執行動作判斷區----------*/
@@ -192,7 +192,7 @@ switch ($op) {
         list_tad_repair_unit();
         break;
 
-    /*---判斷動作請貼在上方---*/
+        /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

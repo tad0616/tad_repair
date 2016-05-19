@@ -1,3 +1,10 @@
+"Tad Repair 2.3 official version of" functional items (release 2015-07-12)
+=================================================
+1. Support PHP7
+2. Remove BootStrap2
+3. Add color config to status
+
+
 "Tad Repair 2.2 official version of" functional items (release 2015-07-12)
 =================================================
  1. Add the English language

@@ -88,7 +88,7 @@ function get_tad_repair_unit_menu_options($default_unit_sn = "0")
 {
     global $xoopsDB, $xoopsModule;
     $sql    = "select `unit_sn` , `unit_title` from `" . $xoopsDB->prefix("tad_repair_unit") . "` order by `unit_sn`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $option = "";
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
@@ -118,7 +118,7 @@ function insert_tad_repair()
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair") . "`
 	(`repair_title` , `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)
 	values('{$_POST['repair_title']}' , '{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status}' , '')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql);
 
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();
@@ -132,10 +132,10 @@ function insert_tad_repair()
         $repair_name = XoopsUser::getUnameFromId($uid, 0);
     }
 
-    $title   = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $_POST['repair_title']);
+    $title = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $_POST['repair_title']);
     //把填報詳細內容也放入 MAIL
-    $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $_POST['repair_title'], nl2br($_POST['repair_content'])  .
-     "<br /> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
+    $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $_POST['repair_title'], nl2br($_POST['repair_content']) .
+        "<br /> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content);
     }
@@ -164,7 +164,7 @@ function update_tad_repair($repair_sn = "")
 	 `repair_uid` = '{$uid}' ,
 	 `unit_sn` = '{$_POST['unit_sn']}'
 	where `repair_sn` = '$repair_sn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $unit_sn = $_POST['unit_sn'];
     $unit    = unit_admin_arr();
@@ -286,7 +286,7 @@ function update_tad_fixed($repair_sn = "")
 	 `fixed_status` = '{$_POST['fixed_status']}' ,
 	 `fixed_content` = '{$_POST['fixed_content']}'
 	where `repair_sn` = '$repair_sn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $DBV = get_tad_repair($repair_sn);
 

@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADREPAIR_NAME;
-$modversion['version']     = 2.2;
+$modversion['version']     = 2.3;
 $modversion['description'] = _MI_TADREPAIR_DESC;
 $modversion['author']      = _MI_TADREPAIR_AUTHOR;
 $modversion['credits']     = _MI_TADREPAIR_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2015/07/12';
+$modversion['release_date']        = '2016/05/19';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -56,26 +56,14 @@ $modversion['sub'][2]['url']  = "repair.php";
 //---樣板設定---//
 $modversion['templates']                    = array();
 $i                                          = 1;
-$modversion['templates'][$i]['file']        = 'tad_repair_index.html';
-$modversion['templates'][$i]['description'] = 'tad_repair_index.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_repair_index_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_repair_index_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_repair_repair.html';
-$modversion['templates'][$i]['description'] = 'tad_repair_repair.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_repair_repair_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_repair_repair_b3.html';
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_repair_adm_main.html';
-$modversion['templates'][$i]['description'] = 'tad_repair_adm_main.html';
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_repair_adm_main_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_repair_adm_main_b3.html';
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_repair_adm_unit.html';
-$modversion['templates'][$i]['description'] = 'tad_repair_adm_unit.html';
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_repair_adm_unit_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_repair_adm_unit_b3.html';

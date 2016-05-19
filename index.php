@@ -54,10 +54,14 @@ function list_tad_repair($show_function = 0)
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_content = "";
     $i           = 0;
+
+    $repair_color = get_color('repair_status');
+    $status_color = get_color('fixed_status');
+
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
@@ -81,7 +85,7 @@ function list_tad_repair($show_function = 0)
         $repair_date = substr($repair_date, 0, 10);
         $fixed_date  = ($fixed_date == "0000-00-00 00:00:00") ? "" : substr($fixed_date, 0, 10);
 
-        $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
+        $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
 
         $unit = get_tad_repair_unit($unit_sn);
 
@@ -90,7 +94,7 @@ function list_tad_repair($show_function = 0)
         $all_content[$i]['repair_title']  = "<a href='{$_SERVER['PHP_SELF']}?repair_sn={$repair_sn}'>{$repair_title}</a>";
         $all_content[$i]['repair_name']   = $repair_name;
         $all_content[$i]['unit_title']    = $unit['unit_title'];
-        $all_content[$i]['repair_status'] = $repair_status;
+        $all_content[$i]['repair_status'] = "<span style='color:{$repair_color[$repair_status]}'>$repair_status</span>";
         $all_content[$i]['fixed_name']    = $fixed_name;
         $all_content[$i]['fixed_date']    = $fixed_date;
         $all_content[$i]['fixed_status']  = $fixed_status;
@@ -105,7 +109,7 @@ function list_tad_repair($show_function = 0)
     //$main=div_3d("",$main,"corners","width:98%");
 
     $sql    = "select repair_date from `" . $xoopsDB->prefix("tad_repair") . "` order by `repair_date` desc";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_repair_ym = "";
 
@@ -135,6 +139,27 @@ function list_tad_repair($show_function = 0)
     //return $main;
 }
 
+//取得顏色陣列
+function get_color($name = '')
+{
+    global $xoopsConfig;
+    include_once "language/{$xoopsConfig['language']}/modinfo.php";
+    $default = ($name == 'fixed_status') ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
+
+    $def_arr = mk_arr(explode(";", $default));
+    // die(var_export($def_arr));
+    foreach ($def_arr as $color => $item) {
+        $def_color_arr[$item] = $color;
+    }
+    // die(var_export($def_color_arr));
+    $arr = mc2arr($name, "", false, 'return');
+    // die(var_export($arr));
+    foreach ($arr as $color => $item) {
+        $color_arr[$item] = (is_numeric($color) or $color == $item) ? $def_color_arr[$item] : $color;
+    }
+    return $color_arr;
+}
+
 //以流水號秀出某筆tad_repair資料內容
 function show_one_tad_repair($repair_sn = "")
 {
@@ -153,7 +178,7 @@ function show_one_tad_repair($repair_sn = "")
     $unit_admin_arr = unit_admin_arr();
 
     $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}' ";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $all    = $xoopsDB->fetchArray($result);
 
     //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
