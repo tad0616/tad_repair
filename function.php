@@ -10,9 +10,16 @@ include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 function SendEmail($uid = "", $title = "", $content = "")
 {
     global $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
-    $member_handler = xoops_gethandler('member');
-    $user           = $member_handler->getUser($uid);
-    $email          = $user->email();
+    if (empty($uid)) {
+        return;
+    }
+
+    // $member_handler = xoops_gethandler('member');
+    // $user           = $member_handler->getUser($uid);
+    // $email          = $user->email();
+    $sql         = "select email from `" . $xoopsDB->prefix("users") . "` where uid='{$uid}'";
+    $result      = $xoopsDB->query($sql) or web_error($sql);
+    list($email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer                           = &getMailer();
     $xoopsMailer->multimailer->ContentType = "text/html";
