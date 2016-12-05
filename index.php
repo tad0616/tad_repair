@@ -1,13 +1,13 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_repair_index.html");
+$xoopsOption['template_main'] = "tad_repair_index.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 
 /*-----------function區--------------*/
 
 //列出所有tad_repair資料
-function list_tad_repair($show_function = 0)
+function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_function = 0)
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
@@ -27,8 +27,7 @@ function list_tad_repair($show_function = 0)
     $unit_menu[0] = _MD_TADREPAIR_REPAIR_UNIT_FILTER;
     //array_unshift($unit_menu, _MD_TADREPAIR_REPAIR_UNIT_FILTER) ;
 
-//顯示條件
-    $fixed_status_id = intval($_POST['fixed_status_id']);
+    //顯示條件
     if ($fixed_status_id > 0) {
         $show_fixed_status = $fixed_status_list[$fixed_status_id];
     }
@@ -37,7 +36,6 @@ function list_tad_repair($show_function = 0)
         $where_fixed = "  and  fixed_status = '$show_fixed_status'  ";
     }
 
-    $unit_menu_id = intval($_POST['unit_menu_id']);
     if ($unit_menu_id > 0) {
         $where_unit = "  and  unit_sn = $unit_menu_id   ";
     }
@@ -135,6 +133,8 @@ function list_tad_repair($show_function = 0)
     $xoopsTpl->assign("unit_menu", $unit_menu);
     $xoopsTpl->assign("fixed_status_id", $fixed_status_id);
     $xoopsTpl->assign("unit_menu_id", $unit_menu_id);
+    $xoopsTpl->assign("repair_ym", $all_repair_ym);
+    $xoopsTpl->assign("now_op", 'list_tad_repair');
 
     //return $main;
 }
@@ -228,22 +228,24 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("fixed_content", $fixed_content);
     $xoopsTpl->assign("fixed_date", $fixed_date);
     $xoopsTpl->assign("fixed_name", $fixed_name);
-    $xoopsTpl->assign("mode", 'show_one');
+    $xoopsTpl->assign("now_op", 'show_one');
     //return $main;
 }
 
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op        = system_CleanVars($_REQUEST, 'op', '', 'string');
-$repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
-$unit_sn   = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
+$op              = system_CleanVars($_REQUEST, 'op', '', 'string');
+$repair_sn       = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
+$unit_sn         = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
+$unit_menu_id    = system_CleanVars($_REQUEST, 'unit_menu_id', 0, 'int');
+$fixed_status_id = system_CleanVars($_REQUEST, 'fixed_status_id', 0, 'int');
 
 switch ($op) {
 
     //預設動作
     default:
         if (empty($repair_sn)) {
-            list_tad_repair();
+            list_tad_repair($unit_menu_id, $fixed_status_id);
         } else {
             show_one_tad_repair($repair_sn);
         }

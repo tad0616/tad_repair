@@ -1,6 +1,6 @@
 <{$toolbar}>
 
-<{if $mode=="show_one"}>
+<{if $now_op=="show_one"}>
 
   <{$modify_link}>
 
@@ -27,42 +27,43 @@
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th><td><{$fixed_name}></td></tr>
     </table>
   </div>
+<{/if}>
 
-<{else}>
-  <{if $content}>
-    <{$FooTableJS}>
+<{if $now_op=="list_tad_repair"}>
+  <{$FooTableJS}>
 
-    <div class="row">
-        <div class="col-md-6">
-          <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-            <div class="form-group">
-              <div class="col-md-6">
-                <{html_options name='unit_menu_id' options=$unit_menu  selected=$unit_menu_id  class="form-control" onchange="submit();"}>
-              </div>
-              <div class="col-md-6">
-                <{html_options name='fixed_status_id' options=$fixed_status_list selected=$fixed_status_id  class="form-control" onchange="submit();"}>
-              </div>
-            </div>
-          </form>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="index.php" method="get" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+        <div class="form-group">
+          <div class="col-md-6">
+            <{html_options name='unit_menu_id' options=$unit_menu  selected=$unit_menu_id  class="form-control" onchange="submit();"}>
+          </div>
+          <div class="col-md-6">
+            <{html_options name='fixed_status_id' options=$fixed_status_list selected=$fixed_status_id  class="form-control" onchange="submit();"}>
+          </div>
         </div>
-
-        <div class="col-md-6">
-          <form action="excel.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-            <div class="form-group">
-              <div class="col-md-6">
-                <select name="ym" class="form-control">
-                  <{foreach item=report from=$repair_ym}>
-                    <option value="<{$report.ym}>"><{$report.ym}></option>
-                  <{/foreach}>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADREPAIR_DL_REPORT}></button>
-              </div>
-            </div>
-          </form>
-      </div>
+      </form>
     </div>
+
+    <div class="col-md-6">
+      <form action="excel.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+        <div class="form-group">
+          <div class="col-md-6">
+            <select name="ym" class="form-control">
+              <{foreach item=report from=$repair_ym}>
+                <option value="<{$report.ym}>"><{$report.ym}></option>
+              <{/foreach}>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADREPAIR_DL_REPORT}></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <{if $content}>
 
     <div class="row">
       <div class="col-md-12">

@@ -5,7 +5,7 @@ if (empty($xoopsUser)) {
     redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
 }
 
-$xoopsOption['template_main'] = set_bootstrap("tad_repair_repair.html");
+$xoopsOption['template_main'] = "tad_repair_repair.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
@@ -112,12 +112,12 @@ function insert_tad_repair()
     $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
 
     $arr          = explode(";", $xoopsModuleConfig['fixed_status']);
-    $fixed_status = $arr[0];
+    $fixed_status = explode('=', $arr[0]);
     $today        = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair") . "`
 	(`repair_title` , `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)
-	values('{$_POST['repair_title']}' , '{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status}' , '')";
+	values('{$_POST['repair_title']}' , '{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status[1]}' , '')";
     $xoopsDB->query($sql) or web_error($sql);
 
     //取得最後新增資料的流水編號

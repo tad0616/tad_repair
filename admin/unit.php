@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_repair_adm_unit.html";
+$xoopsOption['template_main'] = "tad_repair_adm_unit.tpl";
 include_once "header.php";
 include_once "../function.php";
 
