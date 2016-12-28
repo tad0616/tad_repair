@@ -42,3 +42,5 @@ define('_MD_TADREPAIR_MAIL_FIXED_CONTENT', 'hello:. <p>%s to%s for your Service 
 define('_MD_TADREPAIR_NEED_UNIT', 'the administrator has not set the maintenance management units, please notify the administrator to the background "Unit settings"!');
 
 define('_MD_TADREPAIR_EMPTY', "Congratulations, there are currently no Repair orders <a href='repair.php' class='btn btn-info'> You'll be the first person notified </a>!!");
+
+define('_MD_TADREPAIR_DONT_REPEAT', 'At present, the same information, do not repeat the repair.');

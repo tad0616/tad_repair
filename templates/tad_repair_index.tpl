@@ -33,30 +33,30 @@
   <{$FooTableJS}>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-sm-6">
       <form action="index.php" method="get" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
         <div class="form-group">
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <{html_options name='unit_menu_id' options=$unit_menu  selected=$unit_menu_id  class="form-control" onchange="submit();"}>
           </div>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <{html_options name='fixed_status_id' options=$fixed_status_list selected=$fixed_status_id  class="form-control" onchange="submit();"}>
           </div>
         </div>
       </form>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-sm-6">
       <form action="excel.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
         <div class="form-group">
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <select name="ym" class="form-control">
               <{foreach item=report from=$repair_ym}>
                 <option value="<{$report.ym}>"><{$report.ym}></option>
               <{/foreach}>
             </select>
           </div>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADREPAIR_DL_REPORT}></button>
           </div>
         </div>
@@ -66,7 +66,7 @@
   <{if $content}>
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-sm-12">
         <table class="table table-striped table-hover footable">
           <thead>
           <tr>

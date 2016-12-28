@@ -13,8 +13,6 @@ include_once XOOPS_ROOT_PATH . "/header.php";
 function tad_repair_form($repair_sn = "")
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
-    //include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
-    //include_once(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php");
 
     //抓取預設值
     if (!empty($repair_sn)) {
@@ -114,6 +112,13 @@ function insert_tad_repair()
     $arr          = explode(";", $xoopsModuleConfig['fixed_status']);
     $fixed_status = explode('=', $arr[0]);
     $today        = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $today_chk    = date("Y-m-d H:i", xoops_getUserTimestamp(time()));
+
+    $sql    = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$_POST['repair_title']}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
+    $result = $xoopsDB->query($sql) or web_error($sql);
+    while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
+        redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
+    }
 
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair") . "`
 	(`repair_title` , `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)

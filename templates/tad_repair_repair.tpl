@@ -6,31 +6,31 @@
   <form action="repair.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-sm-8">
         <div class="form-group">
-          <label class="col-md-2 control-label">
+          <label class="col-sm-2 control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
           </label>
-          <div class="col-md-10">
+          <div class="col-sm-10">
             <input type="text" name="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>" value="<{$repair_title}>" id="repair_title" class="form-control validate[required]">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-md-2 control-label">
+          <label class="col-sm-2 control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
           </label>
-          <div class="col-md-10">
-            <textarea name="repair_content" rows=4 class="form-control validate[required] col-md-12" id="repair_content" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>"><{$repair_content}></textarea>
+          <div class="col-sm-10">
+            <textarea name="repair_content" rows=4 class="form-control validate[required] col-sm-12" id="repair_content" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>"><{$repair_content}></textarea>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <div class="form-group">
-          <label class="col-md-6 control-label">
+          <label class="col-sm-6 control-label">
             <{$smarty.const._MD_TADREPAIR_UNIT_SN}>
           </label>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <select name="unit_sn" size=1 class="form-control">
               <{$unit_sn_menu_options}>
             </select>
@@ -39,10 +39,10 @@
 
         <!--嚴重程度-->
         <div class="form-group">
-          <label class="col-md-6 control-label">
+          <label class="col-sm-6 control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
           </label>
-          <div class="col-md-6">
+          <div class="col-sm-6">
             <select name="repair_status" size=1 class="form-control">
               <{$repair_status}>
             </select>
@@ -90,22 +90,22 @@
   <form action="repair.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <!--回覆內容-->
     <div class="form-group">
-      <div class="col-md-12">
+      <div class="col-sm-12">
       <textarea name="fixed_content" class="form-control" rows=4 id="fixed_content" placeholder="<{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}>" ><{$fixed_content}></textarea>
       </div>
     </div>
 
     <!--處理狀況-->
     <div class="form-group">
-      <label class="col-md-2 control-label">
+      <label class="col-sm-2 control-label">
         <{$smarty.const._MD_TADREPAIR_FIXED_STATUS}>
       </label>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <select name="fixed_status" size=1 class="form-control">
           <{$fixed_status}>
         </select>
       </div>
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
         <input type="hidden" name="op" value="update_tad_fixed">
         <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>

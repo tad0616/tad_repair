@@ -23,7 +23,7 @@
     </script>
     <form action="unit.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
       <div class="form-group">
-        <div class="col-md-9">
+        <div class="col-sm-9">
           <!--單位名稱-->
           <input type="text" name="unit_title" value="<{$unit_title}>" id="unit_title" class="form-control validate[required]" placeholder="<{$smarty.const._MA_TADREPAIR_UNIT_TITLE}>">
         </div>
@@ -34,12 +34,12 @@
       <h3><{$smarty.const._MA_TADREPAIR_UNIT_ADMIN}></h3>
 
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
             <{$option}>
           </select>
         </div>
-        <div class="col-md-1 text-center">
+        <div class="col-sm-1 text-center">
           <img src="../images/right.png" onclick="tmt.spry.linkedselect.util.moveOptions('repository', 'destination');getOptions();"><br>
           <img src="../images/left.png" onclick="tmt.spry.linkedselect.util.moveOptions('destination' , 'repository');getOptions();"><br><br>
 
@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <select id="destination" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
            <{$option2}>
           </select>
