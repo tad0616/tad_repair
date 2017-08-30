@@ -1,3 +1,8 @@
+Tad Repair 2.3.4 (2017-06-16 released)
+====================================================
+1.Complete accessibility 2.0 A level detection
+
+
 Tad Repair 2.3.3 (2016-12-28 released)
 ====================================================
  1. Change the col-md of boootstrap to col-sm

@@ -6,7 +6,6 @@
 
   <h2>[<{$repair_sn}>] <{$smarty.const._MD_TADREPAIR_FIXED_NOTICE}></h2>
 
-  <div class="row">
     <table class="table table-striped table-bordered table-hover">
       <tr><th nowrap style="width:80px;"><{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}></th><td><{$repair_title}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_REPAIR_DATE}></th><td><{$repair_date}></td></tr>
@@ -14,11 +13,10 @@
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_REPAIR_UID}></th><td><{$repair_name}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}></th><td><{$repair_content}></td></tr>
     </table>
-  </div>
+
   <{$fixed_link}>
   <h2><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></h2>
 
-  <div class="row">
     <table class="table table-striped table-bordered table-hover">
       <tr><th nowrap style="width:80px;"><{$smarty.const._MD_TADREPAIR_FIXED_UNIT_SN}></th><td><{$unit_title}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></th><td><{$fixed_status}></td></tr>
@@ -26,7 +24,6 @@
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th><td><{$fixed_date}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th><td><{$fixed_name}></td></tr>
     </table>
-  </div>
 <{/if}>
 
 <{if $now_op=="list_tad_repair"}>
