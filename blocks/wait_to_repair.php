@@ -4,7 +4,7 @@ function wait_to_repair($options)
 {
     global $xoopsDB;
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' order by `repair_date` desc";
+    $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair") . "` WHERE fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' ORDER BY `repair_date` DESC";
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
@@ -49,10 +49,9 @@ if (!function_exists('get_tad_repair_unit')) {
             return;
         }
 
-        $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
+        $sql = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
         $result = $xoopsDB->query($sql) or web_error($sql);
-        $data   = $xoopsDB->fetchArray($result);
+        $data = $xoopsDB->fetchArray($result);
         return $data;
     }
-
 }

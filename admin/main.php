@@ -13,7 +13,7 @@ function list_tad_repair()
 
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
-    $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` order by `repair_date` desc";
+    $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
 
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
@@ -45,7 +45,6 @@ function list_tad_repair()
             if (empty($fixed_name)) {
                 $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 0);
             }
-
         }
 
         $fixed_date = ($fixed_date == "0000-00-00 00:00:00") ? "" : $fixed_date;
@@ -78,6 +77,7 @@ function delete_tad_repair($repair_sn = "")
     $sql = "delete from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
     $xoopsDB->queryF($sql) or web_error($sql);
 }
+
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op        = system_CleanVars($_REQUEST, 'op', '', 'string');
@@ -97,7 +97,7 @@ switch ($op) {
         list_tad_repair();
         break;
 
-        /*---判斷動作請貼在上方---*/
+    /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/
