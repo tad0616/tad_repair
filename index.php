@@ -106,7 +106,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     //raised,corners,inset
     //$main=div_3d("",$main,"corners","width:98%");
 
-    $sql    = "select repair_date from `" . $xoopsDB->prefix("tad_repair") . "` order by `repair_date` desc";
+    $sql = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_repair_ym = "";
