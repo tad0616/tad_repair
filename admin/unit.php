@@ -39,7 +39,7 @@ function tad_repair_unit_form($unit_sn = "")
     $formValidator_code = $formValidator->render();
 
     $option = $option2 = "";
-    $sql    = "select uid,uname,name from " . $xoopsDB->prefix("users") . " order by name";
+    $sql    = "SELECT uid,uname,name FROM " . $xoopsDB->prefix("users") . " ORDER BY name";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
@@ -66,7 +66,7 @@ function insert_tad_repair_unit()
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts                = &MyTextSanitizer::getInstance();
+    $myts                = MyTextSanitizer::getInstance();
     $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
 
     if (empty($_POST['unit_admin']) or $_POST['unit_admin'] == ',') {
@@ -90,7 +90,7 @@ function update_tad_repair_unit($unit_sn = "")
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts                = &MyTextSanitizer::getInstance();
+    $myts                = MyTextSanitizer::getInstance();
     $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
 
     if (empty($_POST['unit_admin']) or $_POST['unit_admin'] == ',') {
@@ -112,7 +112,7 @@ function list_tad_repair_unit()
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
-    $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` ";
+    $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_content = "";
@@ -192,7 +192,7 @@ switch ($op) {
         list_tad_repair_unit();
         break;
 
-        /*---判斷動作請貼在上方---*/
+    /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

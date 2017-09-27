@@ -94,14 +94,13 @@ function tad_repair_form($repair_sn = "")
 function get_tad_repair_unit_menu_options($default_unit_sn = "0")
 {
     global $xoopsDB, $xoopsModule;
-    $sql    = "select `unit_sn` , `unit_title` from `" . $xoopsDB->prefix("tad_repair_unit") . "` order by `unit_sn`";
+    $sql = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $option = "";
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $selected = ($unit_sn == $default_unit_sn) ? "selected='selected'" : "";
-        $option .= "<option value=$unit_sn $selected>{$unit_title}</option>";
-
+        $option   .= "<option value=$unit_sn $selected>{$unit_title}</option>";
     }
     return $option;
 }
@@ -114,7 +113,7 @@ function insert_tad_repair()
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
-    $myts                    = &MyTextSanitizer::getInstance();
+    $myts                    = MyTextSanitizer::getInstance();
     $_POST['repair_title']   = $myts->addSlashes($_POST['repair_title']);
     $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
 
@@ -123,7 +122,7 @@ function insert_tad_repair()
     $today        = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $today_chk    = date("Y-m-d H:i", xoops_getUserTimestamp(time()));
 
-    $sql    = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$_POST['repair_title']}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
+    $sql = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$_POST['repair_title']}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
@@ -167,7 +166,7 @@ function update_tad_repair($repair_sn = "")
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
-    $myts                    = &MyTextSanitizer::getInstance();
+    $myts                    = MyTextSanitizer::getInstance();
     $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
     $_POST['fixed_content']  = $myts->addSlashes($_POST['fixed_content']);
 
@@ -283,7 +282,6 @@ function tad_fixed_form($repair_sn = "")
     $xoopsTpl->assign("repair_sn", $repair_sn);
     $xoopsTpl->assign("fixed_form_title", _MD_TAD_FIXED_FORM);
     $xoopsTpl->assign("mode", 'fixed_form');
-
 }
 
 //更新處理狀態
@@ -294,7 +292,7 @@ function update_tad_fixed($repair_sn = "")
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
-    $myts                   = &MyTextSanitizer::getInstance();
+    $myts                   = MyTextSanitizer::getInstance();
     $_POST['fixed_content'] = $myts->addSlashes($_POST['fixed_content']);
     $_POST['fixed_status']  = $myts->addSlashes($_POST['fixed_status']);
 
@@ -328,6 +326,7 @@ function update_tad_fixed($repair_sn = "")
 
     return $repair_sn;
 }
+
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op        = system_CleanVars($_REQUEST, 'op', '', 'string');

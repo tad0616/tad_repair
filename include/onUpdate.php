@@ -19,6 +19,7 @@ function xoops_module_update_tad_repair(&$module, $old_version)
     chk_tad_repair_block();
     return true;
 }
+
 //刪除錯誤的重複欄位及樣板檔
 function chk_tad_repair_block()
 {
@@ -34,7 +35,7 @@ function chk_tad_repair_block()
     }
 
     //找出目前所有的樣板檔
-    $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
+    $sql    = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
     WHERE `dirname` = 'tad_repair' ORDER BY `func_num`";
     $result = $xoopsDB->query($sql);
     while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
@@ -55,16 +56,15 @@ function chk_tad_repair_block()
             $xoopsDB->queryF($sql);
         }
     }
-
 }
 
 //修正uid欄位
 function chk_uid()
 {
     global $xoopsDB;
-    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tad_repair") . "' AND COLUMN_NAME = 'repair_uid'";
-    $result     = $xoopsDB->query($sql);
+    $result = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;
@@ -77,7 +77,7 @@ function chk_uid()
 function go_update_uid()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_repair") . "` CHANGE `repair_uid` `repair_uid` mediumint(8) unsigned NOT NULL default 0";
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_repair") . "` CHANGE `repair_uid` `repair_uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     return true;
 }
@@ -209,7 +209,6 @@ function delete_directory($dirname)
             } else {
                 delete_directory($dirname . '/' . $file);
             }
-
         }
     }
     closedir($dir_handle);
