@@ -46,3 +46,4 @@ define('_MD_TADREPAIR_NEED_UNIT', '管理員尚未設定維修管理單位，請
 define('_MD_TADREPAIR_EMPTY', '恭喜！目前沒有任何通報！<a href="repair.php" class="btn btn-default btn-info">我來當第一個通報的人</a>');
 
 define('_MD_TADREPAIR_DONT_REPEAT', '目前已有相同資料，請勿重複報修。');
+define('_MD_TADREPAIR_IMG', '照片');

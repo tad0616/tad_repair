@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADREPAIR_NAME;
-$modversion['version']     = 2.34;
+$modversion['version']     = 2.36;
 $modversion['description'] = _MI_TADREPAIR_DESC;
 $modversion['author']      = _MI_TADREPAIR_AUTHOR;
 $modversion['credits']     = _MI_TADREPAIR_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2017/06/16';
+$modversion['release_date']        = '2017/09/27';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -35,6 +35,7 @@ $modversion['system_menu']      = 1; //---資料表架構---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][1]        = "tad_repair";
 $modversion['tables'][2]        = "tad_repair_unit";
+$modversion['tables'][3]        = "tad_repair_files_center";
 
 //---安裝設定---//
 $modversion['onInstall']   = "include/onInstall.php";
@@ -90,6 +91,21 @@ $modversion['config'][1]['formtype']    = 'textbox';
 $modversion['config'][1]['valuetype']   = 'text';
 $modversion['config'][1]['default']     = _MI_TADREPAIR_FIXED_STATUS_VAL;
 
+$modversion['config'][2]['name']        = 'show_cols';
+$modversion['config'][2]['title']       = '_MI_TADREPAIR_SHOW_COLS';
+$modversion['config'][2]['description'] = '_MI_TADREPAIR_SHOW_COLS_DESC';
+$modversion['config'][2]['formtype']    = 'select_multi';
+$modversion['config'][2]['valuetype']   = 'array';
+$modversion['config'][2]['default']     = array('repair_date', 'repair_uid', 'unit_sn', 'repair_status', 'fixed_uid', 'fixed_date', 'fixed_status');
+$modversion['config'][2]['options']     = array(
+    '_MI_TADREPAIR_SHOW_DATE'         => 'repair_date',
+    '_MI_TADREPAIR_SHOW_UID'          => 'repair_uid',
+    '_MI_TADREPAIR_UNIT'              => 'unit_sn',
+    '_MI_TADREPAIR_STATUS'            => 'repair_status',
+    '_MI_TADREPAIR_SHOW_FIXED_UID'    => 'fixed_uid',
+    '_MI_TADREPAIR_SHOW_FIXED_DATE'   => 'fixed_date',
+    '_MI_TADREPAIR_SHOW_FIXED_STATUS' => 'fixed_status',
+);
 //---搜尋設定---//
 $modversion['hasSearch']      = 1;
 $modversion['search']['file'] = "include/tad_repair_search.php";

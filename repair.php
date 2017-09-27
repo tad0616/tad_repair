@@ -7,12 +7,15 @@ if (empty($xoopsUser)) {
 
 $xoopsOption['template_main'] = "tad_repair_repair.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
+
+include_once XOOPS_ROOT_PATH . "/modules/tadtools/TadUpFiles.php";
+$TadUpFiles = new TadUpFiles("tad_repair");
 /*-----------function區--------------*/
 
 //tad_repair編輯表單
 function tad_repair_form($repair_sn = "")
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl;
+    global $xoopsDB, $xoopsUser, $xoopsTpl, $TadUpFiles;
 
     //抓取預設值
     if (!empty($repair_sn)) {
@@ -79,6 +82,12 @@ function tad_repair_form($repair_sn = "")
     $xoopsTpl->assign("op", $op);
     $xoopsTpl->assign("repair_form_title", _MD_TAD_REPAIR_FORM);
     $xoopsTpl->assign("mode", 'repair_form');
+
+    //上傳表單（enctype='multipart/form-data'）
+    $TadUpFiles->set_col('repair_sn', $repair_sn);
+    $upform = $TadUpFiles->upform(true);
+    $xoopsTpl->assign("upform", $upform);
+
 }
 
 //取得tad_repair_unit分類選單的選項（單層選單）
@@ -100,7 +109,7 @@ function get_tad_repair_unit_menu_options($default_unit_sn = "0")
 //新增維修通報
 function insert_tad_repair()
 {
-    global $xoopsDB, $xoopsUser, $xoopsModuleConfig;
+    global $xoopsDB, $xoopsUser, $xoopsModuleConfig, $TadUpFiles;
 
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
@@ -128,6 +137,9 @@ function insert_tad_repair()
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();
 
+    $TadUpFiles->set_col('repair_sn', $repair_sn);
+    $TadUpFiles->upload_file(null, 1280, 550, null, $repair_title, true);
+
     $unit_sn = $_POST['unit_sn'];
     $unit    = unit_admin_arr();
     $msg     = "";
@@ -150,7 +162,7 @@ function insert_tad_repair()
 //更新tad_repair某一筆資料
 function update_tad_repair($repair_sn = "")
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB, $xoopsUser, $TadUpFiles;
 
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
@@ -170,6 +182,9 @@ function update_tad_repair($repair_sn = "")
 	 `unit_sn` = '{$_POST['unit_sn']}'
 	where `repair_sn` = '$repair_sn'";
     $xoopsDB->queryF($sql) or web_error($sql);
+
+    $TadUpFiles->set_col('repair_sn', $repair_sn);
+    $TadUpFiles->upload_file(null, 1280, 550, null, $repair_title, true);
 
     $unit_sn = $_POST['unit_sn'];
     $unit    = unit_admin_arr();

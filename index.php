@@ -135,6 +135,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     $xoopsTpl->assign("unit_menu_id", $unit_menu_id);
     $xoopsTpl->assign("repair_ym", $all_repair_ym);
     $xoopsTpl->assign("now_op", 'list_tad_repair');
+    $xoopsTpl->assign("show_cols", $xoopsModuleConfig['show_cols']);
 
     //return $main;
 }
@@ -230,6 +231,14 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("fixed_name", $fixed_name);
     $xoopsTpl->assign("now_op", 'show_one');
     //return $main;
+
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/TadUpFiles.php";
+    $TadUpFiles = new TadUpFiles("tad_repair");
+    $TadUpFiles->set_col('repair_sn', $repair_sn);
+    $show_files = $TadUpFiles->show_files();
+    $xoopsTpl->assign("show_files", $show_files);
+    //上傳表單name, 是否縮圖, 顯示模式 (filename、small), 顯示描述, 顯示下載次數, 數量限制, 自訂路徑, 加密, 自動播放時間(0 or 3000)
+    //show_files($upname="",$thumb=true,$show_mode="",$show_description=false,$show_dl=false,$limit=NULL,$path=NULL,$hash=false,$playSpeed=5000)
 }
 
 /*-----------執行動作判斷區----------*/

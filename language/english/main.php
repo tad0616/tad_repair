@@ -44,3 +44,5 @@ define('_MD_TADREPAIR_NEED_UNIT', 'the administrator has not set the maintenance
 define('_MD_TADREPAIR_EMPTY', "Congratulations, there are currently no Repair orders <a href='repair.php' class='btn btn-info'> You'll be the first person notified </a>!!");
 
 define('_MD_TADREPAIR_DONT_REPEAT', 'At present, the same information, do not repeat the repair.');
+
+define('_MD_TADREPAIR_IMG', 'Photo');

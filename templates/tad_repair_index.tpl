@@ -67,28 +67,57 @@
         <table class="table table-striped table-hover footable">
           <thead>
           <tr>
-            <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_DATE}></th>
-            <th nowrap data-class="expand"><{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}></th>
-            <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_UID}></th>
-            <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_UNIT}></th>
-            <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_STATUS2}></th>
-            <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th>
-            <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th>
-            <th><{$smarty.const._MD_TADREPAIR_FIXED_STATUS2}></th>
+            <{if 'repair_date'|in_array:$show_cols}>
+              <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_DATE}></th>
+            <{/if}>
+              <th nowrap data-class="expand"><{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}></th>
+            <{if 'repair_uid'|in_array:$show_cols}>
+              <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_UID}></th>
+            <{/if}>
+            <{if 'unit_sn'|in_array:$show_cols}>
+              <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_UNIT}></th>
+            <{/if}>
+            <{if 'repair_status'|in_array:$show_cols}>
+              <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_STATUS2}></th>
+            <{/if}>
+            <{if 'fixed_uid'|in_array:$show_cols}>
+              <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th>
+            <{/if}>
+            <{if 'fixed_date'|in_array:$show_cols}>
+              <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th>
+            <{/if}>
+            <{if 'fixed_status'|in_array:$show_cols}>
+              <th><{$smarty.const._MD_TADREPAIR_FIXED_STATUS2}></th>
+            <{/if}>
+
           </tr>
           </thead>
 
           <tbody>
           <{foreach item=repair from=$content}>
             <tr>
+            <{if 'repair_date'|in_array:$show_cols}>
               <td nowrap><{$repair.repair_date}></td>
+            <{/if}>
               <td><span class="label label-success"><{$repair.repair_sn}></span> <{$repair.repair_title}></a></td>
+            <{if 'repair_uid'|in_array:$show_cols}>
               <td nowrap><{$repair.repair_name}></td>
+            <{/if}>
+            <{if 'unit_sn'|in_array:$show_cols}>
               <td nowrap><{$repair.unit_title}></td>
+            <{/if}>
+            <{if 'repair_status'|in_array:$show_cols}>
               <td nowrap><{$repair.repair_status}></td>
+            <{/if}>
+            <{if 'fixed_uid'|in_array:$show_cols}>
               <td nowrap><{$repair.fixed_name}></td>
+            <{/if}>
+            <{if 'fixed_date'|in_array:$show_cols}>
               <td nowrap><{$repair.fixed_date}></td>
+            <{/if}>
+            <{if 'fixed_status'|in_array:$show_cols}>
               <td nowrap><{$repair.fixed_status}></td>
+            <{/if}>
             </tr>
           <{/foreach}>
           </tbody>

@@ -23,6 +23,15 @@
           <div class="col-sm-10">
             <textarea name="repair_content" rows=4 class="form-control validate[required] col-sm-12" id="repair_content" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>"><{$repair_content}></textarea>
           </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">
+            <{$smarty.const._MD_TADREPAIR_IMG}>
+          </label>
+          <div class="col-sm-10">
+            <{$upform}>
+          </div>
+        </div>
         </div>
       </div>
       <div class="col-sm-4">

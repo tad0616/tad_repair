@@ -46,3 +46,4 @@ define('_MD_TADREPAIR_NEED_UNIT', 'ºÞ²z­û©|¥¼³]©wºû­×ºÞ²z³æ¦ì¡A½Ð³qª¾ºÞ²z­û¦Ü«á¥
 define('_MD_TADREPAIR_EMPTY', '®¥³ß¡I¥Ø«e¨S¦³¥ô¦ó³q³ø¡I<a href="repair.php" class="btn btn-default btn-info">§Ú¨Ó·í²Ä¤@­Ó³q³øªº¤H</a>');
 
 define('_MD_TADREPAIR_DONT_REPEAT', '¥Ø«e¤w¦³¬Û¦P¸ê®Æ¡A½Ð¤Å­«½Æ³ø­×¡C');
+define('_MD_TADREPAIR_IMG', '·Ó¤ù');
