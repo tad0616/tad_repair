@@ -90,6 +90,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
         $all_content[$i]['repair_sn']     = $repair_sn;
         $all_content[$i]['repair_date']   = $repair_date;
         $all_content[$i]['repair_title']  = "<a href='{$_SERVER['PHP_SELF']}?repair_sn={$repair_sn}'>{$repair_title}</a>";
+        $all_content[$i]['repair_place']  = $repair_place;
         $all_content[$i]['repair_name']   = $repair_name;
         $all_content[$i]['unit_title']    = $unit['unit_title'];
         $all_content[$i]['repair_status'] = "<span style='color:{$repair_color[$repair_status]}'>$repair_status</span>";
@@ -106,7 +107,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     //raised,corners,inset
     //$main=div_3d("",$main,"corners","width:98%");
 
-    $sql = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
+    $sql    = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_repair_ym = "";
@@ -199,6 +200,7 @@ function show_one_tad_repair($repair_sn = "")
     $repair_content = nl2br($repair_content);
 
     $xoopsTpl->assign("repair_title", $repair_title);
+    $xoopsTpl->assign("repair_place", $repair_place);
     $xoopsTpl->assign("repair_date", $repair_date);
     $xoopsTpl->assign("repair_status", $repair_status);
     $xoopsTpl->assign("repair_name", $repair_name);
@@ -250,6 +252,11 @@ $unit_menu_id    = system_CleanVars($_REQUEST, 'unit_menu_id', 0, 'int');
 $fixed_status_id = system_CleanVars($_REQUEST, 'fixed_status_id', 0, 'int');
 
 switch ($op) {
+    //下載檔案
+    case "tufdl":
+        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $TadUpFiles->add_file_counter($files_sn, $hash = false, $force = false);
+        exit;
 
     //預設動作
     default:

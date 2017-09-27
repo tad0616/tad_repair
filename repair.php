@@ -32,11 +32,11 @@ function tad_repair_form($repair_sn = "")
     //設定「repair_title」欄位預設值
     $repair_title = (!isset($DBV['repair_title'])) ? null : $DBV['repair_title'];
 
+    //設定「repair_place」欄位預設值
+    $repair_place = (!isset($DBV['repair_place'])) ? null : $DBV['repair_place'];
+
     //設定「repair_content」欄位預設值
     $repair_content = (!isset($DBV['repair_content'])) ? "" : $DBV['repair_content'];
-    if (!$repair_content) {
-        $repair_content = _MD_TADREPAIR_REPAIR_CONTENT_PRETEXT;
-    }
 
     //設定「repair_date」欄位預設值
     $repair_date = (!isset($DBV['repair_date'])) ? date("Y-m-d H:i:s") : $DBV['repair_date'];
@@ -76,6 +76,7 @@ function tad_repair_form($repair_sn = "")
     $xoopsTpl->assign("PHP_SELF", $_SERVER['PHP_SELF']);
     $xoopsTpl->assign("unit_sn_menu_options", $unit_menu_options);
     $xoopsTpl->assign("repair_title", $repair_title);
+    $xoopsTpl->assign("repair_place", $repair_place);
     $xoopsTpl->assign("repair_content", $repair_content);
     $xoopsTpl->assign("repair_status", mc2arr("repair_status", $repair_status));
     $xoopsTpl->assign("repair_sn", $repair_sn);
@@ -85,7 +86,7 @@ function tad_repair_form($repair_sn = "")
 
     //上傳表單（enctype='multipart/form-data'）
     $TadUpFiles->set_col('repair_sn', $repair_sn);
-    $upform = $TadUpFiles->upform(true);
+    $upform = $TadUpFiles->upform(true, 'repair_img');
     $xoopsTpl->assign("upform", $upform);
 
 }
@@ -94,13 +95,13 @@ function tad_repair_form($repair_sn = "")
 function get_tad_repair_unit_menu_options($default_unit_sn = "0")
 {
     global $xoopsDB, $xoopsModule;
-    $sql = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
+    $sql    = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $option = "";
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $selected = ($unit_sn == $default_unit_sn) ? "selected='selected'" : "";
-        $option   .= "<option value=$unit_sn $selected>{$unit_title}</option>";
+        $option .= "<option value=$unit_sn $selected>{$unit_title}</option>";
     }
     return $option;
 }
@@ -115,6 +116,7 @@ function insert_tad_repair()
 
     $myts                    = MyTextSanitizer::getInstance();
     $_POST['repair_title']   = $myts->addSlashes($_POST['repair_title']);
+    $_POST['repair_place']   = $myts->addSlashes($_POST['repair_place']);
     $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
 
     $arr          = explode(";", $xoopsModuleConfig['fixed_status']);
@@ -122,22 +124,22 @@ function insert_tad_repair()
     $today        = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $today_chk    = date("Y-m-d H:i", xoops_getUserTimestamp(time()));
 
-    $sql = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$_POST['repair_title']}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
+    $sql    = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$_POST['repair_title']}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
 
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair") . "`
-	(`repair_title` , `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)
-	values('{$_POST['repair_title']}' , '{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status[1]}' , '')";
+	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)
+	values('{$_POST['repair_title']}' , '{$_POST['repair_place']}' ,'{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status[1]}' , '')";
     $xoopsDB->query($sql) or web_error($sql);
 
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();
 
     $TadUpFiles->set_col('repair_sn', $repair_sn);
-    $TadUpFiles->upload_file(null, 1280, 550, null, $repair_title, true);
+    $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
 
     $unit_sn = $_POST['unit_sn'];
     $unit    = unit_admin_arr();
@@ -168,22 +170,25 @@ function update_tad_repair($repair_sn = "")
 
     $myts                    = MyTextSanitizer::getInstance();
     $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
+    $_POST['repair_place']   = $myts->addSlashes($_POST['repair_place']);
     $_POST['fixed_content']  = $myts->addSlashes($_POST['fixed_content']);
 
     $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "update `" . $xoopsDB->prefix("tad_repair") . "` set
 	 `repair_title` = '{$_POST['repair_title']}' ,
+     `repair_place` = '{$_POST['repair_place']}' ,
 	 `repair_content` = '{$_POST['repair_content']}' ,
 	 `repair_date` = '{$today}' ,
 	 `repair_status` = '{$_POST['repair_status']}' ,
 	 `repair_uid` = '{$uid}' ,
 	 `unit_sn` = '{$_POST['unit_sn']}'
 	where `repair_sn` = '$repair_sn'";
+    // die($sql);
     $xoopsDB->queryF($sql) or web_error($sql);
 
     $TadUpFiles->set_col('repair_sn', $repair_sn);
-    $TadUpFiles->upload_file(null, 1280, 550, null, $repair_title, true);
+    $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
 
     $unit_sn = $_POST['unit_sn'];
     $unit    = unit_admin_arr();

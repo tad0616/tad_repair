@@ -35,3 +35,4 @@ define('_MI_TADREPAIR_STATUS', '等級');
 define('_MI_TADREPAIR_SHOW_FIXED_UID', '回覆者');
 define('_MI_TADREPAIR_SHOW_FIXED_DATE', '回覆日期');
 define('_MI_TADREPAIR_SHOW_FIXED_STATUS', '處理');
+define('_MI_TADREPAIR_PLACE', '報修地點');

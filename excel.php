@@ -17,27 +17,29 @@ $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一�
 $objActSheet->getColumnDimension('A')->setWidth(8);
 $objActSheet->getColumnDimension('B')->setWidth(20);
 $objActSheet->getColumnDimension('C')->setWidth(45);
-$objActSheet->getColumnDimension('D')->setWidth(15);
+$objActSheet->getColumnDimension('D')->setWidth(25);
 $objActSheet->getColumnDimension('E')->setWidth(15);
 $objActSheet->getColumnDimension('F')->setWidth(15);
 $objActSheet->getColumnDimension('G')->setWidth(15);
-$objActSheet->getColumnDimension('H')->setWidth(20);
-$objActSheet->getColumnDimension('I')->setWidth(15);
-$objActSheet->getColumnDimension('J')->setWidth(40);
-$objActSheet->getColumnDimension('K')->setWidth(60);
+$objActSheet->getColumnDimension('H')->setWidth(15);
+$objActSheet->getColumnDimension('I')->setWidth(20);
+$objActSheet->getColumnDimension('J')->setWidth(15);
+$objActSheet->getColumnDimension('K')->setWidth(40);
+$objActSheet->getColumnDimension('L')->setWidth(60);
 $objActSheet->getStyle('A1:K1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
 
 $objActSheet->setCellValue("A1", _MD_TADREPAIR_REPAIR_SN)
     ->setCellValue("B1", _MD_TADREPAIR_REPAIR_DATE)
     ->setCellValue("C1", _MD_TADREPAIR_REPAIR_TITLE)
-    ->setCellValue("D1", _MD_TADREPAIR_REPAIR_UID)
-    ->setCellValue("E1", _MD_TADREPAIR_UNIT)
-    ->setCellValue("F1", _MD_TADREPAIR_REPAIR_STATUS2)
-    ->setCellValue("G1", _MD_TADREPAIR_FIXED_UID)
-    ->setCellValue("H1", _MD_TADREPAIR_FIXED_DATE)
-    ->setCellValue("I1", _MD_TADREPAIR_FIXED_STATUS2)
-    ->setCellValue("J1", _MD_TADREPAIR_FIXED_CONTENT)
-    ->setCellValue("K1", _MD_TADREPAIR_REPAIR_CONTENT);
+    ->setCellValue("D1", _MD_TADREPAIR_PLACE)
+    ->setCellValue("E1", _MD_TADREPAIR_REPAIR_UID)
+    ->setCellValue("F1", _MD_TADREPAIR_UNIT)
+    ->setCellValue("G1", _MD_TADREPAIR_REPAIR_STATUS2)
+    ->setCellValue("H1", _MD_TADREPAIR_FIXED_UID)
+    ->setCellValue("I1", _MD_TADREPAIR_FIXED_DATE)
+    ->setCellValue("J1", _MD_TADREPAIR_FIXED_STATUS2)
+    ->setCellValue("K1", _MD_TADREPAIR_FIXED_CONTENT)
+    ->setCellValue("L1", _MD_TADREPAIR_REPAIR_CONTENT);
 
 $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
 $result = $xoopsDB->query($sql) or web_error($sql);
@@ -73,14 +75,15 @@ while ($all = $xoopsDB->fetchArray($result)) {
     $objActSheet->setCellValue("A{$i}", $repair_sn)
         ->setCellValue("B{$i}", $repair_date)
         ->setCellValue("C{$i}", $repair_title)
-        ->setCellValue("D{$i}", $repair_name)
-        ->setCellValue("E{$i}", $unit['unit_title'])
-        ->setCellValue("F{$i}", $repair_status)
-        ->setCellValue("G{$i}", $fixed_name)
-        ->setCellValue("H{$i}", $fixed_date)
-        ->setCellValue("I{$i}", $fixed_status)
-        ->setCellValue("J{$i}", $fixed_content)
-        ->setCellValue("K{$i}", $repair_content);
+        ->setCellValue("D{$i}", $repair_place)
+        ->setCellValue("E{$i}", $repair_name)
+        ->setCellValue("F{$i}", $unit['unit_title'])
+        ->setCellValue("G{$i}", $repair_status)
+        ->setCellValue("H{$i}", $fixed_name)
+        ->setCellValue("I{$i}", $fixed_date)
+        ->setCellValue("J{$i}", $fixed_status)
+        ->setCellValue("K{$i}", $fixed_content)
+        ->setCellValue("L{$i}", $repair_content);
     $i++;
 }
 

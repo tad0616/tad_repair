@@ -36,3 +36,4 @@ define('_MI_TADREPAIR_STATUS', 'Severity');
 define('_MI_TADREPAIR_SHOW_FIXED_UID', 'Respondents');
 define('_MI_TADREPAIR_SHOW_FIXED_DATE', 'Date');
 define('_MI_TADREPAIR_SHOW_FIXED_STATUS', 'Status');
+define('_MI_TADREPAIR_PLACE', 'Place');

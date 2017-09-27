@@ -4,6 +4,11 @@ function xoops_module_update_tad_repair(&$module, $old_version)
 {
     global $xoopsDB;
 
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
+
     if (chk_uid()) {
         go_update_uid();
     }
@@ -13,6 +18,7 @@ function xoops_module_update_tad_repair(&$module, $old_version)
     }
 
     if (chk_chk2()) {
+
         go_update2();
     }
 
@@ -35,7 +41,7 @@ function chk_tad_repair_block()
     }
 
     //找出目前所有的樣板檔
-    $sql    = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
+    $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
     WHERE `dirname` = 'tad_repair' ORDER BY `func_num`";
     $result = $xoopsDB->query($sql);
     while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
@@ -62,9 +68,9 @@ function chk_tad_repair_block()
 function chk_uid()
 {
     global $xoopsDB;
-    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tad_repair") . "' AND COLUMN_NAME = 'repair_uid'";
-    $result = $xoopsDB->query($sql);
+    $result     = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;
@@ -89,10 +95,10 @@ function chk_chk1()
     $sql    = "select count(`repair_place`) from " . $xoopsDB->prefix("tad_repair");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
-        return false;
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 //執行更新
