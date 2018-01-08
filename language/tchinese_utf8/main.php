@@ -48,3 +48,4 @@ define('_MD_TADREPAIR_EMPTY', '恭喜！目前沒有任何通報！<a href="repa
 define('_MD_TADREPAIR_DONT_REPEAT', '目前已有相同資料，請勿重複報修。');
 define('_MD_TADREPAIR_IMG', '照片');
 define('_MD_TADREPAIR_PLACE', '報修地點');
+define('_MD_TADREPAIR_NO_PERMISSION', '您沒有修改的權限');

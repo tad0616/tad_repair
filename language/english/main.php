@@ -50,3 +50,4 @@ define('_MD_TADREPAIR_DONT_REPEAT', 'At present, the same information, do not re
 
 define('_MD_TADREPAIR_IMG', 'Photo');
 define('_MD_TADREPAIR_PLACE', 'Place');
+define('_MD_TADREPAIR_NO_PERMISSION', 'You do not have permission to edit');

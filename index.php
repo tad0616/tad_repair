@@ -54,7 +54,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $all_content = "";
+    $all_content = array();
     $i           = 0;
 
     $repair_color = get_color('repair_status');
@@ -110,7 +110,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     $sql    = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $all_repair_ym = "";
+    $all_repair_ym = array();
 
     while (list($repair_date) = $xoopsDB->fetchRow($result)) {
         $ym             = substr($repair_date, 0, 7);
@@ -137,6 +137,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     $xoopsTpl->assign("repair_ym", $all_repair_ym);
     $xoopsTpl->assign("now_op", 'list_tad_repair');
     $xoopsTpl->assign("show_cols", $xoopsModuleConfig['show_cols']);
+    $xoopsTpl->assign("unuse_cols", $xoopsModuleConfig['unuse_cols']);
 
     //return $main;
 }
@@ -165,7 +166,7 @@ function get_color($name = '')
 //以流水號秀出某筆tad_repair資料內容
 function show_one_tad_repair($repair_sn = "")
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
     if (empty($repair_sn)) {
         return;
@@ -232,6 +233,8 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("fixed_date", $fixed_date);
     $xoopsTpl->assign("fixed_name", $fixed_name);
     $xoopsTpl->assign("now_op", 'show_one');
+    $xoopsTpl->assign("unuse_cols", $xoopsModuleConfig['unuse_cols']);
+
     //return $main;
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/TadUpFiles.php";
@@ -241,6 +244,11 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("show_files", $show_files);
     //上傳表單name, 是否縮圖, 顯示模式 (filename、small), 顯示描述, 顯示下載次數, 數量限制, 自訂路徑, 加密, 自動播放時間(0 or 3000)
     //show_files($upname="",$thumb=true,$show_mode="",$show_description=false,$show_dl=false,$limit=NULL,$path=NULL,$hash=false,$playSpeed=5000)
+
+    $TadUpFiles->set_col('fixed_sn', $repair_sn);
+    $show_fixed = $TadUpFiles->show_files();
+    $xoopsTpl->assign("show_fixed", $show_fixed);
+
 }
 
 /*-----------執行動作判斷區----------*/

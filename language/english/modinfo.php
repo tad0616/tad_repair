@@ -37,3 +37,8 @@ define('_MI_TADREPAIR_SHOW_FIXED_UID', 'Respondents');
 define('_MI_TADREPAIR_SHOW_FIXED_DATE', 'Date');
 define('_MI_TADREPAIR_SHOW_FIXED_STATUS', 'Status');
 define('_MI_TADREPAIR_PLACE', 'Place');
+
+define('_MI_TADREPAIR_CONTENT', 'Details');
+define('_MI_TADREPAIR_UNUSE_COLS', 'choose not to use field');
+define('_MI_TADREPAIR_UNUSE_COLS_DESC', 'do not use the field does not appear in the form, it will not appear in the list');
+define('_MD_TADREPAIR_NOT_USER', 'This notification is not your notification, without modification');

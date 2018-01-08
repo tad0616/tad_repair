@@ -1,4 +1,12 @@
-Tad Repair 2.3.6 (2017-09-27)
+Tad Repair 2.3.7 (2018-01-08 released)
+====================================================
+1. Support for PHP 7.1
+2. Fix the status field is a null value bug
+3. Added option to not use fields
+4. Repair unit can also upload pictures
+
+
+Tad Repair 2.3.6 (2017-09-27 released)
 ================================================== ==
 1. Join the picture upload function
 2. Add the "repair location" field

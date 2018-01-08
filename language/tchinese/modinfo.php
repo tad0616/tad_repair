@@ -16,7 +16,7 @@ define('_MI_TADREPAIR_REPAIR_STATUS_DESC', '³]©w¡uÃC¦â½X=ÄY­«µ{«×¡vªº¿ï¶µ¡A½Ð¥H¡
 define('_MI_TADREPAIR_REPAIR_STATUS_VAL', '#C9AB24=»´·L;#FF7802=¤¤µ¥;#FF0206=ÄY­«');
 
 define('_MI_TADREPAIR_FIXED_STATUS', '³B²zª¬ªp');
-define('_MI_TADREPAIR_FIXED_STATUS_DESC', '³]©w¡uÃC¦â½X=³B²zª¬ªp¡vªº¿ï¶µ¡A½Ð¥H¡u;¡v¹j¶}¡]²Ä¤@¶µ¬°¹w³]­È¡^¡C¡u¤w­×´_¡v¿ï¶µ½Ð¤Å²¾°£©Î­×§ï¡A¦]¬°µ{¦¡·|¥Î¨ì¡C');
+define('_MI_TADREPAIR_FIXED_STATUS_DESC', '³]©w¡uÃC¦â½X=³B²zª¬ªp¡vªº¿ï¶µ¡A½Ð¥H¡u;¡v¹j¶}¡]²Ä¤@¶µ¬°¹w³]­È¡^¡C¡u©|«Ý³B²z¡v¤Î¡u¤w­×´_¡v¿ï¶µ½Ð¤Å²¾°£©Î­×§ï¡A¦]¬°µ{¦¡·|¥Î¨ì¡C');
 define('_MI_TADREPAIR_FIXED_STATUS_VAL', '#E80DB8=©|«Ý³B²z;#4F6820=³B²z¤¤;#336BBF=¤w­×´_');
 
 define('_MI_TADREPAIR_DIRNAME', basename(dirname(dirname(__DIR__))));
@@ -36,3 +36,7 @@ define('_MI_TADREPAIR_SHOW_FIXED_UID', '¦^ÂÐªÌ');
 define('_MI_TADREPAIR_SHOW_FIXED_DATE', '¦^ÂÐ¤é´Á');
 define('_MI_TADREPAIR_SHOW_FIXED_STATUS', '³B²z');
 define('_MI_TADREPAIR_PLACE', '³ø­×¦aÂI');
+
+define('_MI_TADREPAIR_CONTENT', '¸Ô²Ó»¡©ú');
+define('_MI_TADREPAIR_UNUSE_COLS', '¿ï¾Ü¤£¨Ï¥ÎÄæ¦ì');
+define('_MI_TADREPAIR_UNUSE_COLS_DESC', '¤£¨Ï¥ÎÄæ¦ì¤£·|¥X²{¦bªí³æ¡A¥ç¤£·|¥X²{¦b¦Cªí');

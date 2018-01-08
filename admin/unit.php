@@ -112,10 +112,10 @@ function list_tad_repair_unit()
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
-    $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ";
+    $sql    = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $all_content = "";
+    $all_content = array();
     $i           = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $unit_sn , $unit_title , $unit_admin
@@ -124,7 +124,8 @@ function list_tad_repair_unit()
         }
 
         $unit_admin_arr  = explode(',', $unit_admin);
-        $unit_admin_list = $unit_admin_name = "";
+        $unit_admin_list = "";
+        $unit_admin_name = array();
         foreach ($unit_admin_arr as $uid) {
             //以uid取得使用者名稱
             $uid_name = XoopsUser::getUnameFromId($uid, 1);
@@ -192,7 +193,7 @@ switch ($op) {
         list_tad_repair_unit();
         break;
 
-    /*---判斷動作請貼在上方---*/
+        /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADREPAIR_NAME;
-$modversion['version']     = 2.36;
+$modversion['version']     = 2.37;
 $modversion['description'] = _MI_TADREPAIR_DESC;
 $modversion['author']      = _MI_TADREPAIR_AUTHOR;
 $modversion['credits']     = _MI_TADREPAIR_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2017/09/27';
+$modversion['release_date']        = '2018/01/08';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -107,6 +107,19 @@ $modversion['config'][2]['options']     = array(
     '_MI_TADREPAIR_SHOW_FIXED_DATE'   => 'fixed_date',
     '_MI_TADREPAIR_SHOW_FIXED_STATUS' => 'fixed_status',
 );
+
+$modversion['config'][3]['name']        = 'unuse_cols';
+$modversion['config'][3]['title']       = '_MI_TADREPAIR_UNUSE_COLS';
+$modversion['config'][3]['description'] = '_MI_TADREPAIR_UNUSE_COLS_DESC';
+$modversion['config'][3]['formtype']    = 'select_multi';
+$modversion['config'][3]['valuetype']   = 'array';
+$modversion['config'][3]['default']     = array();
+$modversion['config'][3]['options']     = array(
+    '_MI_TADREPAIR_PLACE'   => 'repair_place',
+    '_MI_TADREPAIR_STATUS'  => 'repair_status',
+    '_MI_TADREPAIR_CONTENT' => 'repair_content',
+);
+
 //---搜尋設定---//
 $modversion['hasSearch']      = 1;
 $modversion['search']['file'] = "include/tad_repair_search.php";

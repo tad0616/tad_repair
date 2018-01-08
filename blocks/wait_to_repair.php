@@ -8,9 +8,9 @@ function wait_to_repair($options)
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $block   = "";
+    $block   = array();
     $i       = 0;
-    $content = "";
+    $content = array();
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
@@ -49,9 +49,9 @@ if (!function_exists('get_tad_repair_unit')) {
             return;
         }
 
-        $sql = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
+        $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
         $result = $xoopsDB->query($sql) or web_error($sql);
-        $data = $xoopsDB->fetchArray($result);
+        $data   = $xoopsDB->fetchArray($result);
         return $data;
     }
 }

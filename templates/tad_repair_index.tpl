@@ -15,14 +15,20 @@
           <{$repair_title}>
         </td>
       </tr>
-      <tr>
-        <th>
-          <{$smarty.const._MD_TADREPAIR_PLACE}>
-        </th>
-        <td>
-          <{$repair_place}>
-        </td>
-      </tr>
+      
+        <{if 'repair_place'|in_array:$unuse_cols}>
+        <{else}>
+          <tr>
+            <th>
+              <{$smarty.const._MD_TADREPAIR_PLACE}>
+            </th>
+            <td>
+              <{$repair_place}>
+            </td>
+          </tr>
+        <{/if}>
+
+
       <tr>
         <th nowrap>
           <{$smarty.const._MD_TADREPAIR_REPAIR_DATE}>
@@ -31,14 +37,20 @@
           <{$repair_date}>
         </td>
       </tr>
-      <tr>
-        <th nowrap>
-          <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
-        </th>
-        <td>
-          <{$repair_status}>
-        </td>
-      </tr>
+      
+      <{if 'repair_status'|in_array:$unuse_cols}>
+      <{else}>
+        <tr>
+          <th nowrap>
+            <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
+          </th>
+          <td>
+            <{$repair_status}>
+          </td>
+        </tr>
+      <{/if}>
+      
+
       <tr>
         <th nowrap>
           <{$smarty.const._MD_TADREPAIR_REPAIR_UID}>
@@ -74,7 +86,14 @@
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></th><td><{$fixed_status}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}></th><td><{$fixed_content}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th><td><{$fixed_date}></td></tr>
-      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th><td><{$fixed_name}></td></tr>
+      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th><td><{$fixed_name}></td></tr><tr>
+      <th nowrap>
+        <{$smarty.const._MD_TADREPAIR_IMG}>
+      </th>
+      <td>
+        <{$show_fixed}>
+      </td>
+    </tr>
     </table>
 <{/if}>
 
@@ -123,18 +142,25 @@
               <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_DATE}></th>
             <{/if}>
               <th nowrap data-class="expand"><{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}></th>
-            <{if 'repair_place'|in_array:$show_cols}>
+
+            <{if 'repair_place'|in_array:$unuse_cols}>
+            <{elseif 'repair_place'|in_array:$show_cols and 'repair_place'|in_array:$unuse_cols}>
               <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_PLACE}></th>
             <{/if}>
+
             <{if 'repair_uid'|in_array:$show_cols}>
               <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_UID}></th>
             <{/if}>
             <{if 'unit_sn'|in_array:$show_cols}>
               <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_UNIT}></th>
             <{/if}>
-            <{if 'repair_status'|in_array:$show_cols}>
+
+            
+            <{if 'repair_status'|in_array:$unuse_cols}>
+            <{elseif 'repair_status'|in_array:$show_cols and 'repair_status'|in_array:$unuse_cols}>
               <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_REPAIR_STATUS2}></th>
             <{/if}>
+
             <{if 'fixed_uid'|in_array:$show_cols}>
               <th nowrap data-hide="phone"><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th>
             <{/if}>
@@ -156,7 +182,8 @@
             <{/if}>
               <td><span class="label label-success"><{$repair.repair_sn}></span> <{$repair.repair_title}></a></td>
 
-            <{if 'repair_place'|in_array:$show_cols}>
+            <{if 'repair_place'|in_array:$unuse_cols}>
+            <{elseif 'repair_place'|in_array:$show_cols and 'repair_place'|in_array:$unuse_cols}>
               <td nowrap><{$repair.repair_place}></td>
             <{/if}>
             <{if 'repair_uid'|in_array:$show_cols}>
@@ -165,9 +192,13 @@
             <{if 'unit_sn'|in_array:$show_cols}>
               <td nowrap><{$repair.unit_title}></td>
             <{/if}>
-            <{if 'repair_status'|in_array:$show_cols}>
+
+
+            <{if 'repair_status'|in_array:$unuse_cols}>
+            <{elseif 'repair_status'|in_array:$show_cols and 'repair_status'|in_array:$unuse_cols}>
               <td nowrap><{$repair.repair_status}></td>
             <{/if}>
+
             <{if 'fixed_uid'|in_array:$show_cols}>
               <td nowrap><{$repair.fixed_name}></td>
             <{/if}>

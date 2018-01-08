@@ -21,7 +21,7 @@ function xoops_module_update_tad_repair(&$module, $old_version)
 
         go_update2();
     }
-
+    update_blank_status();
     chk_tad_repair_block();
     return true;
 }
@@ -144,6 +144,24 @@ function go_update2()
 PRIMARY KEY (`files_sn`)
     ) ENGINE=MyISAM;";
     $xoopsDB->queryF($sql);
+}
+
+//執行更新
+function update_blank_status()
+{
+    global $xoopsDB, $xoopsModuleConfig;
+    $arr = explode(";", $xoopsModuleConfig['fixed_status']);
+    if (strpos("=", $arr[0]) !== false) {
+        $status       = explode('=', $arr[0]);
+        $fixed_status = $status[1];
+    } else {
+        $fixed_status = $arr[0];
+    }
+
+    $sql = "UPDATE " . $xoopsDB->prefix("tad_repair") . " SET `fixed_status` ='{$fixed_status}' WHERE `fixed_status`=''";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
+
+    return true;
 }
 
 //建立目錄
