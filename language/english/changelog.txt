@@ -1,3 +1,8 @@
+Tad Repair 2.3.8 (released on 2018-01-22)
+================================================== ==
+1. Correct the status information shows incorrect question
+
+
 Tad Repair 2.3.7 (2018-01-08 released)
 ====================================================
 1. Support for PHP 7.1

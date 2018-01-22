@@ -127,7 +127,7 @@ function insert_tad_repair()
 
     $arr = explode(";", $xoopsModuleConfig['fixed_status']);
     // die(var_export($arr));
-    if (strpos("=", $arr[0]) !== false) {
+    if (strpos($arr[0], "=") !== false) {
         $status       = explode('=', $arr[0]);
         $fixed_status = $status[1];
     } else {
