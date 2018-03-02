@@ -1,3 +1,14 @@
+Tad Repair 2.3.6 (2017-09-27)
+================================================== ==
+1. Join the picture upload function
+2. Add the "repair location" field
+
+
+Tad Repair 2.3.5 (2017-09-23 released)
+====================================================
+1.Add preferences for the optional presentation field
+
+
 Tad Repair 2.3.4 (2017-06-16 released)
 ====================================================
 1.Complete accessibility 2.0 A level detection

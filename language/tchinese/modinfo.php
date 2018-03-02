@@ -25,3 +25,14 @@ define('_MI_TADREPAIR_BACK_2_ADMIN', '管理');
 
 //help
 define('_MI_TADREPAIR_HELP_OVERVIEW', '概要');
+
+define('_MI_TADREPAIR_SHOW_COLS', '選擇欲顯示欄位');
+define('_MI_TADREPAIR_SHOW_COLS_DESC', '按住Ctrl鍵可以挑選在前台報表欲顯示的欄位');
+define('_MI_TADREPAIR_SHOW_DATE', '報修日期');
+define('_MI_TADREPAIR_SHOW_UID', '報修者');
+define('_MI_TADREPAIR_UNIT', '通知');
+define('_MI_TADREPAIR_STATUS', '等級');
+define('_MI_TADREPAIR_SHOW_FIXED_UID', '回覆者');
+define('_MI_TADREPAIR_SHOW_FIXED_DATE', '回覆日期');
+define('_MI_TADREPAIR_SHOW_FIXED_STATUS', '處理');
+define('_MI_TADREPAIR_PLACE', '報修地點');

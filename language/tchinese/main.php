@@ -10,7 +10,7 @@ define('_MD_TADREPAIR_REPORT_TOTAL2', 'µ§');
 define('_MD_TADREPAIR_REPAIR_SN', '½s¸¹');
 define('_MD_TADREPAIR_REPAIR_TITLE', '³ø­×¤º®e');
 define('_MD_TADREPAIR_REPAIR_CONTENT', '¸Ô²Ó»¡©ú');
-define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', "¦aÂI¡G\n´y­z¡G");
+define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', "½Ð»¡©ú»Ý³ø­×±¡§Î");
 define('_MD_TADREPAIR_REPAIR_UNIT_FILTER', 'Åã¥Ü¥þ³¡³æ¦ì');
 define('_MD_TADREPAIR_REPAIR_FIXED_FILTER', 'Åã¥Ü¥þ³¡³B²zª¬ºA');
 define('_MD_TADREPAIR_REPAIR_DATE', '³ø­×¤é´Á');
@@ -46,3 +46,5 @@ define('_MD_TADREPAIR_NEED_UNIT', 'ºÞ²z­û©|¥¼³]©wºû­×ºÞ²z³æ¦ì¡A½Ð³qª¾ºÞ²z­û¦Ü«á¥
 define('_MD_TADREPAIR_EMPTY', '®¥³ß¡I¥Ø«e¨S¦³¥ô¦ó³q³ø¡I<a href="repair.php" class="btn btn-default btn-info">§Ú¨Ó·í²Ä¤@­Ó³q³øªº¤H</a>');
 
 define('_MD_TADREPAIR_DONT_REPEAT', '¥Ø«e¤w¦³¬Û¦P¸ê®Æ¡A½Ð¤Å­«½Æ³ø­×¡C');
+define('_MD_TADREPAIR_IMG', '·Ó¤ù');
+define('_MD_TADREPAIR_PLACE', '³ø­×¦aÂI');

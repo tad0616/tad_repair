@@ -4,13 +4,25 @@ function xoops_module_update_tad_repair(&$module, $old_version)
 {
     global $xoopsDB;
 
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
+
     if (chk_uid()) {
         go_update_uid();
     }
 
-    //if(!chk_chk1()) go_update1();
-    chk_tad_repair_block();
+    if (chk_chk1()) {
+        go_update1();
+    }
 
+    if (chk_chk2()) {
+
+        go_update2();
+    }
+
+    chk_tad_repair_block();
     return true;
 }
 
@@ -29,7 +41,7 @@ function chk_tad_repair_block()
     }
 
     //找出目前所有的樣板檔
-    $sql    = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
+    $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
     WHERE `dirname` = 'tad_repair' ORDER BY `func_num`";
     $result = $xoopsDB->query($sql);
     while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
@@ -56,9 +68,9 @@ function chk_tad_repair_block()
 function chk_uid()
 {
     global $xoopsDB;
-    $sql    = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
   WHERE table_name = '" . $xoopsDB->prefix("tad_repair") . "' AND COLUMN_NAME = 'repair_uid'";
-    $result = $xoopsDB->query($sql);
+    $result     = $xoopsDB->query($sql);
     list($type) = $xoopsDB->fetchRow($result);
     if ($type == 'smallint') {
         return true;
@@ -76,25 +88,63 @@ function go_update_uid()
     return true;
 }
 
-/*
 //檢查某欄位是否存在
-function chk_chk1(){
-global $xoopsDB;
-$sql="select count(`欄位`) from ".$xoopsDB->prefix("資料表");
-$result=$xoopsDB->query($sql);
-if(empty($result)) return false;
-return true;
+function chk_chk1()
+{
+    global $xoopsDB;
+    $sql    = "select count(`repair_place`) from " . $xoopsDB->prefix("tad_repair");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
 }
 
 //執行更新
-function go_update1(){
-global $xoopsDB;
-$sql="ALTER TABLE ".$xoopsDB->prefix("資料表")." ADD `欄位` smallint(5) NOT NULL";
-$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  $xoopsDB->error());
+function go_update1()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_repair") . " ADD `repair_place` varchar(255) NOT NULL default '' COMMENT '報修地點' AFTER `repair_title`";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
 
-return true;
+    return true;
 }
- */
+
+//新增檔案表格
+function chk_chk2()
+{
+    global $xoopsDB;
+    $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_repair_files_center");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
+}
+
+function go_update2()
+{
+    global $xoopsDB;
+    $sql = "CREATE TABLE `" . $xoopsDB->prefix("tad_repair_files_center") . "` (
+      `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
+      `col_name` varchar(255) NOT NULL default '' COMMENT '欄位名稱',
+      `col_sn` smallint(5) unsigned NOT NULL default 0 COMMENT '欄位編號',
+      `sort` smallint(5) unsigned NOT NULL default 0 COMMENT '排序',
+      `kind` enum('img','file') NOT NULL default 'img' COMMENT '檔案種類',
+      `file_name` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
+      `file_type` varchar(255) NOT NULL default '' COMMENT '檔案類型',
+      `file_size` int(10) unsigned NOT NULL default 0 COMMENT '檔案大小',
+      `description` text NOT NULL COMMENT '檔案說明',
+      `counter` mediumint(8) unsigned NOT NULL default 0 COMMENT '下載人次',
+      `original_filename` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
+      `hash_filename` varchar(255) NOT NULL default '' COMMENT '加密檔案名稱',
+      `sub_dir` varchar(255) NOT NULL default '' COMMENT '檔案子路徑',
+PRIMARY KEY (`files_sn`)
+    ) ENGINE=MyISAM;";
+    $xoopsDB->queryF($sql);
+}
 
 //建立目錄
 function mk_dir($dir = "")

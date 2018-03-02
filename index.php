@@ -90,6 +90,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
         $all_content[$i]['repair_sn']     = $repair_sn;
         $all_content[$i]['repair_date']   = $repair_date;
         $all_content[$i]['repair_title']  = "<a href='{$_SERVER['PHP_SELF']}?repair_sn={$repair_sn}'>{$repair_title}</a>";
+        $all_content[$i]['repair_place']  = $repair_place;
         $all_content[$i]['repair_name']   = $repair_name;
         $all_content[$i]['unit_title']    = $unit['unit_title'];
         $all_content[$i]['repair_status'] = "<span style='color:{$repair_color[$repair_status]}'>$repair_status</span>";
@@ -106,7 +107,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     //raised,corners,inset
     //$main=div_3d("",$main,"corners","width:98%");
 
-    $sql = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
+    $sql    = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $all_repair_ym = "";
@@ -135,6 +136,7 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
     $xoopsTpl->assign("unit_menu_id", $unit_menu_id);
     $xoopsTpl->assign("repair_ym", $all_repair_ym);
     $xoopsTpl->assign("now_op", 'list_tad_repair');
+    $xoopsTpl->assign("show_cols", $xoopsModuleConfig['show_cols']);
 
     //return $main;
 }
@@ -198,6 +200,7 @@ function show_one_tad_repair($repair_sn = "")
     $repair_content = nl2br($repair_content);
 
     $xoopsTpl->assign("repair_title", $repair_title);
+    $xoopsTpl->assign("repair_place", $repair_place);
     $xoopsTpl->assign("repair_date", $repair_date);
     $xoopsTpl->assign("repair_status", $repair_status);
     $xoopsTpl->assign("repair_name", $repair_name);
@@ -230,6 +233,14 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("fixed_name", $fixed_name);
     $xoopsTpl->assign("now_op", 'show_one');
     //return $main;
+
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/TadUpFiles.php";
+    $TadUpFiles = new TadUpFiles("tad_repair");
+    $TadUpFiles->set_col('repair_sn', $repair_sn);
+    $show_files = $TadUpFiles->show_files();
+    $xoopsTpl->assign("show_files", $show_files);
+    //上傳表單name, 是否縮圖, 顯示模式 (filename、small), 顯示描述, 顯示下載次數, 數量限制, 自訂路徑, 加密, 自動播放時間(0 or 3000)
+    //show_files($upname="",$thumb=true,$show_mode="",$show_description=false,$show_dl=false,$limit=NULL,$path=NULL,$hash=false,$playSpeed=5000)
 }
 
 /*-----------執行動作判斷區----------*/
@@ -241,6 +252,11 @@ $unit_menu_id    = system_CleanVars($_REQUEST, 'unit_menu_id', 0, 'int');
 $fixed_status_id = system_CleanVars($_REQUEST, 'fixed_status_id', 0, 'int');
 
 switch ($op) {
+    //下載檔案
+    case "tufdl":
+        $files_sn = isset($_GET['files_sn']) ? intval($_GET['files_sn']) : "";
+        $TadUpFiles->add_file_counter($files_sn, $hash = false, $force = false);
+        exit;
 
     //預設動作
     default:

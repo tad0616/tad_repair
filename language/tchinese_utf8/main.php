@@ -10,7 +10,7 @@ define('_MD_TADREPAIR_REPORT_TOTAL2', '筆');
 define('_MD_TADREPAIR_REPAIR_SN', '編號');
 define('_MD_TADREPAIR_REPAIR_TITLE', '報修內容');
 define('_MD_TADREPAIR_REPAIR_CONTENT', '詳細說明');
-define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', "地點：\n描述：");
+define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', "請說明需報修情形");
 define('_MD_TADREPAIR_REPAIR_UNIT_FILTER', '顯示全部單位');
 define('_MD_TADREPAIR_REPAIR_FIXED_FILTER', '顯示全部處理狀態');
 define('_MD_TADREPAIR_REPAIR_DATE', '報修日期');
@@ -46,3 +46,5 @@ define('_MD_TADREPAIR_NEED_UNIT', '管理員尚未設定維修管理單位，請
 define('_MD_TADREPAIR_EMPTY', '恭喜！目前沒有任何通報！<a href="repair.php" class="btn btn-default btn-info">我來當第一個通報的人</a>');
 
 define('_MD_TADREPAIR_DONT_REPEAT', '目前已有相同資料，請勿重複報修。');
+define('_MD_TADREPAIR_IMG', '照片');
+define('_MD_TADREPAIR_PLACE', '報修地點');
