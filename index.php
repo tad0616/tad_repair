@@ -7,7 +7,7 @@ include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
 //列出所有tad_repair資料
-function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_function = 0)
+function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_function = 0)
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
@@ -18,31 +18,25 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
         $FooTableJS = $FooTable->render();
     }
 
-    //
-    $fixed_status_list = preg_split('/;/', $xoopsModuleConfig['fixed_status']);
+    $fixed_status_list = mc2arr("fixed_status", $def_fixed_status, true, 'return');
     array_unshift($fixed_status_list, _MD_TADREPAIR_REPAIR_FIXED_FILTER);
-    //$fixed_status_list[0]='全部狀態' ;
 
     $unit_menu    = get_tad_repair_unit_list();
     $unit_menu[0] = _MD_TADREPAIR_REPAIR_UNIT_FILTER;
-    //array_unshift($unit_menu, _MD_TADREPAIR_REPAIR_UNIT_FILTER) ;
 
     //顯示條件
-    if ($fixed_status_id > 0) {
-        $show_fixed_status = $fixed_status_list[$fixed_status_id];
+    $and_fixed = $and_unit = '';
+    if ($def_fixed_status) {
+        $and_fixed = "  and  fixed_status = '$def_fixed_status'  ";
     }
 
-    if ($show_fixed_status) {
-        $where_fixed = "  and  fixed_status = '$show_fixed_status'  ";
-    }
-
-    if ($unit_menu_id > 0) {
-        $where_unit = "  and  unit_sn = $unit_menu_id   ";
+    if ($def_unit_menu_sn > 0) {
+        $and_unit = "  and  unit_sn = '{$def_unit_menu_sn}'   ";
     }
 
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
-    $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "`   where 1   $where_fixed    $where_unit    order by `repair_date` desc";
-// echo $sql ;
+    $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "`   where 1   $and_fixed    $and_unit    order by `repair_date` desc";
+
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
 
@@ -132,8 +126,8 @@ function list_tad_repair($unit_menu_id = '', $fixed_status_id = '', $show_functi
 
     $xoopsTpl->assign("fixed_status_list", $fixed_status_list);
     $xoopsTpl->assign("unit_menu", $unit_menu);
-    $xoopsTpl->assign("fixed_status_id", $fixed_status_id);
-    $xoopsTpl->assign("unit_menu_id", $unit_menu_id);
+    $xoopsTpl->assign("def_fixed_status", $def_fixed_status);
+    $xoopsTpl->assign("def_unit_menu_sn", $def_unit_menu_sn);
     $xoopsTpl->assign("repair_ym", $all_repair_ym);
     $xoopsTpl->assign("now_op", 'list_tad_repair');
     $xoopsTpl->assign("show_cols", $xoopsModuleConfig['show_cols']);
@@ -209,6 +203,8 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("repair_sn", $repair_sn);
     $xoopsTpl->assign("modify_link", $modify_link);
     $xoopsTpl->assign("fixed_link", $fixed_link);
+    $xoopsTpl->assign("unit_sn", $unit_sn);
+    $xoopsTpl->assign("fixed_uid", $fixed_uid);
 
     $fixed_name = "";
     if ($fixed_uid != 0) {
@@ -234,6 +230,7 @@ function show_one_tad_repair($repair_sn = "")
     $xoopsTpl->assign("fixed_name", $fixed_name);
     $xoopsTpl->assign("now_op", 'show_one');
     $xoopsTpl->assign("unuse_cols", $xoopsModuleConfig['unuse_cols']);
+    $xoopsTpl->assign("unit_menu", get_tad_repair_unit_list());
 
     //return $main;
 
@@ -251,13 +248,31 @@ function show_one_tad_repair($repair_sn = "")
 
 }
 
+function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
+{
+    global $xoopsDB, $xoopsUser, $TadUpFiles;
+
+    //取得使用者編號
+    $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
+    //取得各單位的管理員陣列
+    $unit_admin_arr = unit_admin_arr();
+
+    if (in_array($uid, $unit_admin_arr[$unit_sn])) {
+        $sql = "update `" . $xoopsDB->prefix("tad_repair") . "` set
+	 `unit_sn` = '{$new_unit_sn}'
+	where `repair_sn` = '$repair_sn'";
+        $xoopsDB->queryF($sql) or web_error($sql);
+    }
+}
+
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op              = system_CleanVars($_REQUEST, 'op', '', 'string');
-$repair_sn       = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
-$unit_sn         = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
-$unit_menu_id    = system_CleanVars($_REQUEST, 'unit_menu_id', 0, 'int');
-$fixed_status_id = system_CleanVars($_REQUEST, 'fixed_status_id', 0, 'int');
+$op           = system_CleanVars($_REQUEST, 'op', '', 'string');
+$repair_sn    = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
+$unit_sn      = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
+$unit_menu_sn = system_CleanVars($_REQUEST, 'unit_menu_sn', 0, 'int');
+$fixed_status = system_CleanVars($_REQUEST, 'fixed_status', '', 'string');
+$new_unit_sn  = system_CleanVars($_REQUEST, 'new_unit_sn', 0, 'int');
 
 switch ($op) {
     //下載檔案
@@ -266,10 +281,15 @@ switch ($op) {
         $TadUpFiles->add_file_counter($files_sn, $hash = false, $force = false);
         exit;
 
+    case "move_to_unit":
+        move_to_unit($repair_sn, $unit_sn, $new_unit_sn);
+        header("location: index.php?repair_sn=$repair_sn");
+        exit;
+
     //預設動作
     default:
         if (empty($repair_sn)) {
-            list_tad_repair($unit_menu_id, $fixed_status_id);
+            list_tad_repair($unit_menu_sn, $fixed_status);
         } else {
             show_one_tad_repair($repair_sn);
         }
@@ -279,7 +299,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("bootstrap", get_bootstrap());
 $xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 

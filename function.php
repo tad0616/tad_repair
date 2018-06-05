@@ -17,8 +17,8 @@ function SendEmail($uid = "", $title = "", $content = "")
     // $member_handler = xoops_gethandler('member');
     // $user           = $member_handler->getUser($uid);
     // $email          = $user->email();
-    $sql = "select email from `" . $xoopsDB->prefix("users") . "` where uid='{$uid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql         = "select email from `" . $xoopsDB->prefix("users") . "` where uid='{$uid}'";
+    $result      = $xoopsDB->query($sql) or web_error($sql);
     list($email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer                           = &getMailer();
@@ -33,7 +33,7 @@ function SendEmail($uid = "", $title = "", $content = "")
 function get_tad_repair_unit_list()
 {
     global $xoopsDB, $xoopsModule;
-    $sql = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
+    $sql    = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
@@ -46,8 +46,8 @@ function get_tad_repair_unit_list()
 function unit_admin_arr()
 {
     global $xoopsDB;
-    $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql            = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "`";
+    $result         = $xoopsDB->query($sql) or web_error($sql);
     $unit_admin_arr = array();
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -66,9 +66,9 @@ function get_tad_repair($repair_sn = "")
         return;
     }
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
+    $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data = $xoopsDB->fetchArray($result);
+    $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -80,9 +80,9 @@ function get_tad_repair_unit($unit_sn = "")
         return;
     }
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
+    $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $data = $xoopsDB->fetchArray($result);
+    $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -96,7 +96,7 @@ function mc2arr($name = "", $def = "", $v_as_k = true, $type = 'option', $other 
         $arr = explode(";", $xoopsModuleConfig[$name]);
     }
 
-    $new_arr = mk_arr($arr);
+    $new_arr = mk_arr($arr, $v_as_k);
 
     if ($type == "checkbox") {
         $opt = arr2chk($name, $new_arr, $def, $v_as_k, $other);
@@ -110,7 +110,7 @@ function mc2arr($name = "", $def = "", $v_as_k = true, $type = 'option', $other 
     return $opt;
 }
 
-function mk_arr($arr = array())
+function mk_arr($arr = array(), $v_as_k = false)
 {
     if (is_array($arr)) {
         foreach ($arr as $item) {
@@ -120,7 +120,9 @@ function mk_arr($arr = array())
 
             if (preg_match("/=/", $item)) {
                 list($k, $v) = explode("=", $item);
-                if ($v == '') {
+                if ($v_as_k) {
+                    $k = $v;
+                } elseif ($v == '') {
                     $v = $k;
                 }
 
@@ -150,7 +152,7 @@ function arr2opt($arr, $def = "", $v_as_k = false, $other = "")
         }
 
         $selected = (in_array($k, $def_arr)) ? "selected" : "";
-        $main     .= "<option value='$k' $selected $other>$v</option>";
+        $main .= "<option value='$k' $selected $other>$v</option>";
     }
     return $main;
 }
@@ -170,7 +172,7 @@ function arr2chk($name, $arr, $def = "", $v_as_k = false, $other = "")
         }
 
         $checked = (in_array($k, $def_arr)) ? "checked" : "";
-        $main    .= "<span style='white-space:nowrap;'><input type='checkbox' name='{$name}[]' value='$k' id='{$name}_{$i}' $checked $other>
+        $main .= "<span style='white-space:nowrap;'><input type='checkbox' name='{$name}[]' value='$k' id='{$name}_{$i}' $checked $other>
         <label for='{$name}_{$i}'>$v</label></span> ";
         $i++;
     }
@@ -187,7 +189,7 @@ function arr2radio($name, $arr, $def = "", $v_as_k = false, $other = "")
         }
 
         $checked = ($def == $k) ? "checked" : "";
-        $main    .= "<span style='white-space:nowrap;'><input type='radio' name='{$name}' value='$k' id='{$name}_{$i}' $checked $other>
+        $main .= "<span style='white-space:nowrap;'><input type='radio' name='{$name}' value='$k' id='{$name}_{$i}' $checked $other>
       <label for='{$name}_{$i}'>$v</label></span> ";
         $i++;
     }

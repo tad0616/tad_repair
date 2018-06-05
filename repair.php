@@ -120,10 +120,11 @@ function insert_tad_repair()
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
-    $myts                    = MyTextSanitizer::getInstance();
-    $_POST['repair_title']   = $myts->addSlashes($_POST['repair_title']);
-    $_POST['repair_place']   = $myts->addSlashes($_POST['repair_place']);
-    $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
+    $myts           = MyTextSanitizer::getInstance();
+    $repair_title   = $myts->addSlashes($_POST['repair_title']);
+    $repair_place   = $myts->addSlashes($_POST['repair_place']);
+    $repair_content = $myts->addSlashes($_POST['repair_content']);
+    $repair_status  = $myts->addSlashes($_POST['repair_status']);
 
     $arr = explode(";", $xoopsModuleConfig['fixed_status']);
     // die(var_export($arr));
@@ -136,15 +137,15 @@ function insert_tad_repair()
     $today     = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $today_chk = date("Y-m-d H:i", xoops_getUserTimestamp(time()));
 
-    $sql    = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$_POST['repair_title']}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
+    $sql    = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$repair_title}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
 
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair") . "`
-	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_status` , `fixed_content`)
-    values('{$_POST['repair_title']}' , '{$_POST['repair_place']}' ,'{$_POST['repair_content']}' , '{$today}' , '{$_POST['repair_status']}' , '{$uid}' , '{$_POST['unit_sn']}' , '{$fixed_status}' , '')";
+	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
+    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$_POST['unit_sn']}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
     // die($sql);
     $xoopsDB->query($sql) or web_error($sql);
 
@@ -163,9 +164,9 @@ function insert_tad_repair()
         $repair_name = XoopsUser::getUnameFromId($uid, 0);
     }
 
-    $title = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $_POST['repair_title']);
+    $title = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $repair_title);
     //把填報詳細內容也放入 MAIL
-    $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $_POST['repair_title'], nl2br($_POST['repair_content']) .
+    $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $repair_title, nl2br($repair_content) .
         "<br /> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content);
@@ -181,21 +182,23 @@ function update_tad_repair($repair_sn = "")
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
-    $myts                    = MyTextSanitizer::getInstance();
-    $_POST['repair_content'] = $myts->addSlashes($_POST['repair_content']);
-    $_POST['repair_place']   = $myts->addSlashes($_POST['repair_place']);
-    $_POST['fixed_content']  = $myts->addSlashes($_POST['fixed_content']);
+    $myts           = MyTextSanitizer::getInstance();
+    $repair_content = $myts->addSlashes($_POST['repair_content']);
+    $repair_place   = $myts->addSlashes($_POST['repair_place']);
+    $repair_title   = $myts->addSlashes($_POST['repair_title']);
+    $repair_status  = $myts->addSlashes($_POST['repair_status']);
+    $unit_sn        = (int) $_POST['unit_sn'];
 
     $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "update `" . $xoopsDB->prefix("tad_repair") . "` set
-	 `repair_title` = '{$_POST['repair_title']}' ,
-     `repair_place` = '{$_POST['repair_place']}' ,
-	 `repair_content` = '{$_POST['repair_content']}' ,
+	 `repair_title` = '{$repair_title}' ,
+     `repair_place` = '{$repair_place}' ,
+	 `repair_content` = '{$repair_content}' ,
 	 `repair_date` = '{$today}' ,
-	 `repair_status` = '{$_POST['repair_status']}' ,
+	 `repair_status` = '{$repair_status}' ,
 	 `repair_uid` = '{$uid}' ,
-	 `unit_sn` = '{$_POST['unit_sn']}'
+	 `unit_sn` = '{$unit_sn}'
 	where `repair_sn` = '$repair_sn'";
     // die($sql);
     $xoopsDB->queryF($sql) or web_error($sql);
@@ -203,17 +206,16 @@ function update_tad_repair($repair_sn = "")
     $TadUpFiles->set_col('repair_sn', $repair_sn);
     $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
 
-    $unit_sn = $_POST['unit_sn'];
-    $unit    = unit_admin_arr();
-    $msg     = "";
+    $unit = unit_admin_arr();
+    $msg  = "";
 
     $repair_name = XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
         $repair_name = XoopsUser::getUnameFromId($uid, 0);
     }
 
-    $title   = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $_POST['repair_title']);
-    $content = sprintf(_MD_TADREPAIR_MAIL_UPDATE_CONTENT, $repair_name, $today, $_POST['repair_title'], "<a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
+    $title   = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $repair_title);
+    $content = sprintf(_MD_TADREPAIR_MAIL_UPDATE_CONTENT, $repair_name, $today, $repair_title, "<a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content);
     }
@@ -318,17 +320,17 @@ function update_tad_fixed($repair_sn = "")
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
-    $myts                   = MyTextSanitizer::getInstance();
-    $_POST['fixed_content'] = $myts->addSlashes($_POST['fixed_content']);
-    $_POST['fixed_status']  = $myts->addSlashes($_POST['fixed_status']);
+    $myts          = MyTextSanitizer::getInstance();
+    $fixed_content = $myts->addSlashes($_POST['fixed_content']);
+    $fixed_status  = $myts->addSlashes($_POST['fixed_status']);
 
     $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "update `" . $xoopsDB->prefix("tad_repair") . "` set
 	 `fixed_uid` = '{$uid}' ,
 	 `fixed_date` = '{$today}' ,
-	 `fixed_status` = '{$_POST['fixed_status']}' ,
-	 `fixed_content` = '{$_POST['fixed_content']}'
+	 `fixed_status` = '{$fixed_status}' ,
+	 `fixed_content` = '{$fixed_content}'
 	where `repair_sn` = '$repair_sn'";
     $xoopsDB->queryF($sql) or web_error($sql);
 
@@ -367,6 +369,7 @@ switch ($op) {
     //新增資料
     case "insert_tad_repair":
         $repair_sn = insert_tad_repair();
+        header("location: index.php?repair_sn=$repair_sn");
         break;
 
     //更新資料
@@ -374,14 +377,12 @@ switch ($op) {
         update_tad_repair($repair_sn);
         header("location: index.php?repair_sn=$repair_sn");
         exit;
-        break;
 
     //回覆維修單
     case "update_tad_fixed":
         update_tad_fixed($repair_sn);
         header("location: index.php?repair_sn=$repair_sn");
         exit;
-        break;
 
     //輸入表格
     case "tad_repair_form":
@@ -400,7 +401,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);

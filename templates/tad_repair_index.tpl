@@ -2,87 +2,102 @@
 
 <{if $now_op=="show_one"}>
 
-  <{$modify_link}>
+    <{$modify_link}>
 
-  <h2>[<{$repair_sn}>] <{$smarty.const._MD_TADREPAIR_FIXED_NOTICE}></h2>
+    <h2>[<{$repair_sn}>] <{$smarty.const._MD_TADREPAIR_FIXED_NOTICE}></h2>
 
-    <table class="table table-striped table-bordered table-hover">
-      <tr>
-        <th nowrap style="width:80px;">
-          <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
-        </th>
-        <td>
-          <{$repair_title}>
-        </td>
-      </tr>
-      
-        <{if 'repair_place'|in_array:$unuse_cols}>
+      <table class="table table-striped table-bordered table-hover">
+        <tr>
+          <th nowrap style="width:80px;">
+            <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
+          </th>
+          <td>
+            <{$repair_title}>
+          </td>
+        </tr>
+        
+          <{if 'repair_place'|in_array:$unuse_cols}>
+          <{else}>
+            <tr>
+              <th>
+                <{$smarty.const._MD_TADREPAIR_PLACE}>
+              </th>
+              <td>
+                <{$repair_place}>
+              </td>
+            </tr>
+          <{/if}>
+
+
+        <tr>
+          <th nowrap>
+            <{$smarty.const._MD_TADREPAIR_REPAIR_DATE}>
+          </th>
+          <td>
+            <{$repair_date}>
+          </td>
+        </tr>
+        
+        <{if 'repair_status'|in_array:$unuse_cols}>
         <{else}>
           <tr>
-            <th>
-              <{$smarty.const._MD_TADREPAIR_PLACE}>
+            <th nowrap>
+              <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
             </th>
             <td>
-              <{$repair_place}>
+              <{$repair_status}>
             </td>
           </tr>
         <{/if}>
+        
 
-
-      <tr>
-        <th nowrap>
-          <{$smarty.const._MD_TADREPAIR_REPAIR_DATE}>
-        </th>
-        <td>
-          <{$repair_date}>
-        </td>
-      </tr>
-      
-      <{if 'repair_status'|in_array:$unuse_cols}>
-      <{else}>
         <tr>
           <th nowrap>
-            <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
+            <{$smarty.const._MD_TADREPAIR_REPAIR_UID}>
           </th>
           <td>
-            <{$repair_status}>
+            <{$repair_name}>
           </td>
         </tr>
-      <{/if}>
-      
-
-      <tr>
-        <th nowrap>
-          <{$smarty.const._MD_TADREPAIR_REPAIR_UID}>
-        </th>
-        <td>
-          <{$repair_name}>
-        </td>
-      </tr>
-      <tr>
-        <th nowrap>
-          <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
-        </th>
-        <td>
-          <{$repair_content}>
-        </td>
-      </tr>
-      <tr>
-        <th nowrap>
-          <{$smarty.const._MD_TADREPAIR_IMG}>
-        </th>
-        <td>
-          <{$show_files}>
-        </td>
-      </tr>
-    </table>
+        <tr>
+          <th nowrap>
+            <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
+          </th>
+          <td>
+            <{$repair_content}>
+          </td>
+        </tr>
+        <tr>
+          <th nowrap>
+            <{$smarty.const._MD_TADREPAIR_IMG}>
+          </th>
+          <td>
+            <{$show_files}>
+          </td>
+        </tr>
+      </table>
 
 
-  <{$fixed_link}>
-  <h2><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></h2>
+    <{$fixed_link}>
+    <h2><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></h2>
 
     <table class="table table-striped table-bordered table-hover">
-      <tr><th nowrap style="width:80px;"><{$smarty.const._MD_TADREPAIR_FIXED_UNIT_SN}></th><td><{$unit_title}></td></tr>
+      <tr><th nowrap style="width:80px;"><{$smarty.const._MD_TADREPAIR_FIXED_UNIT_SN}></th><td>
+        <{if $fixed_link and $fixed_uid==''}>
+          <form action="index.php" method="post">
+            <select name="new_unit_sn" id="new_unit_sn">
+              <{foreach from=$unit_menu key=sn item=title}>
+                <option value="<{$sn}>" <{if $unit_sn==$sn}>selected<{/if}>><{$title}></option>
+              <{/foreach}>
+            </select>
+            <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
+            <input type="hidden" name="unit_sn" value="<{$unit_sn}>">
+            <button type="submit" name="op" value="move_to_unit" class="btn btn-warning btn-sm">改送其他單位</button>
+          </form>
+        <{else}>
+          <{$unit_title}>
+        <{/if}>
+      </td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></th><td><{$fixed_status}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}></th><td><{$fixed_content}></td></tr>
       <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th><td><{$fixed_date}></td></tr>
@@ -105,10 +120,10 @@
       <form action="index.php" method="get" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
         <div class="form-group">
           <div class="col-sm-6">
-            <{html_options name='unit_menu_id' options=$unit_menu  selected=$unit_menu_id  class="form-control" onchange="submit();"}>
+            <{html_options name='unit_menu_sn' options=$unit_menu  selected=$def_unit_menu_sn  class="form-control" onchange="submit();"}>
           </div>
           <div class="col-sm-6">
-            <{html_options name='fixed_status_id' options=$fixed_status_list selected=$fixed_status_id  class="form-control" onchange="submit();"}>
+            <{html_options name='fixed_status' options=$fixed_status_list selected=$def_fixed_status  class="form-control" onchange="submit();"}>
           </div>
         </div>
       </form>
