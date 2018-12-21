@@ -1,9 +1,9 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-if (empty($xoopsUser)) {
-    redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
-}
+// if (empty($xoopsUser)) {
+//     redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
+// }
 
 $xoopsOption['template_main'] = "tad_repair_repair.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
@@ -143,9 +143,11 @@ function insert_tad_repair()
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
 
+    $unit_sn = empty($_POST['unit_sn']) ? '1' : $_POST['unit_sn'];
+
     $sql = "insert into `" . $xoopsDB->prefix("tad_repair") . "`
 	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
-    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$_POST['unit_sn']}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
+    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
     // die($sql);
     $xoopsDB->query($sql) or web_error($sql);
 
@@ -327,10 +329,10 @@ function update_tad_fixed($repair_sn = "")
     $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "update `" . $xoopsDB->prefix("tad_repair") . "` set
-	 `fixed_uid` = '{$uid}' ,
-	 `fixed_date` = '{$today}' ,
-	 `fixed_status` = '{$fixed_status}' ,
-	 `fixed_content` = '{$fixed_content}'
+    `fixed_uid` = '{$uid}' ,
+    `fixed_date` = '{$today}' ,
+    `fixed_status` = '{$fixed_status}' ,
+    `fixed_content` = '{$fixed_content}'
 	where `repair_sn` = '$repair_sn'";
     $xoopsDB->queryF($sql) or web_error($sql);
 
@@ -370,7 +372,7 @@ switch ($op) {
     case "insert_tad_repair":
         $repair_sn = insert_tad_repair();
         header("location: index.php?repair_sn=$repair_sn");
-        break;
+        exit;
 
     //更新資料
     case "update_tad_repair":

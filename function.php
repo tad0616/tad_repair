@@ -6,6 +6,26 @@ if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
 include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
 /********************* 自訂函數 *********************/
+//取得顏色陣列
+function get_color($name = '')
+{
+    global $xoopsConfig;
+    include_once "language/{$xoopsConfig['language']}/modinfo.php";
+    $default = ($name == 'fixed_status') ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
+
+    $def_arr = mk_arr(explode(";", $default));
+    // die(var_export($def_arr));
+    foreach ($def_arr as $color => $item) {
+        $def_color_arr[$item] = $color;
+    }
+    // die(var_export($def_color_arr));
+    $arr = mc2arr($name, "", false, 'return');
+    // die(var_export($arr));
+    foreach ($arr as $color => $item) {
+        $color_arr[$item] = (is_numeric($color) or $color == $item) ? $def_color_arr[$item] : $color;
+    }
+    return $color_arr;
+}
 
 function SendEmail($uid = "", $title = "", $content = "")
 {

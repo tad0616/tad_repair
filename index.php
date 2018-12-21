@@ -7,7 +7,7 @@ include_once XOOPS_ROOT_PATH . "/header.php";
 /*-----------function區--------------*/
 
 //列出所有tad_repair資料
-function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_function = 0)
+function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_function = 0, $mode = '')
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
@@ -94,12 +94,11 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $i++;
     }
 
-    //if(empty($all_content))return "";
+    if ($mode == "return") {
+        return $all_content;
+    }
 
     $add_button = ($show_function) ? "<a href='{$_SERVER['PHP_SELF']}?op=tad_repair_form' class='link_button_r'>" . _TAD_ADD . "</a>" : "";
-
-    //raised,corners,inset
-    //$main=div_3d("",$main,"corners","width:98%");
 
     $sql    = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
     $result = $xoopsDB->query($sql) or web_error($sql);
@@ -134,27 +133,6 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     $xoopsTpl->assign("unuse_cols", $xoopsModuleConfig['unuse_cols']);
 
     //return $main;
-}
-
-//取得顏色陣列
-function get_color($name = '')
-{
-    global $xoopsConfig;
-    include_once "language/{$xoopsConfig['language']}/modinfo.php";
-    $default = ($name == 'fixed_status') ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
-
-    $def_arr = mk_arr(explode(";", $default));
-    // die(var_export($def_arr));
-    foreach ($def_arr as $color => $item) {
-        $def_color_arr[$item] = $color;
-    }
-    // die(var_export($def_color_arr));
-    $arr = mc2arr($name, "", false, 'return');
-    // die(var_export($arr));
-    foreach ($arr as $color => $item) {
-        $color_arr[$item] = (is_numeric($color) or $color == $item) ? $def_color_arr[$item] : $color;
-    }
-    return $color_arr;
 }
 
 //以流水號秀出某筆tad_repair資料內容

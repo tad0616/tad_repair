@@ -1,9 +1,14 @@
-Tad Repair 2.4 (released on 2018-06-05)
+Tad Repair 2.4.1 (2019-01-01 released)
+====================================================
+1.Support BootStrap4
+
+
+Tad Repair 2.4 (2018-06-05 released)
 ====================================================
 1. Modify the reply content can not be modified
 
 
-Tad Repair 2.3.9 (released on 2018-05-28)
+Tad Repair 2.3.9 (2018-05-28 released)
 ================================================== ==
 1. Remove the tchinese Big5 language
 2. Increase the function of transferring maintenance units
@@ -11,7 +16,7 @@ Tad Repair 2.3.9 (released on 2018-05-28)
 4. Fixed an issue that could not be queried by maintenance status
 
 
-Tad Repair 2.3.8 (released on 2018-01-22)
+Tad Repair 2.3.8 (2018-01-22 released)
 ================================================== ==
 1. Correct the status information shows incorrect question
 
