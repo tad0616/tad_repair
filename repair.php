@@ -102,7 +102,7 @@ function get_tad_repair_unit_menu_options($default_unit_sn = "0")
 {
     global $xoopsDB, $xoopsModule;
     $sql    = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $option = "";
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
@@ -138,7 +138,7 @@ function insert_tad_repair()
     $today_chk = date("Y-m-d H:i", xoops_getUserTimestamp(time()));
 
     $sql    = "select repair_sn from `" . $xoopsDB->prefix("tad_repair") . "` where repair_title='{$repair_title}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
@@ -149,7 +149,7 @@ function insert_tad_repair()
 	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
     values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
     // die($sql);
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();
@@ -203,7 +203,7 @@ function update_tad_repair($repair_sn = "")
 	 `unit_sn` = '{$unit_sn}'
 	where `repair_sn` = '$repair_sn'";
     // die($sql);
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     $TadUpFiles->set_col('repair_sn', $repair_sn);
     $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
@@ -334,7 +334,7 @@ function update_tad_fixed($repair_sn = "")
     `fixed_status` = '{$fixed_status}' ,
     `fixed_content` = '{$fixed_content}'
 	where `repair_sn` = '$repair_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     $DBV = get_tad_repair($repair_sn);
 

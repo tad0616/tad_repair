@@ -42,7 +42,7 @@ function get_user_info($pid = '', $tel = '')
     join `" . $xoopsDB->prefix("estate") . "` as e on d.estate_id=e.estate_id
     join `" . $xoopsDB->prefix("users") . "` as f on e.estate_id=f.user_intrest
     where 1 {$and_pid} {$and_tel}";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $user = $xoopsDB->fetchArray($result);
     if (!$user) {
@@ -71,7 +71,7 @@ function get_user_repair($pid = '', $tel = '')
 
     }
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $all_content = array();
     $i           = 0;
@@ -181,7 +181,7 @@ function get_all_repair($estate_id = '', $estate_room_id = '', $def_repair_sn = 
 
     $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where 1 $and_estate_id $and_estate_room_id $and_repair_sn order by `repair_date` desc";
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     $all_content = array();
     $i           = 0;
@@ -278,7 +278,7 @@ function insert_tad_repair()
             (`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
             values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$repair_uid}' , '1' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
     // die($sql);
-    $xoopsDB->query($sql) or web_error($sql);
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();

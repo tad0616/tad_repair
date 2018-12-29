@@ -45,7 +45,7 @@ foreach ($col_title as $n => $title) {
 }
 
 $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
-$result = $xoopsDB->query($sql) or web_error($sql);
+$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
 $i = 2;
 while ($all = $xoopsDB->fetchArray($result)) {

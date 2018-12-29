@@ -38,7 +38,7 @@ function SendEmail($uid = "", $title = "", $content = "")
     // $user           = $member_handler->getUser($uid);
     // $email          = $user->email();
     $sql         = "select email from `" . $xoopsDB->prefix("users") . "` where uid='{$uid}'";
-    $result      = $xoopsDB->query($sql) or web_error($sql);
+    $result      = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     list($email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer                           = &getMailer();
@@ -54,7 +54,7 @@ function get_tad_repair_unit_list()
 {
     global $xoopsDB, $xoopsModule;
     $sql    = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
 
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $list[$unit_sn] = $unit_title;
@@ -67,7 +67,7 @@ function unit_admin_arr()
 {
     global $xoopsDB;
     $sql            = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "`";
-    $result         = $xoopsDB->query($sql) or web_error($sql);
+    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $unit_admin_arr = array();
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -87,7 +87,7 @@ function get_tad_repair($repair_sn = "")
     }
 
     $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -101,7 +101,7 @@ function get_tad_repair_unit($unit_sn = "")
     }
 
     $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
