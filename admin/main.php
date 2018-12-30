@@ -24,7 +24,7 @@ function list_tad_repair()
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $all_content = array();
     $i           = 0;
@@ -75,7 +75,7 @@ function delete_tad_repair($repair_sn = "")
 {
     global $xoopsDB, $isAdmin;
     $sql = "delete from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/
