@@ -2,7 +2,8 @@
 //區塊主函式 (待修通報(wait_to_repair))
 function wait_to_repair($options)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
     $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair") . "` WHERE fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' ORDER BY `repair_date` DESC";
 
