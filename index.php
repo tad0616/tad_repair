@@ -87,14 +87,14 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         // $content = $myts->displayTarea($content, 1, 0, 0, 0, 0);
         // $title   = $myts->htmlSpecialChars($title);
 
-        $repair_sn     = (int) $repair_sn;
-        $repair_title  = $myts->htmlSpecialChars($repair_title);
-        $repair_place  = $myts->htmlSpecialChars($repair_place);
-        $repair_name   = $myts->htmlSpecialChars($repair_name);
-        $repair_status = $myts->htmlSpecialChars($repair_status);
-        $fixed_name    = $myts->htmlSpecialChars($fixed_name);
-        $fixed_date    = $myts->htmlSpecialChars($fixed_date);
-        $fixed_status  = $myts->htmlSpecialChars($fixed_status);
+        $repair_sn    = (int) $repair_sn;
+        $repair_title = $myts->htmlSpecialChars($repair_title);
+        $repair_place = $myts->htmlSpecialChars($repair_place);
+        $repair_name  = $myts->htmlSpecialChars($repair_name);
+        // $repair_status = $myts->htmlSpecialChars($repair_status);
+        $fixed_name = $myts->htmlSpecialChars($fixed_name);
+        $fixed_date = $myts->htmlSpecialChars($fixed_date);
+        // $fixed_status  = $myts->htmlSpecialChars($fixed_status);
 
         $all_content[$i]['repair_sn']     = $repair_sn;
         $all_content[$i]['repair_date']   = $myts->htmlSpecialChars($repair_date);
@@ -185,17 +185,17 @@ function show_one_tad_repair($repair_sn = "")
         $$repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
     }
 
-    $repair_sn      = (int) $repair_sn;
-    $unit_sn        = (int) $unit_sn;
-    $repair_title   = $myts->htmlSpecialChars($repair_title);
-    $repair_place   = $myts->htmlSpecialChars($repair_place);
-    $repair_date    = $myts->htmlSpecialChars($repair_date);
-    $repair_name    = $myts->htmlSpecialChars($repair_name);
-    $repair_status  = $myts->htmlSpecialChars($repair_status);
-    $fixed_name     = $myts->htmlSpecialChars($fixed_name);
-    $fixed_link     = $myts->htmlSpecialChars($fixed_link);
-    $modify_link    = $myts->htmlSpecialChars($modify_link);
-    $fixed_status   = $myts->htmlSpecialChars($fixed_status);
+    $repair_sn    = (int) $repair_sn;
+    $unit_sn      = (int) $unit_sn;
+    $repair_title = $myts->htmlSpecialChars($repair_title);
+    $repair_place = $myts->htmlSpecialChars($repair_place);
+    $repair_date  = $myts->htmlSpecialChars($repair_date);
+    $repair_name  = $myts->htmlSpecialChars($repair_name);
+    // $repair_status  = $myts->htmlSpecialChars($repair_status);
+    $fixed_name  = $myts->htmlSpecialChars($fixed_name);
+    $fixed_link  = $myts->htmlSpecialChars($fixed_link);
+    $modify_link = $myts->htmlSpecialChars($modify_link);
+    // $fixed_status   = $myts->htmlSpecialChars($fixed_status);
     $repair_content = $myts->displayTarea($repair_content, 0, 0, 0, 0, 1);
 
     $xoopsTpl->assign("repair_title", $repair_title);
