@@ -88,7 +88,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         // $title   = $myts->htmlSpecialChars($title);
 
         $repair_sn    = (int) $repair_sn;
-        $repair_title = $myts->htmlSpecialChars($repair_title);
+        $repair_title = empty($repair_title) ? '---' : $myts->htmlSpecialChars($repair_title);
         $repair_place = $myts->htmlSpecialChars($repair_place);
         $repair_name  = $myts->htmlSpecialChars($repair_name);
         // $repair_status = $myts->htmlSpecialChars($repair_status);
