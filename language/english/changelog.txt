@@ -3,6 +3,7 @@ Tad Repair 2.4.1 (2019-01-01 released)
 1.Support BootStrap4
 2.Attached support panoramic picture
 3.Support PHP 7.3
+4.Fix XSS vulnerability
 
 
 Tad Repair 2.4 (2018-06-05 released)

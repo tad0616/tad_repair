@@ -160,9 +160,9 @@ function show_one_tad_repair($repair_sn = "")
     } else {
         $repair_sn = intval($repair_sn);
     }
-
+    $myts = MyTextSanitizer::getInstance();
     //取得使用者編號
-    $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
+    $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
 
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
