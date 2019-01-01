@@ -18,6 +18,8 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $FooTableJS = $FooTable->render();
     }
 
+    $myts = MyTextSanitizer::getInstance();
+
     $fixed_status_list = mc2arr("fixed_status", $def_fixed_status, true, 'return');
     array_unshift($fixed_status_list, _MD_TADREPAIR_REPAIR_FIXED_FILTER);
 
@@ -81,8 +83,21 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
         $unit = get_tad_repair_unit($unit_sn);
 
+        // $content = $myts->displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1);
+        // $content = $myts->displayTarea($content, 1, 0, 0, 0, 0);
+        // $title   = $myts->htmlSpecialChars($title);
+
+        $repair_sn     = (int) $repair_sn;
+        $repair_title  = $myts->htmlSpecialChars($repair_title);
+        $repair_place  = $myts->htmlSpecialChars($repair_place);
+        $repair_name   = $myts->htmlSpecialChars($repair_name);
+        $repair_status = $myts->htmlSpecialChars($repair_status);
+        $fixed_name    = $myts->htmlSpecialChars($fixed_name);
+        $fixed_date    = $myts->htmlSpecialChars($fixed_date);
+        $fixed_status  = $myts->htmlSpecialChars($fixed_status);
+
         $all_content[$i]['repair_sn']     = $repair_sn;
-        $all_content[$i]['repair_date']   = $repair_date;
+        $all_content[$i]['repair_date']   = $myts->htmlSpecialChars($repair_date);
         $all_content[$i]['repair_title']  = "<a href='{$_SERVER['PHP_SELF']}?repair_sn={$repair_sn}'>{$repair_title}</a>";
         $all_content[$i]['repair_place']  = $repair_place;
         $all_content[$i]['repair_name']   = $repair_name;
@@ -170,7 +185,18 @@ function show_one_tad_repair($repair_sn = "")
         $$repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
     }
 
-    $repair_content = nl2br($repair_content);
+    $repair_sn      = (int) $repair_sn;
+    $unit_sn        = (int) $unit_sn;
+    $repair_title   = $myts->htmlSpecialChars($repair_title);
+    $repair_place   = $myts->htmlSpecialChars($repair_place);
+    $repair_date    = $myts->htmlSpecialChars($repair_date);
+    $repair_name    = $myts->htmlSpecialChars($repair_name);
+    $repair_status  = $myts->htmlSpecialChars($repair_status);
+    $fixed_name     = $myts->htmlSpecialChars($fixed_name);
+    $fixed_link     = $myts->htmlSpecialChars($fixed_link);
+    $modify_link    = $myts->htmlSpecialChars($modify_link);
+    $fixed_status   = $myts->htmlSpecialChars($fixed_status);
+    $repair_content = $myts->displayTarea($repair_content, 0, 0, 0, 0, 1);
 
     $xoopsTpl->assign("repair_title", $repair_title);
     $xoopsTpl->assign("repair_place", $repair_place);

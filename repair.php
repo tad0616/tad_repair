@@ -1,9 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-// if (empty($xoopsUser)) {
-//     redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
-// }
 
 $xoopsOption['template_main'] = "tad_repair_repair.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
@@ -16,7 +13,9 @@ $TadUpFiles = new TadUpFiles("tad_repair");
 function tad_repair_form($repair_sn = "")
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl, $TadUpFiles, $xoopsModuleConfig;
-
+    if (empty($xoopsUser)) {
+        redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
+    }
     $user_uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
     //抓取預設值
@@ -116,7 +115,9 @@ function get_tad_repair_unit_menu_options($default_unit_sn = "0")
 function insert_tad_repair()
 {
     global $xoopsDB, $xoopsUser, $xoopsModuleConfig, $TadUpFiles;
-
+    if (empty($xoopsUser)) {
+        redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
+    }
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
@@ -180,7 +181,9 @@ function insert_tad_repair()
 function update_tad_repair($repair_sn = "")
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
-
+    if (empty($xoopsUser)) {
+        redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
+    }
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
@@ -194,13 +197,13 @@ function update_tad_repair($repair_sn = "")
     $today = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "update `" . $xoopsDB->prefix("tad_repair") . "` set
-	 `repair_title` = '{$repair_title}' ,
-     `repair_place` = '{$repair_place}' ,
-	 `repair_content` = '{$repair_content}' ,
-	 `repair_date` = '{$today}' ,
-	 `repair_status` = '{$repair_status}' ,
-	 `repair_uid` = '{$uid}' ,
-	 `unit_sn` = '{$unit_sn}'
+    `repair_title` = '{$repair_title}' ,
+    `repair_place` = '{$repair_place}' ,
+    `repair_content` = '{$repair_content}' ,
+    `repair_date` = '{$today}' ,
+    `repair_status` = '{$repair_status}' ,
+    `repair_uid` = '{$uid}' ,
+    `unit_sn` = '{$unit_sn}'
 	where `repair_sn` = '$repair_sn'";
     // die($sql);
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -232,7 +235,9 @@ function tad_fixed_form($repair_sn = "")
     global $xoopsDB, $xoopsUser, $xoopsTpl, $TadUpFiles;
     //include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
     //include_once(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php");
-
+    if (empty($xoopsUser)) {
+        redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
+    }
     $user_uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
 
     //抓取預設值
@@ -318,9 +323,11 @@ function tad_fixed_form($repair_sn = "")
 function update_tad_fixed($repair_sn = "")
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
-
+    if (empty($xoopsUser)) {
+        redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
+    }
     //取得使用者編號
-    $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : "";
+    $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
 
     $myts          = MyTextSanitizer::getInstance();
     $fixed_content = $myts->addSlashes($_POST['fixed_content']);
