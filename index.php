@@ -192,9 +192,7 @@ function show_one_tad_repair($repair_sn = "")
     $repair_date  = $myts->htmlSpecialChars($repair_date);
     $repair_name  = $myts->htmlSpecialChars($repair_name);
     // $repair_status  = $myts->htmlSpecialChars($repair_status);
-    $fixed_name  = $myts->htmlSpecialChars($fixed_name);
-    $fixed_link  = $myts->htmlSpecialChars($fixed_link);
-    $modify_link = $myts->htmlSpecialChars($modify_link);
+    $fixed_name = $myts->htmlSpecialChars($fixed_name);
     // $fixed_status   = $myts->htmlSpecialChars($fixed_status);
     $repair_content = $myts->displayTarea($repair_content, 0, 0, 0, 0, 1);
 
