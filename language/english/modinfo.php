@@ -21,7 +21,7 @@ define('_MI_TADREPAIR_FIXED_STATUS_DESC', 'Set "color=process status" option, pl
 define('_MI_TADREPAIR_FIXED_STATUS_VAL', '#E80DB8=Pending;#4F6820=Processing;#336BBF=Fixed');
 
 define('_MI_TADREPAIR_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADREPAIR_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADREPAIR_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADREPAIR_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help

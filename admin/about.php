@@ -22,7 +22,7 @@ include '../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 
-$module_info = &$module_handler->get($xoopsModule->getVar("mid"));
+$module_info = $module_handler->get($xoopsModule->getVar("mid"));
 
 $module_info = '<div id="about">
 				<label>' . _AM_XDIR_ABOUT_DESCRIPTION . '</label><text>' . $module_info->getInfo("description") . '</text><br />
@@ -41,5 +41,5 @@ $about_admin->addChangelogLabel(_AM_XDIR_ABOUT_CHANGELOG);
 
 echo $about_admin->addNavigation('about.php');
 echo $about_admin->renderabout();
-echo "<div class='center smallsmall italic pad5'><b>" . $xoopsModule->getVar("name") . "</b> is maintained by the <a class='tooltip' rel='external' href='http://www.xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>";
+echo "<div class='center smallsmall italic pad5'><b>" . $xoopsModule->getVar("name") . "</b> is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>";
 xoops_cp_footer();
