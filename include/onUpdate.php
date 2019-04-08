@@ -4,15 +4,58 @@ function xoops_module_update_tad_repair(&$module, $old_version)
 {
     global $xoopsDB;
 
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
+
     if (chk_uid()) {
         go_update_uid();
     }
 
-    //if(!chk_chk1()) go_update1();
+    if (chk_chk1()) {
+        go_update1();
+    }
+
+    if (chk_chk2()) {
+
+        go_update2();
+    }
+    update_blank_status();
     chk_tad_repair_block();
+
+    //新增檔案欄位
+    if (chk_fc_tag()) {
+        go_fc_tag();
+    }
 
     return true;
 }
+
+//新增檔案欄位
+function chk_fc_tag()
+{
+    global $xoopsDB;
+    $sql    = "SELECT count(`tag`) FROM " . $xoopsDB->prefix("tad_repair_files_center");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
+}
+
+function go_fc_tag()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_repair_files_center") . "
+    ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
+    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+    ";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
+}
+
 //刪除錯誤的重複欄位及樣板檔
 function chk_tad_repair_block()
 {
@@ -49,7 +92,6 @@ function chk_tad_repair_block()
             $xoopsDB->queryF($sql);
         }
     }
-
 }
 
 //修正uid欄位
@@ -71,104 +113,169 @@ function chk_uid()
 function go_update_uid()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_repair") . "` CHANGE `repair_uid` `repair_uid` mediumint(8) unsigned NOT NULL default 0";
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_repair") . "` CHANGE `repair_uid` `repair_uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
     return true;
 }
 
-/*
 //檢查某欄位是否存在
-function chk_chk1(){
-global $xoopsDB;
-$sql="select count(`欄位`) from ".$xoopsDB->prefix("資料表");
-$result=$xoopsDB->query($sql);
-if(empty($result)) return false;
-return true;
+function chk_chk1()
+{
+    global $xoopsDB;
+    $sql    = "select count(`repair_place`) from " . $xoopsDB->prefix("tad_repair");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
 }
 
 //執行更新
-function go_update1(){
-global $xoopsDB;
-$sql="ALTER TABLE ".$xoopsDB->prefix("資料表")." ADD `欄位` smallint(5) NOT NULL";
-$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  $xoopsDB->error());
-
-return true;
-}
- */
-
-//建立目錄
-function mk_dir($dir = "")
+function go_update1()
 {
-    //若無目錄名稱秀出警告訊息
-    if (empty($dir)) {
-        return;
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_repair") . " ADD `repair_place` varchar(255) NOT NULL default '' COMMENT '報修地點' AFTER `repair_title`";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
+
+    return true;
+}
+
+//新增檔案表格
+function chk_chk2()
+{
+    global $xoopsDB;
+    $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_repair_files_center");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
     }
 
-    //若目錄不存在的話建立目錄
-    if (!is_dir($dir)) {
-        umask(000);
-        //若建立失敗秀出警告訊息
-        mkdir($dir, 0777);
+    return false;
+}
+
+function go_update2()
+{
+    global $xoopsDB;
+    $sql = "CREATE TABLE `" . $xoopsDB->prefix("tad_repair_files_center") . "` (
+      `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
+      `col_name` varchar(255) NOT NULL default '' COMMENT '欄位名稱',
+      `col_sn` smallint(5) unsigned NOT NULL default 0 COMMENT '欄位編號',
+      `sort` smallint(5) unsigned NOT NULL default 0 COMMENT '排序',
+      `kind` enum('img','file') NOT NULL default 'img' COMMENT '檔案種類',
+      `file_name` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
+      `file_type` varchar(255) NOT NULL default '' COMMENT '檔案類型',
+      `file_size` int(10) unsigned NOT NULL default 0 COMMENT '檔案大小',
+      `description` text NOT NULL COMMENT '檔案說明',
+      `counter` mediumint(8) unsigned NOT NULL default 0 COMMENT '下載人次',
+      `original_filename` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
+      `hash_filename` varchar(255) NOT NULL default '' COMMENT '加密檔案名稱',
+      `sub_dir` varchar(255) NOT NULL default '' COMMENT '檔案子路徑',
+PRIMARY KEY (`files_sn`)
+    ) ENGINE=MyISAM;";
+    $xoopsDB->queryF($sql);
+}
+
+//執行更新
+function update_blank_status()
+{
+    global $xoopsDB, $xoopsModuleConfig;
+    $arr = explode(";", $xoopsModuleConfig['fixed_status']);
+    if (strpos("=", $arr[0]) !== false) {
+        $status       = explode('=', $arr[0]);
+        $fixed_status = $status[1];
+    } else {
+        $fixed_status = $arr[0];
+    }
+
+    $sql = "UPDATE " . $xoopsDB->prefix("tad_repair") . " SET `fixed_status` ='{$fixed_status}' WHERE `fixed_status`=''";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
+
+    return true;
+}
+
+
+
+//建立目錄
+if (!function_exists('mk_dir')) {
+    function mk_dir($dir = "")
+    {
+        //若無目錄名稱秀出警告訊息
+        if (empty($dir)) {
+            return;
+        }
+
+        //若目錄不存在的話建立目錄
+        if (!is_dir($dir)) {
+            umask(000);
+            //若建立失敗秀出警告訊息
+            mkdir($dir, 0777);
+        }
     }
 }
 
 //拷貝目錄
-function full_copy($source = "", $target = "")
-{
-    if (is_dir($source)) {
-        @mkdir($target);
-        $d = dir($source);
-        while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
+if (!function_exists('full_copy')) {
+    function full_copy($source = "", $target = "")
+    {
+        if (is_dir($source)) {
+            @mkdir($target);
+            $d = dir($source);
+            while (false !== ($entry = $d->read())) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
 
-            $Entry = $source . '/' . $entry;
-            if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
-                continue;
+                $Entry = $source . '/' . $entry;
+                if (is_dir($Entry)) {
+                    full_copy($Entry, $target . '/' . $entry);
+                    continue;
+                }
+                copy($Entry, $target . '/' . $entry);
             }
-            copy($Entry, $target . '/' . $entry);
+            $d->close();
+        } else {
+            copy($source, $target);
         }
-        $d->close();
-    } else {
-        copy($source, $target);
     }
 }
 
-function rename_win($oldfile, $newfile)
-{
-    if (!rename($oldfile, $newfile)) {
-        if (copy($oldfile, $newfile)) {
-            unlink($oldfile);
-            return true;
+if (!function_exists('rename_win')) {
+    function rename_win($oldfile, $newfile)
+    {
+        if (!rename($oldfile, $newfile)) {
+            if (copy($oldfile, $newfile)) {
+                unlink($oldfile);
+                return true;
+            }
+            return false;
         }
-        return false;
+        return true;
     }
-    return true;
 }
 
-function delete_directory($dirname)
-{
-    if (is_dir($dirname)) {
-        $dir_handle = opendir($dirname);
-    }
-
-    if (!$dir_handle) {
-        return false;
-    }
-
-    while ($file = readdir($dir_handle)) {
-        if ($file != "." && $file != "..") {
-            if (!is_dir($dirname . "/" . $file)) {
-                unlink($dirname . "/" . $file);
-            } else {
-                delete_directory($dirname . '/' . $file);
-            }
-
+if (!function_exists('delete_directory')) {
+    function delete_directory($dirname)
+    {
+        if (is_dir($dirname)) {
+            $dir_handle = opendir($dirname);
         }
+
+        if (!$dir_handle) {
+            return false;
+        }
+
+        while ($file = readdir($dir_handle)) {
+            if ($file != "." && $file != "..") {
+                if (!is_dir($dirname . "/" . $file)) {
+                    unlink($dirname . "/" . $file);
+                } else {
+                    delete_directory($dirname . '/' . $file);
+                }
+            }
+        }
+        closedir($dir_handle);
+        rmdir($dirname);
+        return true;
     }
-    closedir($dir_handle);
-    rmdir($dirname);
-    return true;
 }

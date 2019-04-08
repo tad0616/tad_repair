@@ -6,13 +6,40 @@ if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
 include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
 /********************* 自訂函數 *********************/
+//取得顏色陣列
+function get_color($name = '')
+{
+    global $xoopsConfig;
+    include_once "language/{$xoopsConfig['language']}/modinfo.php";
+    $default = ($name == 'fixed_status') ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
+
+    $def_arr = mk_arr(explode(";", $default));
+    // die(var_export($def_arr));
+    foreach ($def_arr as $color => $item) {
+        $def_color_arr[$item] = $color;
+    }
+    // die(var_export($def_color_arr));
+    $arr = mc2arr($name, "", false, 'return');
+    // die(var_export($arr));
+    foreach ($arr as $color => $item) {
+        $color_arr[$item] = (is_numeric($color) or $color == $item) ? $def_color_arr[$item] : $color;
+    }
+    return $color_arr;
+}
 
 function SendEmail($uid = "", $title = "", $content = "")
 {
     global $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
-    $member_handler = xoops_gethandler('member');
-    $user           = $member_handler->getUser($uid);
-    $email          = $user->email();
+    if (empty($uid)) {
+        return;
+    }
+
+    // $member_handler = xoops_gethandler('member');
+    // $user           = $member_handler->getUser($uid);
+    // $email          = $user->email();
+    $sql         = "select email from `" . $xoopsDB->prefix("users") . "` where uid='{$uid}'";
+    $result      = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    list($email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer                           = &getMailer();
     $xoopsMailer->multimailer->ContentType = "text/html";
@@ -25,24 +52,22 @@ function SendEmail($uid = "", $title = "", $content = "")
 //取得tad_repair_unit
 function get_tad_repair_unit_list()
 {
-
     global $xoopsDB, $xoopsModule;
-    $sql    = "select `unit_sn` , `unit_title` from `" . $xoopsDB->prefix("tad_repair_unit") . "` order by `unit_sn`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql    = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $list[$unit_sn] = $unit_title;
     }
     return $list;
-
 }
 
 //取得各單位的管理員陣列
 function unit_admin_arr()
 {
     global $xoopsDB;
-    $sql            = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "`";
-    $result         = $xoopsDB->query($sql) or web_error($sql);
+    $sql            = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "`";
+    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $unit_admin_arr = array();
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -62,7 +87,7 @@ function get_tad_repair($repair_sn = "")
     }
 
     $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -76,7 +101,7 @@ function get_tad_repair_unit($unit_sn = "")
     }
 
     $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -91,7 +116,7 @@ function mc2arr($name = "", $def = "", $v_as_k = true, $type = 'option', $other 
         $arr = explode(";", $xoopsModuleConfig[$name]);
     }
 
-    $new_arr = mk_arr($arr);
+    $new_arr = mk_arr($arr, $v_as_k);
 
     if ($type == "checkbox") {
         $opt = arr2chk($name, $new_arr, $def, $v_as_k, $other);
@@ -105,9 +130,8 @@ function mc2arr($name = "", $def = "", $v_as_k = true, $type = 'option', $other 
     return $opt;
 }
 
-function mk_arr($arr = array())
+function mk_arr($arr = array(), $v_as_k = false)
 {
-
     if (is_array($arr)) {
         foreach ($arr as $item) {
             if (empty($item)) {
@@ -116,7 +140,9 @@ function mk_arr($arr = array())
 
             if (preg_match("/=/", $item)) {
                 list($k, $v) = explode("=", $item);
-                if ($v == '') {
+                if ($v_as_k) {
+                    $k = $v;
+                } elseif ($v == '') {
                     $v = $k;
                 }
 

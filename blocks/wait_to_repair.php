@@ -2,15 +2,16 @@
 //區塊主函式 (待修通報(wait_to_repair))
 function wait_to_repair($options)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' order by `repair_date` desc";
+    $sql = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair") . "` WHERE fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' ORDER BY `repair_date` DESC";
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $block   = "";
+    $block   = array();
     $i       = 0;
-    $content = "";
+    $content = array();
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
@@ -50,9 +51,8 @@ if (!function_exists('get_tad_repair_unit')) {
         }
 
         $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
-        $result = $xoopsDB->query($sql) or web_error($sql);
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         $data   = $xoopsDB->fetchArray($result);
         return $data;
     }
-
 }

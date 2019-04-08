@@ -14,33 +14,38 @@ $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objAc
 $objActSheet->setTitle($ym . _MD_TADREPAIR_REPORT); //設定標題
 $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一次，編號要改
 
-$objActSheet->getColumnDimension('A')->setWidth(8);
-$objActSheet->getColumnDimension('B')->setWidth(20);
-$objActSheet->getColumnDimension('C')->setWidth(45);
-$objActSheet->getColumnDimension('D')->setWidth(15);
-$objActSheet->getColumnDimension('E')->setWidth(15);
-$objActSheet->getColumnDimension('F')->setWidth(15);
-$objActSheet->getColumnDimension('G')->setWidth(15);
-$objActSheet->getColumnDimension('H')->setWidth(20);
-$objActSheet->getColumnDimension('I')->setWidth(15);
-$objActSheet->getColumnDimension('J')->setWidth(40);
-$objActSheet->getColumnDimension('K')->setWidth(60);
-$objActSheet->getStyle('A1:K1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
+$col_width = array(8, 20, 45, 25, 15, 15, 15, 15, 20, 15, 40, 60);
+$z         = 0;
+foreach ($col_width as $n => $w) {
+    if ($n == 3 and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
+        continue;
+    } elseif ($n == 6 and in_array('repair_status', $xoopsModuleConfig['unuse_cols'])) {
+        continue;
+    }
+    $alpha = num2alpha($z);
+    $objActSheet->getColumnDimension($alpha)->setWidth($w);
+    $z++;
+}
 
-$objActSheet->setCellValue("A1", _MD_TADREPAIR_REPAIR_SN)
-    ->setCellValue("B1", _MD_TADREPAIR_REPAIR_DATE)
-    ->setCellValue("C1", _MD_TADREPAIR_REPAIR_TITLE)
-    ->setCellValue("D1", _MD_TADREPAIR_REPAIR_UID)
-    ->setCellValue("E1", _MD_TADREPAIR_UNIT)
-    ->setCellValue("F1", _MD_TADREPAIR_REPAIR_STATUS2)
-    ->setCellValue("G1", _MD_TADREPAIR_FIXED_UID)
-    ->setCellValue("H1", _MD_TADREPAIR_FIXED_DATE)
-    ->setCellValue("I1", _MD_TADREPAIR_FIXED_STATUS2)
-    ->setCellValue("J1", _MD_TADREPAIR_FIXED_CONTENT)
-    ->setCellValue("K1", _MD_TADREPAIR_REPAIR_CONTENT);
+$objActSheet->getStyle("A1:{$alpha}1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
+
+$col_title = array(_MD_TADREPAIR_REPAIR_SN, _MD_TADREPAIR_REPAIR_DATE, _MD_TADREPAIR_REPAIR_TITLE, _MD_TADREPAIR_PLACE, _MD_TADREPAIR_REPAIR_UID, _MD_TADREPAIR_UNIT, _MD_TADREPAIR_REPAIR_STATUS2, _MD_TADREPAIR_FIXED_UID, _MD_TADREPAIR_FIXED_DATE, _MD_TADREPAIR_FIXED_STATUS2, _MD_TADREPAIR_FIXED_CONTENT, _MD_TADREPAIR_REPAIR_CONTENT);
+$z         = 0;
+
+foreach ($col_title as $n => $title) {
+    if ($n == 3 and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
+        continue;
+    } elseif ($n == 6 and in_array('repair_status', $xoopsModuleConfig['unuse_cols'])) {
+        continue;
+    }
+    $alpha = num2alpha($z);
+    $objActSheet->setCellValue("{$alpha}1", $title);
+    $z++;
+
+}
 
 $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
-$result = $xoopsDB->query($sql) or web_error($sql);
+$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
 $i = 2;
 while ($all = $xoopsDB->fetchArray($result)) {
@@ -70,17 +75,21 @@ while ($all = $xoopsDB->fetchArray($result)) {
 
     $unit = get_tad_repair_unit($unit_sn);
 
-    $objActSheet->setCellValue("A{$i}", $repair_sn)
-        ->setCellValue("B{$i}", $repair_date)
-        ->setCellValue("C{$i}", $repair_title)
-        ->setCellValue("D{$i}", $repair_name)
-        ->setCellValue("E{$i}", $unit['unit_title'])
-        ->setCellValue("F{$i}", $repair_status)
-        ->setCellValue("G{$i}", $fixed_name)
-        ->setCellValue("H{$i}", $fixed_date)
-        ->setCellValue("I{$i}", $fixed_status)
-        ->setCellValue("J{$i}", $fixed_content)
-        ->setCellValue("K{$i}", $repair_content);
+    $col_value = array($repair_sn, $repair_date, $repair_title, $repair_place, $repair_name, $unit['unit_title'], $repair_status, $fixed_name, $fixed_date, $fixed_status, $fixed_content, $repair_content);
+    $z         = 0;
+
+    foreach ($col_value as $n => $val) {
+        if ($n == 3 and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
+            continue;
+        } elseif ($n == 6 and in_array('repair_status', $xoopsModuleConfig['unuse_cols'])) {
+            continue;
+        }
+        $alpha = num2alpha($z);
+        $objActSheet->setCellValue("{$alpha}{$i}", $val);
+        $z++;
+
+    }
+
     $i++;
 }
 
@@ -97,3 +106,12 @@ $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->setPreCalculateFormulas(false);
 $objWriter->save('php://output');
 exit;
+
+function num2alpha($n)
+{
+    for ($r = ""; $n >= 0; $n = intval($n / 26) - 1) {
+        $r = chr($n % 26 + 0x41) . $r;
+    }
+
+    return $r;
+}

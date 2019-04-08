@@ -1,23 +1,90 @@
-"Tad Repair 2.3 official version of" functional items (release 2015-07-12)
+Tad Repair 2.4.1 (2019-01-01 released)
+====================================================
+1.Support BootStrap4
+2.Attached support panoramic picture
+3.Support PHP 7.3
+4.Fix XSS vulnerability
+
+
+Tad Repair 2.4 (2018-06-05 released)
+====================================================
+1. Modify the reply content can not be modified
+
+
+Tad Repair 2.3.9 (2018-05-28 released)
+================================================== ==
+1. Remove the tchinese Big5 language
+2. Increase the function of transferring maintenance units
+3. Support database strict mode
+4. Fixed an issue that could not be queried by maintenance status
+
+
+Tad Repair 2.3.8 (2018-01-22 released)
+================================================== ==
+1. Correct the status information shows incorrect question
+
+
+Tad Repair 2.3.7 (2018-01-08 released)
+====================================================
+1. Support for PHP 7.1
+2. Fix the status field is a null value bug
+3. Added option to not use fields
+4. Repair unit can also upload pictures
+
+
+Tad Repair 2.3.6 (2017-09-27 released)
+================================================== ==
+1. Join the picture upload function
+2. Add the "repair location" field
+
+
+Tad Repair 2.3.5 (2017-09-23 released)
+====================================================
+1.Add preferences for the optional presentation field
+
+
+Tad Repair 2.3.4 (2017-06-16 released)
+====================================================
+1.Complete accessibility 2.0 A level detection
+
+
+Tad Repair 2.3.3 (2016-12-28 released)
+====================================================
+ 1. Change the col-md of boootstrap to col-sm
+ 2. Avoid duplicate publication checks
+
+
+Tad Repair 2.3.2 (2016-12-05 released)
+=================================================
+ 1. Fixed the problem of switching to the next page of data can not be filtered.
+
+
+Tad Repair 2.3.1 (2016-11-18 released)
+=================================================
+ 1.Support XOOPS 2.5.8
+ 2.Fix some bug
+
+
+Tad Repair 2.3 (2015-07-12 released)
 =================================================
 1. Support PHP7
 2. Remove BootStrap2
 3. Add color config to status
 
 
-"Tad Repair 2.2 official version of" functional items (release 2015-07-12)
+Tad Repair 2.2 (2015-07-12 released)
 =================================================
  1. Add the English language
  2. Add BootStrap3 support
  3. Fix PHP syntax to conform to PSR2
 
-"Tad Repair 2.1 official version of" functional items (release 2014-06-15)
+Tad Repair 2.1 (2014-06-15 released)
 ================================================
  1. Download the file contents plus Reply
  2. Fixed uid field is mediumint (8) Format
 
 
-"Tad Repair 2.02 official version" feature project (2014-02-17 release)
+Tad Repair 2.02 (2014-02-17 released)
 ================================================
  1. streamline unnecessary functions
  2. Fixed Service Bulletins background arrows did not see the bug
@@ -27,12 +94,12 @@
  6. trimming forum
 
 
-"Tad Repair 2.01 official version" feature project (2013-10-14 release)
+Tad Repair 2.01 (2013-10-14 released)
 ================================================
  1. Fixed download problem can not be selected in January monthly report.
 
 
-"Tad Repair 2.0 official version of" functional items (release 2013-07-27)
+Tad Repair 2.0 (2013-07-27 released)
 ================================================
  1. Modify the standard format XOOPS 2.5 modules
  2. detailed oriented model, can transform online free forum
@@ -40,20 +107,20 @@
  4. Remove option does not exist
 
 
-"Tad Repair 1.2 official version of" functional items (release 2013-02-24)
+Tad Repair 1.2 (2013-02-24 released)
 ================================================
  1. Fix the problem set back unit personnel can not be set (see arrow image can)
  2. Add the monthly report download function (to be with the TadTools Version 1.13 or more)
 
 
-"Tad Repair 1.1 official version of" functional items (release 2013-02-22)
+Tad Repair 1.1 (2013-02-22 released)
 ================================================
  1. Fixed some minor issues
  2. Add automatic notification feature, the notification letter will be sent after the notification to all personnel responsible for the unit. Who finished with the notification letter will be sent to the original notifier.
  3. Modify the template file as a fine model, developers can more easily customize the screen
 
 
-"Tad Repair 1.0 official version features" item (2013-02-21 release)
+Tad Repair 1.0 (2013-02-21 released)
 ================================================
  1. Set the number of service units, each unit can also be set at a number of management staff
  2. You can go to set some options from the preferences, such as processing status, the severity ... and so on.

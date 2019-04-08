@@ -4,7 +4,9 @@ function xoops_module_install_tad_repair(&$module)
 {
 
     mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
-
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
+    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
     return true;
 }
 
