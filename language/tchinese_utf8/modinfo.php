@@ -20,7 +20,7 @@ define('_MI_TADREPAIR_FIXED_STATUS_DESC', '設定「顏色碼=處理狀況」的
 define('_MI_TADREPAIR_FIXED_STATUS_VAL', '#E80DB8=尚待處理;#4F6820=處理中;#336BBF=已修復');
 
 define('_MI_TADREPAIR_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADREPAIR_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADREPAIR_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADREPAIR_BACK_2_ADMIN', '管理');
 
 //help
