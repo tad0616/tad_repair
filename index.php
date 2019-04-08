@@ -158,7 +158,7 @@ function show_one_tad_repair($repair_sn = "")
     if (empty($repair_sn)) {
         return;
     } else {
-        $repair_sn = intval($repair_sn);
+        $repair_sn = (int)$repair_sn;
     }
     $myts = MyTextSanitizer::getInstance();
     //取得使用者編號
