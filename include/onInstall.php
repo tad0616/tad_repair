@@ -3,15 +3,15 @@
 function xoops_module_install_tad_repair(&$module)
 {
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
+    tad_repair_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
+    tad_repair_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
+    tad_repair_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
+    tad_repair_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function tad_repair_mk_dir($dir = "")
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
