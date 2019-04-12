@@ -68,7 +68,7 @@ function unit_admin_arr()
     global $xoopsDB;
     $sql            = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "`";
     $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $unit_admin_arr = array();
+    $unit_admin_arr = [];
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
             $$k = $v;
@@ -130,7 +130,7 @@ function mc2arr($name = "", $def = "", $v_as_k = true, $type = 'option', $other 
     return $opt;
 }
 
-function mk_arr($arr = array(), $v_as_k = false)
+function mk_arr($arr = [], $v_as_k = false)
 {
     if (is_array($arr)) {
         foreach ($arr as $item) {
@@ -152,7 +152,7 @@ function mk_arr($arr = array(), $v_as_k = false)
             }
         }
     } else {
-        $new_arr = array();
+        $new_arr = [];
     }
     return $new_arr;
 }
@@ -163,7 +163,7 @@ function arr2opt($arr, $def = "", $v_as_k = false, $other = "")
     if (is_array($def)) {
         $def_arr = $def;
     } else {
-        $def_arr = array($def);
+        $def_arr = [$def];
     }
     $main = "";
     foreach ($arr as $k => $v) {
@@ -183,7 +183,7 @@ function arr2chk($name, $arr, $def = "", $v_as_k = false, $other = "")
     if (is_array($def)) {
         $def_arr = $def;
     } else {
-        $def_arr = array($def);
+        $def_arr = [$def];
     }
     $i = 1;
     foreach ($arr as $k => $v) {

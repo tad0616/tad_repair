@@ -1,5 +1,5 @@
 <?php
-$modversion = array();
+$modversion = [];
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADREPAIR_NAME;
@@ -24,7 +24,7 @@ $modversion['min_php']             = 5.4;
 $modversion['min_xoops']           = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal']                  = array();
+$modversion['paypal']                  = [];
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TAD_WEB;
 $modversion['paypal']['amount']        = 0;
@@ -55,7 +55,7 @@ $modversion['sub'][2]['name'] = _MI_TADREPAIR_SMNAME2;
 $modversion['sub'][2]['url']  = "repair.php";
 
 //---樣板設定---//
-$modversion['templates']                    = array();
+$modversion['templates']                    = [];
 $i                                          = 1;
 $modversion['templates'][$i]['file']        = 'tad_repair_index.tpl';
 $modversion['templates'][$i]['description'] = 'tad_repair_index.tpl';
@@ -96,8 +96,8 @@ $modversion['config'][2]['title']       = '_MI_TADREPAIR_SHOW_COLS';
 $modversion['config'][2]['description'] = '_MI_TADREPAIR_SHOW_COLS_DESC';
 $modversion['config'][2]['formtype']    = 'select_multi';
 $modversion['config'][2]['valuetype']   = 'array';
-$modversion['config'][2]['default']     = array('repair_date', 'repair_place', 'repair_uid', 'unit_sn', 'repair_status', 'fixed_uid', 'fixed_date', 'fixed_status');
-$modversion['config'][2]['options']     = array(
+$modversion['config'][2]['default']     = ['repair_date', 'repair_place', 'repair_uid', 'unit_sn', 'repair_status', 'fixed_uid', 'fixed_date', 'fixed_status'];
+$modversion['config'][2]['options']     = [
     '_MI_TADREPAIR_SHOW_DATE'         => 'repair_date',
     '_MI_TADREPAIR_PLACE'             => 'repair_place',
     '_MI_TADREPAIR_SHOW_UID'          => 'repair_uid',
@@ -106,19 +106,19 @@ $modversion['config'][2]['options']     = array(
     '_MI_TADREPAIR_SHOW_FIXED_UID'    => 'fixed_uid',
     '_MI_TADREPAIR_SHOW_FIXED_DATE'   => 'fixed_date',
     '_MI_TADREPAIR_SHOW_FIXED_STATUS' => 'fixed_status',
-);
+];
 
 $modversion['config'][3]['name']        = 'unuse_cols';
 $modversion['config'][3]['title']       = '_MI_TADREPAIR_UNUSE_COLS';
 $modversion['config'][3]['description'] = '_MI_TADREPAIR_UNUSE_COLS_DESC';
 $modversion['config'][3]['formtype']    = 'select_multi';
 $modversion['config'][3]['valuetype']   = 'array';
-$modversion['config'][3]['default']     = array();
-$modversion['config'][3]['options']     = array(
+$modversion['config'][3]['default']     = [];
+$modversion['config'][3]['options']     = [
     '_MI_TADREPAIR_PLACE'   => 'repair_place',
     '_MI_TADREPAIR_STATUS'  => 'repair_status',
     '_MI_TADREPAIR_CONTENT' => 'repair_content',
-);
+];
 
 //---搜尋設定---//
 $modversion['hasSearch']      = 1;

@@ -14,7 +14,7 @@ $objActSheet = $objPHPExcel->getActiveSheet(); //指定預設工作表為 $objAc
 $objActSheet->setTitle($ym . _MD_TADREPAIR_REPORT); //設定標題
 $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一次，編號要改
 
-$col_width = array(8, 20, 45, 25, 15, 15, 15, 15, 20, 15, 40, 60);
+$col_width = [8, 20, 45, 25, 15, 15, 15, 15, 20, 15, 40, 60];
 $z         = 0;
 foreach ($col_width as $n => $w) {
     if ($n == 3 and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
@@ -29,7 +29,7 @@ foreach ($col_width as $n => $w) {
 
 $objActSheet->getStyle("A1:{$alpha}1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setARGB('FFC9E3F3');
 
-$col_title = array(_MD_TADREPAIR_REPAIR_SN, _MD_TADREPAIR_REPAIR_DATE, _MD_TADREPAIR_REPAIR_TITLE, _MD_TADREPAIR_PLACE, _MD_TADREPAIR_REPAIR_UID, _MD_TADREPAIR_UNIT, _MD_TADREPAIR_REPAIR_STATUS2, _MD_TADREPAIR_FIXED_UID, _MD_TADREPAIR_FIXED_DATE, _MD_TADREPAIR_FIXED_STATUS2, _MD_TADREPAIR_FIXED_CONTENT, _MD_TADREPAIR_REPAIR_CONTENT);
+$col_title = [_MD_TADREPAIR_REPAIR_SN, _MD_TADREPAIR_REPAIR_DATE, _MD_TADREPAIR_REPAIR_TITLE, _MD_TADREPAIR_PLACE, _MD_TADREPAIR_REPAIR_UID, _MD_TADREPAIR_UNIT, _MD_TADREPAIR_REPAIR_STATUS2, _MD_TADREPAIR_FIXED_UID, _MD_TADREPAIR_FIXED_DATE, _MD_TADREPAIR_FIXED_STATUS2, _MD_TADREPAIR_FIXED_CONTENT, _MD_TADREPAIR_REPAIR_CONTENT];
 $z         = 0;
 
 foreach ($col_title as $n => $title) {
@@ -75,7 +75,7 @@ while ($all = $xoopsDB->fetchArray($result)) {
 
     $unit = get_tad_repair_unit($unit_sn);
 
-    $col_value = array($repair_sn, $repair_date, $repair_title, $repair_place, $repair_name, $unit['unit_title'], $repair_status, $fixed_name, $fixed_date, $fixed_status, $fixed_content, $repair_content);
+    $col_value = [$repair_sn, $repair_date, $repair_title, $repair_place, $repair_name, $unit['unit_title'], $repair_status, $fixed_name, $fixed_date, $fixed_status, $fixed_content, $repair_content];
     $z         = 0;
 
     foreach ($col_value as $n => $val) {

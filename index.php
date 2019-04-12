@@ -50,7 +50,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $all_content = array();
+    $all_content = [];
     $i           = 0;
 
     $repair_color = get_color('repair_status');
@@ -118,7 +118,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     $sql    = "SELECT repair_date FROM `" . $xoopsDB->prefix("tad_repair") . "` ORDER BY `repair_date` DESC";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $all_repair_ym = array();
+    $all_repair_ym = [];
 
     while (list($repair_date) = $xoopsDB->fetchRow($result)) {
         $ym             = substr($repair_date, 0, 7);

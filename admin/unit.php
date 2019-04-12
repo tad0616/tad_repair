@@ -14,7 +14,7 @@ function tad_repair_unit_form($unit_sn = "")
     if (!empty($unit_sn)) {
         $DBV = get_tad_repair_unit($unit_sn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -26,7 +26,7 @@ function tad_repair_unit_form($unit_sn = "")
     $unit_title = (!isset($DBV['unit_title'])) ? null : $DBV['unit_title'];
 
     //設定「unit_admin」欄位預設值
-    $unit_admin = (!isset($DBV['unit_admin'])) ? array('1') : explode(",", $DBV['unit_admin']);
+    $unit_admin = (!isset($DBV['unit_admin'])) ? ['1'] : explode(",", $DBV['unit_admin']);
 
     $op = (empty($unit_sn)) ? "insert_tad_repair_unit" : "update_tad_repair_unit";
     //$op="replace_tad_repair_unit";
@@ -115,7 +115,7 @@ function list_tad_repair_unit()
     $sql    = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $all_content = array();
+    $all_content = [];
     $i           = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： $unit_sn , $unit_title , $unit_admin
@@ -125,7 +125,7 @@ function list_tad_repair_unit()
 
         $unit_admin_arr  = explode(',', $unit_admin);
         $unit_admin_list = "";
-        $unit_admin_name = array();
+        $unit_admin_name = [];
         foreach ($unit_admin_arr as $uid) {
             //以uid取得使用者名稱
             $uid_name = XoopsUser::getUnameFromId($uid, 1);

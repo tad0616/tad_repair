@@ -25,7 +25,7 @@ function tad_repair_form($repair_sn = "")
             redirect_header("index.php", 3, _MD_TADREPAIR_NO_PERMISSION);
         }
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -248,7 +248,7 @@ function tad_fixed_form($repair_sn = "")
         }
 
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
