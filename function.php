@@ -11,7 +11,7 @@ function get_color($name = '')
 {
     global $xoopsConfig;
     include_once "language/{$xoopsConfig['language']}/modinfo.php";
-    $default = ('fixed_status' == $name) ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
+    $default = ('fixed_status' === $name) ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
 
     $def_arr = mk_arr(explode(';', $default));
     // die(var_export($def_arr));
@@ -124,11 +124,11 @@ function mc2arr($name = '', $def = '', $v_as_k = true, $type = 'option', $other 
 
     $new_arr = mk_arr($arr, $v_as_k);
 
-    if ('checkbox' == $type) {
+    if ('checkbox' === $type) {
         $opt = arr2chk($name, $new_arr, $def, $v_as_k, $other);
-    } elseif ('radio' == $type) {
+    } elseif ('radio' === $type) {
         $opt = arr2radio($name, $new_arr, $def, $v_as_k, $other);
-    } elseif ('return' == $type) {
+    } elseif ('return' === $type) {
         return $new_arr;
     } else {
         $opt = arr2opt($new_arr, $def, $v_as_k, $other, $nl);

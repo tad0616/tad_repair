@@ -67,7 +67,7 @@ while ($all = $xoopsDB->fetchArray($result)) {
     }
 
     $repair_date = mb_substr($repair_date, 0, 10);
-    $fixed_date = ('0000-00-00 00:00:00' == $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
+    $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
     $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn], true) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
 
@@ -94,7 +94,7 @@ $n = $i - 1;
 $objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", '=CONCATENATE("' . _MD_TADREPAIR_REPORT_TOTAL . " \" , COUNTA(A2:A{$n}) , \" " . _MD_TADREPAIR_REPORT_TOTAL2 . '")');
 
 $title = $ym . _MD_TADREPAIR_REPORT;
-$title = (_CHARSET == 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
+$title = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
 header('Content-Type: application/vnd.ms-excel');
 header("Content-Disposition: attachment;filename={$title}.xls");
 header('Cache-Control: max-age=0');

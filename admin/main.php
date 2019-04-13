@@ -47,7 +47,7 @@ function list_tad_repair()
             }
         }
 
-        $fixed_date = ('0000-00-00 00:00:00' == $fixed_date) ? '' : $fixed_date;
+        $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : $fixed_date;
 
         $unit = get_tad_repair_unit($unit_sn);
 

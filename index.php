@@ -76,7 +76,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         }
 
         $repair_date = mb_substr($repair_date, 0, 10);
-        $fixed_date = ('0000-00-00 00:00:00' == $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
+        $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
         $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn], true) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
 
@@ -108,7 +108,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $i++;
     }
 
-    if ('return' == $mode) {
+    if ('return' === $mode) {
         return $all_content;
     }
 
@@ -215,7 +215,7 @@ function show_one_tad_repair($repair_sn = '')
         }
     }
 
-    $fixed_date = ('0000-00-00 00:00:00' == $fixed_date) ? '' : $fixed_date;
+    $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : $fixed_date;
     $unit = get_tad_repair_unit($unit_sn);
 
     $fixed_content = nl2br($fixed_content);

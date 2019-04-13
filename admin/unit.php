@@ -69,7 +69,7 @@ function insert_tad_repair_unit()
     $myts = MyTextSanitizer::getInstance();
     $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
 
-    if (empty($_POST['unit_admin']) or ',' == $_POST['unit_admin']) {
+    if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
         $unit_admin = '1';
     } else {
         $unit_admin = mb_substr($_POST['unit_admin'], 1);
@@ -94,7 +94,7 @@ function update_tad_repair_unit($unit_sn = '')
     $myts = MyTextSanitizer::getInstance();
     $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
 
-    if (empty($_POST['unit_admin']) or ',' == $_POST['unit_admin']) {
+    if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
         $unit_admin = '1';
     } else {
         $unit_admin = mb_substr($_POST['unit_admin'], 1);
