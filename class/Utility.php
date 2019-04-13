@@ -134,7 +134,7 @@ class Utility
     }
 
     //刪除錯誤的重複欄位及樣板檔
-    public function chk_tad_repair_block()
+    public static function chk_tad_repair_block()
     {
         global $xoopsDB;
         //die(var_export($xoopsConfig));
@@ -255,7 +255,7 @@ PRIMARY KEY (`files_sn`)
     }
 
     //執行更新
-    public function update_blank_status()
+    public static function update_blank_status()
     {
         global $xoopsDB, $xoopsModuleConfig;
         $arr = explode(';', $xoopsModuleConfig['fixed_status']);
