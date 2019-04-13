@@ -1,9 +1,9 @@
 <?php
 //引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
-    redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
+if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
+    redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
+include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
 /********************* 自訂函數 *********************/
 //取得顏色陣列
@@ -11,23 +11,24 @@ function get_color($name = '')
 {
     global $xoopsConfig;
     include_once "language/{$xoopsConfig['language']}/modinfo.php";
-    $default = ($name == 'fixed_status') ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
+    $default = ('fixed_status' == $name) ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
 
-    $def_arr = mk_arr(explode(";", $default));
+    $def_arr = mk_arr(explode(';', $default));
     // die(var_export($def_arr));
     foreach ($def_arr as $color => $item) {
         $def_color_arr[$item] = $color;
     }
     // die(var_export($def_color_arr));
-    $arr = mc2arr($name, "", false, 'return');
+    $arr = mc2arr($name, '', false, 'return');
     // die(var_export($arr));
     foreach ($arr as $color => $item) {
         $color_arr[$item] = (is_numeric($color) or $color == $item) ? $def_color_arr[$item] : $color;
     }
+
     return $color_arr;
 }
 
-function SendEmail($uid = "", $title = "", $content = "")
+function SendEmail($uid = '', $title = '', $content = '')
 {
     global $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
     if (empty($uid)) {
@@ -37,15 +38,16 @@ function SendEmail($uid = "", $title = "", $content = "")
     // $member_handler = xoops_gethandler('member');
     // $user           = $member_handler->getUser($uid);
     // $email          = $user->email();
-    $sql         = "select email from `" . $xoopsDB->prefix("users") . "` where uid='{$uid}'";
-    $result      = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     list($email) = $xoopsDB->fetchRow($result);
 
-    $xoopsMailer                           = &getMailer();
-    $xoopsMailer->multimailer->ContentType = "text/html";
-    $xoopsMailer->addHeaders("MIME-Version: 1.0");
+    $xoopsMailer = &getMailer();
+    $xoopsMailer->multimailer->ContentType = 'text/html';
+    $xoopsMailer->addHeaders('MIME-Version: 1.0');
 
     $msg .= ($xoopsMailer->sendMail($email, $title, $content, $headers)) ? sprintf(_MD_TADREPAIR_MAIL_OK, $title, $email) : sprintf(_MD_TADREPAIR_MAIL_FAIL, $title, $email);
+
     return $msg;
 }
 
@@ -53,12 +55,13 @@ function SendEmail($uid = "", $title = "", $content = "")
 function get_tad_repair_unit_list()
 {
     global $xoopsDB, $xoopsModule;
-    $sql    = "SELECT `unit_sn` , `unit_title` FROM `" . $xoopsDB->prefix("tad_repair_unit") . "` ORDER BY `unit_sn`";
+    $sql = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $list[$unit_sn] = $unit_title;
     }
+
     return $list;
 }
 
@@ -66,8 +69,8 @@ function get_tad_repair_unit_list()
 function unit_admin_arr()
 {
     global $xoopsDB;
-    $sql            = "SELECT * FROM `" . $xoopsDB->prefix("tad_repair_unit") . "`";
-    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $unit_admin_arr = [];
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -75,58 +78,62 @@ function unit_admin_arr()
         }
         $unit_admin_arr[$unit_sn] = explode(',', $unit_admin);
     }
+
     return $unit_admin_arr;
 }
 
 //以流水號取得某筆tad_repair資料
-function get_tad_repair($repair_sn = "")
+function get_tad_repair($repair_sn = '')
 {
     global $xoopsDB;
     if (empty($repair_sn)) {
         return;
     }
 
-    $sql    = "select * from `" . $xoopsDB->prefix("tad_repair") . "` where `repair_sn` = '{$repair_sn}'";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
+
     return $data;
 }
 
 //以流水號取得某筆tad_repair_unit資料
-function get_tad_repair_unit($unit_sn = "")
+function get_tad_repair_unit($unit_sn = '')
 {
     global $xoopsDB;
     if (empty($unit_sn)) {
         return;
     }
 
-    $sql    = "select * from `" . $xoopsDB->prefix("tad_repair_unit") . "` where `unit_sn` = '{$unit_sn}'";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
+
     return $data;
 }
 
 //把模組設定項目轉為選項
-function mc2arr($name = "", $def = "", $v_as_k = true, $type = 'option', $other = "", $nl = true)
+function mc2arr($name = '', $def = '', $v_as_k = true, $type = 'option', $other = '', $nl = true)
 {
     global $xoopsModuleConfig;
     if (is_array($xoopsModuleConfig[$name])) {
         $arr = $xoopsModuleConfig[$name];
     } else {
-        $arr = explode(";", $xoopsModuleConfig[$name]);
+        $arr = explode(';', $xoopsModuleConfig[$name]);
     }
 
     $new_arr = mk_arr($arr, $v_as_k);
 
-    if ($type == "checkbox") {
+    if ('checkbox' == $type) {
         $opt = arr2chk($name, $new_arr, $def, $v_as_k, $other);
-    } elseif ($type == "radio") {
+    } elseif ('radio' == $type) {
         $opt = arr2radio($name, $new_arr, $def, $v_as_k, $other);
-    } elseif ($type == "return") {
+    } elseif ('return' == $type) {
         return $new_arr;
     } else {
         $opt = arr2opt($new_arr, $def, $v_as_k, $other, $nl);
     }
+
     return $opt;
 }
 
@@ -138,11 +145,11 @@ function mk_arr($arr = [], $v_as_k = false)
                 continue;
             }
 
-            if (preg_match("/=/", $item)) {
-                list($k, $v) = explode("=", $item);
+            if (preg_match('/=/', $item)) {
+                list($k, $v) = explode('=', $item);
                 if ($v_as_k) {
                     $k = $v;
-                } elseif ($v == '') {
+                } elseif ('' == $v) {
                     $v = $k;
                 }
 
@@ -154,31 +161,33 @@ function mk_arr($arr = [], $v_as_k = false)
     } else {
         $new_arr = [];
     }
+
     return $new_arr;
 }
 
 //把陣列轉為選項
-function arr2opt($arr, $def = "", $v_as_k = false, $other = "")
+function arr2opt($arr, $def = '', $v_as_k = false, $other = '')
 {
     if (is_array($def)) {
         $def_arr = $def;
     } else {
         $def_arr = [$def];
     }
-    $main = "";
+    $main = '';
     foreach ($arr as $k => $v) {
         if ($v_as_k) {
             $k = $v;
         }
 
-        $selected = (in_array($k, $def_arr)) ? "selected" : "";
+        $selected = (in_array($k, $def_arr, true)) ? 'selected' : '';
         $main .= "<option value='$k' $selected $other>$v</option>";
     }
+
     return $main;
 }
 
 //把陣列轉為選項
-function arr2chk($name, $arr, $def = "", $v_as_k = false, $other = "")
+function arr2chk($name, $arr, $def = '', $v_as_k = false, $other = '')
 {
     if (is_array($def)) {
         $def_arr = $def;
@@ -191,16 +200,17 @@ function arr2chk($name, $arr, $def = "", $v_as_k = false, $other = "")
             $k = $v;
         }
 
-        $checked = (in_array($k, $def_arr)) ? "checked" : "";
+        $checked = (in_array($k, $def_arr, true)) ? 'checked' : '';
         $main .= "<span style='white-space:nowrap;'><input type='checkbox' name='{$name}[]' value='$k' id='{$name}_{$i}' $checked $other>
         <label for='{$name}_{$i}'>$v</label></span> ";
         $i++;
     }
+
     return $main;
 }
 
 //把陣列轉為單選項
-function arr2radio($name, $arr, $def = "", $v_as_k = false, $other = "")
+function arr2radio($name, $arr, $def = '', $v_as_k = false, $other = '')
 {
     $i = 1;
     foreach ($arr as $k => $v) {
@@ -208,11 +218,12 @@ function arr2radio($name, $arr, $def = "", $v_as_k = false, $other = "")
             $k = $v;
         }
 
-        $checked = ($def == $k) ? "checked" : "";
+        $checked = ($def == $k) ? 'checked' : '';
         $main .= "<span style='white-space:nowrap;'><input type='radio' name='{$name}' value='$k' id='{$name}_{$i}' $checked $other>
       <label for='{$name}_{$i}'>$v</label></span> ";
         $i++;
     }
+
     return $main;
 }
 

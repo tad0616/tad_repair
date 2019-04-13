@@ -6,10 +6,10 @@ function xoops_module_update_tad_repair(&$module, $old_version)
 {
     global $xoopsDB;
 
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair");
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/file");
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image");
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_repair/image/.thumbs");
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_repair');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_repair/file');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_repair/image');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_repair/image/.thumbs');
 
     if (Utility::chk_uid()) {
         Utility::go_update_uid();
@@ -32,4 +32,3 @@ function xoops_module_update_tad_repair(&$module, $old_version)
 
     return true;
 }
-

@@ -10,9 +10,9 @@ function tad_repair_search($queryarray, $andor, $limit, $offset, $userid)
         }
         $queryarray = $arr;
     }
-    $sql = "SELECT `repair_sn`,`repair_title`,`repair_date`, `repair_uid` FROM " . $xoopsDB->prefix("tad_repair") . " WHERE 1";
-    if ($userid != 0) {
-        $sql .= " AND uid=" . $userid . " ";
+    $sql = 'SELECT `repair_sn`,`repair_title`,`repair_date`, `repair_uid` FROM ' . $xoopsDB->prefix('tad_repair') . ' WHERE 1';
+    if (0 != $userid) {
+        $sql .= ' AND uid=' . $userid . ' ';
     }
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((`repair_title` LIKE '%{$queryarray[0]}%'  OR `repair_content` LIKE '%{$queryarray[0]}%' OR  `fixed_content` LIKE '%{$queryarray[0]}%')";
@@ -20,19 +20,20 @@ function tad_repair_search($queryarray, $andor, $limit, $offset, $userid)
             $sql .= " $andor ";
             $sql .= "(`repair_title` LIKE '%{$queryarray[$i]}%' OR  `repair_content` LIKE '%{$queryarray[$i]}%'  OR  `fixed_content` LIKE '%{$queryarray[$i]}%')";
         }
-        $sql .= ") ";
+        $sql .= ') ';
     }
-    $sql .= "ORDER BY  `repair_date` DESC";
+    $sql .= 'ORDER BY  `repair_date` DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret    = [];
-    $i      = 0;
+    $ret = [];
+    $i = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret[$i]['image'] = "images/report.png";
-        $ret[$i]['link']  = "index.php?repair_sn=" . $myrow['repair_sn'];
+        $ret[$i]['image'] = 'images/report.png';
+        $ret[$i]['link'] = 'index.php?repair_sn=' . $myrow['repair_sn'];
         $ret[$i]['title'] = $myrow['repair_title'];
-        $ret[$i]['time']  = strtotime($myrow['repair_date']);
-        $ret[$i]['uid']   = $myrow['repair_uid'];
+        $ret[$i]['time'] = strtotime($myrow['repair_date']);
+        $ret[$i]['uid'] = $myrow['repair_uid'];
         $i++;
     }
+
     return $ret;
 }
