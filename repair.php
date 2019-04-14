@@ -1,11 +1,11 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
+require __DIR__ . '/header.php';
 
-$xoopsOption['template_main'] = 'tad_repair_repair.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_repair_repair.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
 $TadUpFiles = new TadUpFiles('tad_repair');
 /*-----------function區--------------*/
 
@@ -66,7 +66,7 @@ function tad_repair_form($repair_sn = '')
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
         redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm', true);
     $formValidator_code = $formValidator->render();
 
@@ -103,7 +103,7 @@ function get_tad_repair_unit_menu_options($default_unit_sn = '0')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $option = '';
-    while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result))) {
         $selected = ($unit_sn == $default_unit_sn) ? "selected='selected'" : '';
         $option .= "<option value=$unit_sn $selected>{$unit_title}</option>";
     }
@@ -140,7 +140,7 @@ function insert_tad_repair()
 
     $sql = 'select repair_sn from `' . $xoopsDB->prefix('tad_repair') . "` where repair_title='{$repair_title}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($repair_sn) = $xoopsDB->fetchRow($result))) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
 
@@ -170,7 +170,7 @@ function insert_tad_repair()
     $title = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $repair_title);
     //把填報詳細內容也放入 MAIL
     $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $repair_title, nl2br($repair_content) .
-        "<br /> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
+        "<br> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content);
     }
@@ -292,7 +292,7 @@ function tad_fixed_form($repair_sn = '')
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
         redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm', true);
     $formValidator_code = $formValidator->render();
 
@@ -366,7 +366,7 @@ function update_tad_fixed($repair_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
 $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
@@ -409,4 +409,4 @@ $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('jquery', get_jquery(true));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

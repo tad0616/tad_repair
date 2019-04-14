@@ -3,14 +3,14 @@
 if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
     redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
 /********************* 自訂函數 *********************/
 //取得顏色陣列
 function get_color($name = '')
 {
     global $xoopsConfig;
-    include_once "language/{$xoopsConfig['language']}/modinfo.php";
+    require_once "language/{$xoopsConfig['language']}/modinfo.php";
     $default = ('fixed_status' === $name) ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
 
     $def_arr = mk_arr(explode(';', $default));
@@ -35,8 +35,8 @@ function SendEmail($uid = '', $title = '', $content = '')
         return;
     }
 
-    // $member_handler = xoops_gethandler('member');
-    // $user           = $member_handler->getUser($uid);
+    // $memberHandler = xoops_getHandler('member');
+    // $user           = $memberHandler->getUser($uid);
     // $email          = $user->email();
     $sql = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
@@ -58,7 +58,7 @@ function get_tad_repair_unit_list()
     $sql = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result))) {
         $list[$unit_sn] = $unit_title;
     }
 
@@ -72,7 +72,7 @@ function unit_admin_arr()
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $unit_admin_arr = [];
-    while ($data = $xoopsDB->fetchArray($result)) {
+    while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }

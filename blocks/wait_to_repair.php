@@ -12,7 +12,7 @@ function wait_to_repair($options)
     $block = [];
     $i = 0;
     $content = [];
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
             $$k = $v;

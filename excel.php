@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once 'header.php';
+require_once __DIR__ . '/header.php';
 
 $ym = mb_substr($_POST['ym'], 0, 7);
 
@@ -47,7 +47,7 @@ $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where repair_date
 $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
 $i = 2;
-while ($all = $xoopsDB->fetchArray($result)) {
+while (false !== ($all = $xoopsDB->fetchArray($result))) {
     //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
     foreach ($all as $k => $v) {
         $$k = $v;

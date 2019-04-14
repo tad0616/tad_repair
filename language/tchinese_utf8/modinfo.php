@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
 define('_MI_TADREPAIR_NAME', '維修通報');
 define('_MI_TADREPAIR_AUTHOR', '維修通報');
 define('_MI_TADREPAIR_CREDITS', 'tad');

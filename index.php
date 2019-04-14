@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
-$xoopsOption['template_main'] = 'tad_repair_index.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_repair_index.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 
@@ -12,7 +12,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
     if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php')) {
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
 
         $FooTable = new FooTable();
         $FooTableJS = $FooTable->render();
@@ -56,7 +56,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     $repair_color = get_color('repair_status');
     $status_color = get_color('fixed_status');
 
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -119,7 +119,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
     $all_repair_ym = [];
 
-    while (list($repair_date) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($repair_date) = $xoopsDB->fetchRow($result))) {
         $ym = mb_substr($repair_date, 0, 7);
         $repair_ym[$ym] = $ym;
     }
@@ -234,7 +234,7 @@ function show_one_tad_repair($repair_sn = '')
 
     //return $main;
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
     $TadUpFiles = new TadUpFiles('tad_repair');
     $TadUpFiles->set_col('repair_sn', $repair_sn);
     $show_files = $TadUpFiles->show_files();
@@ -265,7 +265,7 @@ function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
 $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
@@ -300,5 +300,5 @@ $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('jquery', get_jquery(true));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
-include_once XOOPS_ROOT_PATH . '/include/comment_view.php';
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

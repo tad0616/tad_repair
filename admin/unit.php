@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_repair_adm_unit.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_repair_adm_unit.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 //tad_repair_unit編輯表單
@@ -34,7 +34,7 @@ function tad_repair_unit_form($unit_sn = '')
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once TADTOOLS_PATH . '/formValidator.php';
+    require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm', true);
     $formValidator_code = $formValidator->render();
 
@@ -42,7 +42,7 @@ function tad_repair_unit_form($unit_sn = '')
     $sql = 'SELECT uid,uname,name FROM ' . $xoopsDB->prefix('users') . ' ORDER BY name';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($uid, $uname, $name) = $xoopsDB->fetchRow($result))) {
         $name = empty($name) ? $uname : $name;
         if (in_array($uid, $unit_admin, true)) {
             $option2 .= "<option value='{$uid}'>{$name}</option>";
@@ -119,7 +119,7 @@ function list_tad_repair_unit()
 
     $all_content = [];
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $unit_sn , $unit_title , $unit_admin
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -157,7 +157,7 @@ function delete_tad_repair_unit($unit_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
 $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
@@ -194,4 +194,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

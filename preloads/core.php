@@ -27,6 +27,6 @@ class Tad_repairCorePreload extends XoopsPreloadItem
      */
     public static function eventCoreIncludeCommonEnd($args)
     {
-        include __DIR__ . '/autoloader.php';
+        require __DIR__ . '/autoloader.php';
     }
 }
