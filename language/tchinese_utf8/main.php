@@ -10,7 +10,7 @@ define('_MD_TADREPAIR_REPORT_TOTAL2', '筆');
 define('_MD_TADREPAIR_REPAIR_SN', '編號');
 define('_MD_TADREPAIR_REPAIR_TITLE', '報修內容');
 define('_MD_TADREPAIR_REPAIR_CONTENT', '詳細說明');
-define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', "請說明需報修情形");
+define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', '請說明需報修情形');
 define('_MD_TADREPAIR_REPAIR_UNIT_FILTER', '顯示全部單位');
 define('_MD_TADREPAIR_REPAIR_FIXED_FILTER', '顯示全部處理狀態');
 define('_MD_TADREPAIR_REPAIR_DATE', '報修日期');

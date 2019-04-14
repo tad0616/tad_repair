@@ -11,7 +11,7 @@ define('_MD_TADREPAIR_REPORT_TOTAL2', 'Pen');
 define('_MD_TADREPAIR_REPAIR_SN', 'Number');
 define('_MD_TADREPAIR_REPAIR_TITLE', 'Title');
 define('_MD_TADREPAIR_REPAIR_CONTENT', 'Details');
-define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', "Please describe or explain the condition to be repaired");
+define('_MD_TADREPAIR_REPAIR_CONTENT_PRETEXT', 'Please describe or explain the condition to be repaired');
 define('_MD_TADREPAIR_REPAIR_UNIT_FILTER', 'Show all units');
 define('_MD_TADREPAIR_REPAIR_FIXED_FILTER', 'Show all processing status');
 define('_MD_TADREPAIR_REPAIR_DATE', 'Date');

@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Tad_repair;
+<?php
+
+namespace XoopsModules\Tad_repair;
 
 /*
  Utility Class Definition
@@ -19,14 +21,13 @@
  * @author       Mamba <mambax7@gmail.com>
  */
 
-
 /**
  * Class Utility
  */
 class Utility
 {
     //建立目錄
-    public static function mk_dir($dir = "")
+    public static function mk_dir($dir = '')
     {
         //若無目錄名稱秀出警告訊息
         if (empty($dir)) {
@@ -55,28 +56,30 @@ class Utility
         }
 
         while ($file = readdir($dir_handle)) {
-            if ($file != "." && $file != "..") {
-                if (!is_dir($dirname . "/" . $file)) {
-                    unlink($dirname . "/" . $file);
+            if ('.' !== $file && '..' !== $file) {
+                if (!is_dir($dirname . '/' . $file)) {
+                    unlink($dirname . '/' . $file);
                 } else {
                     self::delete_directory($dirname . '/' . $file);
                 }
-
             }
         }
         closedir($dir_handle);
         rmdir($dirname);
+
         return true;
     }
 
     //拷貝目錄
-    public static function full_copy($source = "", $target = "")
+    public static function full_copy($source = '', $target = '')
     {
         if (is_dir($source)) {
-            @mkdir($target);
+            if (!mkdir($target) && !is_dir($target)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $target));
+            }
             $d = dir($source);
             while (false !== ($entry = $d->read())) {
-                if ($entry == '.' || $entry == '..') {
+                if ('.' === $entry || '..' === $entry) {
                     continue;
                 }
 
@@ -98,10 +101,13 @@ class Utility
         if (!rename($oldfile, $newfile)) {
             if (copy($oldfile, $newfile)) {
                 unlink($oldfile);
+
                 return true;
             }
+
             return false;
         }
+
         return true;
     }
 
@@ -109,7 +115,7 @@ class Utility
     public static function chk_fc_tag()
     {
         global $xoopsDB;
-        $sql    = "SELECT count(`tag`) FROM " . $xoopsDB->prefix("tad_repair_files_center");
+        $sql = 'SELECT count(`tag`) FROM ' . $xoopsDB->prefix('tad_repair_files_center');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -121,16 +127,16 @@ class Utility
     public static function go_fc_tag()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_repair_files_center") . "
+        $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_repair_files_center') . "
     ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
     ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
     ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
     ";
-        $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
+        $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $xoopsDB->error());
     }
 
     //刪除錯誤的重複欄位及樣板檔
-    function chk_tad_repair_block()
+    public static function chk_tad_repair_block()
     {
         global $xoopsDB;
         //die(var_export($xoopsConfig));
@@ -138,28 +144,28 @@ class Utility
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {
-            $show_func                = $block['show_func'];
+            $show_func = $block['show_func'];
             $tpl_file_arr[$show_func] = $block['template'];
             $tpl_desc_arr[$show_func] = $block['description'];
         }
 
         //找出目前所有的樣板檔
-        $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
+        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
     WHERE `dirname` = 'tad_repair' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
             if ($template != $tpl_file_arr[$show_func]) {
-                $sql = "delete from " . $xoopsDB->prefix("newblocks") . " where bid='{$bid}'";
+                $sql = 'delete from ' . $xoopsDB->prefix('newblocks') . " where bid='{$bid}'";
                 $xoopsDB->queryF($sql);
 
                 //連同樣板以及樣板實體檔案也要刪掉
-                $sql = "delete from " . $xoopsDB->prefix("tplfile") . " as a
-            left join " . $xoopsDB->prefix("tplsource") . "  as b on a.tpl_id=b.tpl_id
+                $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
+            left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
             where a.tpl_refid='$bid' and a.tpl_module='tad_repair' and a.tpl_type='block'";
                 $xoopsDB->queryF($sql);
             } else {
-                $sql = "update " . $xoopsDB->prefix("tplfile") . "
+                $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
             set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
             where tpl_refid='{$bid}'";
                 $xoopsDB->queryF($sql);
@@ -172,10 +178,10 @@ class Utility
     {
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE table_name = '" . $xoopsDB->prefix("tad_repair") . "' AND COLUMN_NAME = 'repair_uid'";
-        $result     = $xoopsDB->query($sql);
+  WHERE table_name = '" . $xoopsDB->prefix('tad_repair') . "' AND COLUMN_NAME = 'repair_uid'";
+        $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
-        if ($type == 'smallint') {
+        if ('smallint' === $type) {
             return true;
         }
 
@@ -186,8 +192,9 @@ class Utility
     public static function go_update_uid()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_repair") . "` CHANGE `repair_uid` `repair_uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
+        $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_repair') . '` CHANGE `repair_uid` `repair_uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
+
         return true;
     }
 
@@ -195,7 +202,7 @@ class Utility
     public static function chk_chk1()
     {
         global $xoopsDB;
-        $sql    = "select count(`repair_place`) from " . $xoopsDB->prefix("tad_repair");
+        $sql = 'select count(`repair_place`) from ' . $xoopsDB->prefix('tad_repair');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -208,7 +215,7 @@ class Utility
     public static function go_update1()
     {
         global $xoopsDB;
-        $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_repair") . " ADD `repair_place` varchar(255) NOT NULL default '' COMMENT '報修地點' AFTER `repair_title`";
+        $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_repair') . " ADD `repair_place` varchar(255) NOT NULL default '' COMMENT '報修地點' AFTER `repair_title`";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
 
         return true;
@@ -218,7 +225,7 @@ class Utility
     public static function chk_chk2()
     {
         global $xoopsDB;
-        $sql    = "SELECT count(*) FROM " . $xoopsDB->prefix("tad_repair_files_center");
+        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_repair_files_center');
         $result = $xoopsDB->query($sql);
         if (empty($result)) {
             return true;
@@ -230,7 +237,7 @@ class Utility
     public static function go_update2()
     {
         global $xoopsDB;
-        $sql = "CREATE TABLE `" . $xoopsDB->prefix("tad_repair_files_center") . "` (
+        $sql = 'CREATE TABLE `' . $xoopsDB->prefix('tad_repair_files_center') . "` (
       `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
       `col_name` varchar(255) NOT NULL default '' COMMENT '欄位名稱',
       `col_sn` smallint(5) unsigned NOT NULL default 0 COMMENT '欄位編號',
@@ -250,21 +257,20 @@ PRIMARY KEY (`files_sn`)
     }
 
     //執行更新
-    function update_blank_status()
+    public static function update_blank_status()
     {
         global $xoopsDB, $xoopsModuleConfig;
-        $arr = explode(";", $xoopsModuleConfig['fixed_status']);
-        if (strpos("=", $arr[0]) !== false) {
-            $status       = explode('=', $arr[0]);
+        $arr = explode(';', $xoopsModuleConfig['fixed_status']);
+        if (false !== mb_strpos('=', $arr[0])) {
+            $status = explode('=', $arr[0]);
             $fixed_status = $status[1];
         } else {
             $fixed_status = $arr[0];
         }
 
-        $sql = "UPDATE " . $xoopsDB->prefix("tad_repair") . " SET `fixed_status` ='{$fixed_status}' WHERE `fixed_status`=''";
+        $sql = 'UPDATE ' . $xoopsDB->prefix('tad_repair') . " SET `fixed_status` ='{$fixed_status}' WHERE `fixed_status`=''";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $xoopsDB->error());
 
         return true;
-    }    
-    
+    }
 }
