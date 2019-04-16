@@ -44,7 +44,7 @@ function tad_repair_unit_form($unit_sn = '')
 
     while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
         $name = empty($name) ? $uname : $name;
-        if (in_array($uid, $unit_admin, true)) {
+        if (in_array($uid, $unit_admin)) {
             $option2 .= "<option value='{$uid}'>{$name}</option>";
         } else {
             $option .= "<option value='{$uid}'>{$name}</option>";

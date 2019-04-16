@@ -17,9 +17,9 @@ $objPHPExcel->createSheet(); //建立新的工作表，上面那三行再來一�
 $col_width = [8, 20, 45, 25, 15, 15, 15, 15, 20, 15, 40, 60];
 $z = 0;
 foreach ($col_width as $n => $w) {
-    if (3 == $n and in_array('repair_place', $xoopsModuleConfig['unuse_cols'], true)) {
+    if (3 == $n and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
         continue;
-    } elseif (6 == $n and in_array('repair_status', $xoopsModuleConfig['unuse_cols'], true)) {
+    } elseif (6 == $n and in_array('repair_status', $xoopsModuleConfig['unuse_cols'])) {
         continue;
     }
     $alpha = num2alpha($z);
@@ -33,9 +33,9 @@ $col_title = [_MD_TADREPAIR_REPAIR_SN, _MD_TADREPAIR_REPAIR_DATE, _MD_TADREPAIR_
 $z = 0;
 
 foreach ($col_title as $n => $title) {
-    if (3 == $n and in_array('repair_place', $xoopsModuleConfig['unuse_cols'], true)) {
+    if (3 == $n and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
         continue;
-    } elseif (6 == $n and in_array('repair_status', $xoopsModuleConfig['unuse_cols'], true)) {
+    } elseif (6 == $n and in_array('repair_status', $xoopsModuleConfig['unuse_cols'])) {
         continue;
     }
     $alpha = num2alpha($z);
@@ -69,7 +69,7 @@ while ($all = $xoopsDB->fetchArray($result)) {
     $repair_date = mb_substr($repair_date, 0, 10);
     $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
-    $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn], true) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
+    $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
 
     $unit = get_tad_repair_unit($unit_sn);
 
@@ -77,9 +77,9 @@ while ($all = $xoopsDB->fetchArray($result)) {
     $z = 0;
 
     foreach ($col_value as $n => $val) {
-        if (3 == $n and in_array('repair_place', $xoopsModuleConfig['unuse_cols'], true)) {
+        if (3 == $n and in_array('repair_place', $xoopsModuleConfig['unuse_cols'])) {
             continue;
-        } elseif (6 == $n and in_array('repair_status', $xoopsModuleConfig['unuse_cols'], true)) {
+        } elseif (6 == $n and in_array('repair_status', $xoopsModuleConfig['unuse_cols'])) {
             continue;
         }
         $alpha = num2alpha($z);
@@ -106,7 +106,7 @@ exit;
 
 function num2alpha($n)
 {
-    for ($r = ''; $n >= 0; $n = (int)($n / 26) - 1) {
+    for ($r = ''; $n >= 0; $n = (int) ($n / 26) - 1) {
         $r = chr($n % 26 + 0x41) . $r;
     }
 

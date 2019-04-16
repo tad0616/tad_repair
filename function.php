@@ -38,11 +38,11 @@ function SendEmail($uid = '', $title = '', $content = '')
     // $member_handler = xoops_gethandler('member');
     // $user           = $member_handler->getUser($uid);
     // $email          = $user->email();
-    $sql         = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
-    $result      = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     list($email) = $xoopsDB->fetchRow($result);
 
-    $xoopsMailer                           = &getMailer();
+    $xoopsMailer = &getMailer();
     $xoopsMailer->multimailer->ContentType = 'text/html';
     $xoopsMailer->addHeaders('MIME-Version: 1.0');
 
@@ -55,7 +55,7 @@ function SendEmail($uid = '', $title = '', $content = '')
 function get_tad_repair_unit_list()
 {
     global $xoopsDB, $xoopsModule;
-    $sql    = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
+    $sql = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
@@ -69,8 +69,8 @@ function get_tad_repair_unit_list()
 function unit_admin_arr()
 {
     global $xoopsDB;
-    $sql            = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
-    $result         = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $unit_admin_arr = [];
     while ($data = $xoopsDB->fetchArray($result)) {
         foreach ($data as $k => $v) {
@@ -93,9 +93,9 @@ function get_tad_repair($repair_sn = '')
         return;
     }
 
-    $sql    = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}'";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
 
     return $data;
 }
@@ -108,9 +108,9 @@ function get_tad_repair_unit($unit_sn = '')
         return;
     }
 
-    $sql    = 'select * from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
 
     return $data;
 }
@@ -182,7 +182,7 @@ function arr2opt($arr, $def = '', $v_as_k = false, $other = '')
             $k = $v;
         }
 
-        $selected = (in_array($k, $def_arr, true)) ? 'selected' : '';
+        $selected = (in_array($k, $def_arr)) ? 'selected' : '';
         $main .= "<option value='$k' $selected $other>$v</option>";
     }
 
@@ -203,7 +203,7 @@ function arr2chk($name, $arr, $def = '', $v_as_k = false, $other = '')
             $k = $v;
         }
 
-        $checked = (in_array($k, $def_arr, true)) ? 'checked' : '';
+        $checked = (in_array($k, $def_arr)) ? 'checked' : '';
         $main .= "<span style='white-space:nowrap;'><input type='checkbox' name='{$name}[]' value='$k' id='{$name}_{$i}' $checked $other>
         <label for='{$name}_{$i}'>$v</label></span> ";
         $i++;
