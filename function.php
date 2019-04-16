@@ -76,7 +76,10 @@ function unit_admin_arr()
         foreach ($data as $k => $v) {
             $$k = $v;
         }
-        $unit_admin_arr[$unit_sn] = explode(',', $unit_admin);
+        $unit_admin_uid = explode(',', $unit_admin);
+        foreach ($unit_admin_uid as $uid) {
+            $unit_admin_arr[$unit_sn][] = (int) $uid;
+        }
     }
 
     return $unit_admin_arr;
@@ -179,7 +182,7 @@ function arr2opt($arr, $def = '', $v_as_k = false, $other = '')
             $k = $v;
         }
 
-        $selected = (in_array($k, $def_arr, true)) ? 'selected' : '';
+        $selected = (in_array($k, $def_arr)) ? 'selected' : '';
         $main .= "<option value='$k' $selected $other>$v</option>";
     }
 
@@ -200,7 +203,7 @@ function arr2chk($name, $arr, $def = '', $v_as_k = false, $other = '')
             $k = $v;
         }
 
-        $checked = (in_array($k, $def_arr, true)) ? 'checked' : '';
+        $checked = (in_array($k, $def_arr)) ? 'checked' : '';
         $main .= "<span style='white-space:nowrap;'><input type='checkbox' name='{$name}[]' value='$k' id='{$name}_{$i}' $checked $other>
         <label for='{$name}_{$i}'>$v</label></span> ";
         $i++;

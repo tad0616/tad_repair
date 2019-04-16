@@ -36,7 +36,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $and_unit = "  and  unit_sn = '{$def_unit_menu_sn}'   ";
     }
 
-    $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
+    $uid = ($xoopsUser) ? (int) $xoopsUser->getVar('uid') : '';
     $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "`   where 1   $and_fixed    $and_unit    order by `repair_date` desc";
 
     //取得各單位的管理員陣列
@@ -78,7 +78,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $repair_date = mb_substr($repair_date, 0, 10);
         $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
-        $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn], true) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
+        $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
 
         $unit = get_tad_repair_unit($unit_sn);
 
@@ -157,7 +157,7 @@ function show_one_tad_repair($repair_sn = '')
     if (empty($repair_sn)) {
         return;
     }
-    $repair_sn = (int)$repair_sn;
+    $repair_sn = (int) $repair_sn;
 
     $myts = MyTextSanitizer::getInstance();
     //取得使用者編號
@@ -177,7 +177,7 @@ function show_one_tad_repair($repair_sn = '')
 
     $modify_link = ($uid == $repair_uid and _MD_TADREPAIR_REPAIRED != $fixed_status) ? "<a href='repair.php?op=tad_repair_form&repair_sn=$repair_sn' class='btn btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
 
-    $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn], true) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
+    $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
 
     $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
     if (empty($repair_name)) {
@@ -256,7 +256,7 @@ function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
 
-    if (in_array($uid, $unit_admin_arr[$unit_sn], true)) {
+    if (in_array($uid, $unit_admin_arr[$unit_sn])) {
         $sql = 'update `' . $xoopsDB->prefix('tad_repair') . "` set
 	 `unit_sn` = '{$new_unit_sn}'
 	where `repair_sn` = '$repair_sn'";
@@ -276,7 +276,7 @@ $new_unit_sn = system_CleanVars($_REQUEST, 'new_unit_sn', 0, 'int');
 switch ($op) {
     //下載檔案
     case 'tufdl':
-        $files_sn = isset($_GET['files_sn']) ? (int)$_GET['files_sn'] : '';
+        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
         $TadUpFiles->add_file_counter($files_sn, $hash = false, $force = false);
         exit;
 

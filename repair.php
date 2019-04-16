@@ -285,7 +285,7 @@ function tad_fixed_form($repair_sn = '')
 
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
-    if (!in_array($user_uid, $unit_admin_arr[$unit_sn], true)) {
+    if (!in_array($user_uid, $unit_admin_arr[$unit_sn])) {
         redirect_header('index.php', 3, _MD_TADREPAIR_NOT_ADMIN);
     }
 
