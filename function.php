@@ -13,7 +13,7 @@ require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 function get_color($name = '')
 {
     global $xoopsConfig;
-    require_once "language/{$xoopsConfig['language']}/modinfo.php";
+    require_once __DIR__ . "/language/{$xoopsConfig['language']}/modinfo.php";
     $default = ('fixed_status' === $name) ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
 
     $def_arr = mk_arr(explode(';', $default));
