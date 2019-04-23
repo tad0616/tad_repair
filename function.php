@@ -5,7 +5,10 @@ if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
 }
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
-/********************* 自訂函數 *********************/
+/********************* 自訂函數 ********************
+ * @param string $name
+ * @return mixed
+ */
 //取得顏色陣列
 function get_color($name = '')
 {
