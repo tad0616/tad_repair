@@ -162,9 +162,9 @@ function insert_tad_repair()
     $unit = unit_admin_arr();
     $msg = '';
 
-    $repair_name = XoopsUser::getUnameFromId($uid, 1);
+    $repair_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
-        $repair_name = XoopsUser::getUnameFromId($uid, 0);
+        $repair_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
     $title = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $repair_title);
@@ -214,9 +214,9 @@ function update_tad_repair($repair_sn = '')
     $unit = unit_admin_arr();
     $msg = '';
 
-    $repair_name = XoopsUser::getUnameFromId($uid, 1);
+    $repair_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
-        $repair_name = XoopsUser::getUnameFromId($uid, 0);
+        $repair_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
     $title = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $repair_title);
@@ -347,9 +347,9 @@ function update_tad_fixed($repair_sn = '')
     $unit = get_tad_repair_unit($unit_sn);
     $msg = '';
 
-    $fixed_name = XoopsUser::getUnameFromId($uid, 1);
+    $fixed_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($fixed_name)) {
-        $fixed_name = XoopsUser::getUnameFromId($uid, 0);
+        $fixed_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
     $TadUpFiles->set_col('fixed_sn', $repair_sn);

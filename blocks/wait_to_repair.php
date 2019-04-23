@@ -21,9 +21,9 @@ function wait_to_repair($options)
         $repair_date = mb_substr($repair_date, 0, 10);
         $unit = get_tad_repair_unit($unit_sn);
 
-        $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
-            $repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
         }
 
         $content[$i]['repair_date'] = $repair_date;

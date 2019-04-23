@@ -32,7 +32,7 @@ function tad_repair_unit_form($unit_sn = '')
     //$op="replace_tad_repair_unit";
 
     if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once TADTOOLS_PATH . '/formValidator.php';
     $formValidator = new formValidator('#myForm', true);
@@ -130,9 +130,9 @@ function list_tad_repair_unit()
         $unit_admin_name = [];
         foreach ($unit_admin_arr as $uid) {
             //以uid取得使用者名稱
-            $uid_name = XoopsUser::getUnameFromId($uid, 1);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             if (empty($uid_name)) {
-                $uid_name = XoopsUser::getUnameFromId($uid, 0);
+                $uid_name = \XoopsUser::getUnameFromId($uid, 0);
             }
 
             $unit_admin_name[] = $uid_name;

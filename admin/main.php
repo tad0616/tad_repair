@@ -34,16 +34,16 @@ function list_tad_repair()
             $$k = $v;
         }
 
-        $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
-            $$repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+            $$repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
         }
 
         $fixed_name = '';
         if (0 != $fixed_uid) {
-            $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 1);
+            $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
             if (empty($fixed_name)) {
-                $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 0);
+                $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
             }
         }
 

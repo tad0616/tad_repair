@@ -62,16 +62,16 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
             $$k = $v;
         }
 
-        $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
-            $repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
         }
 
         $fixed_name = '';
         if (0 != $fixed_uid) {
-            $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 1);
+            $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
             if (empty($fixed_name)) {
-                $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 0);
+                $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
             }
         }
 
@@ -179,9 +179,9 @@ function show_one_tad_repair($repair_sn = '')
 
     $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
 
-    $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+    $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
     if (empty($repair_name)) {
-        $$repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+        $$repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
     }
 
     $repair_sn = (int) $repair_sn;
@@ -209,9 +209,9 @@ function show_one_tad_repair($repair_sn = '')
 
     $fixed_name = '';
     if (0 != $fixed_uid) {
-        $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 1);
+        $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
         if (empty($fixed_name)) {
-            $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 0);
+            $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
         }
     }
 
