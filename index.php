@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\FooTable;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 include 'header.php';
 $xoopsOption['template_main'] = 'tad_repair_index.tpl';
@@ -11,14 +13,10 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 {
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
-    if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php')) {
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
+    $FooTable = new FooTable();
+    $FooTable->render();
 
-        $FooTable = new FooTable();
-        $FooTableJS = $FooTable->render();
-    }
-
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $fixed_status_list = mc2arr('fixed_status', $def_fixed_status, true, 'return');
     array_unshift($fixed_status_list, _MD_TADREPAIR_REPAIR_FIXED_FILTER);
@@ -42,13 +40,13 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
 
-    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, 20, 10);
+    //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+    $PageBar = Utility::getPageBar($sql, 20, 10);
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_content = [];
     $i = 0;
@@ -115,7 +113,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     $add_button = ($show_function) ? "<a href='{$_SERVER['PHP_SELF']}?op=tad_repair_form' class='link_button_r'>" . _TAD_ADD . '</a>' : '';
 
     $sql = 'SELECT repair_date FROM `' . $xoopsDB->prefix('tad_repair') . '` ORDER BY `repair_date` DESC';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_repair_ym = [];
 
@@ -159,7 +157,7 @@ function show_one_tad_repair($repair_sn = '')
     }
     $repair_sn = (int) $repair_sn;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
@@ -167,7 +165,7 @@ function show_one_tad_repair($repair_sn = '')
     $unit_admin_arr = unit_admin_arr();
 
     $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}' ";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $all = $xoopsDB->fetchArray($result);
 
     //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
@@ -234,7 +232,6 @@ function show_one_tad_repair($repair_sn = '')
 
     //return $main;
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
     $TadUpFiles = new TadUpFiles('tad_repair');
     $TadUpFiles->set_col('repair_sn', $repair_sn);
     $show_files = $TadUpFiles->show_files();
@@ -260,7 +257,7 @@ function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
         $sql = 'update `' . $xoopsDB->prefix('tad_repair') . "` set
 	 `unit_sn` = '{$new_unit_sn}'
 	where `repair_sn` = '$repair_sn'";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 }
 
@@ -296,8 +293,8 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('jquery', get_jquery(true));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('jquery', Utility::get_jquery(true));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
 include_once XOOPS_ROOT_PATH . '/include/comment_view.php';

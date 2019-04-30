@@ -1,11 +1,12 @@
 <?php
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\TadUpFiles;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 include 'header.php';
 
 $xoopsOption['template_main'] = 'tad_repair_repair.tpl';
 include_once XOOPS_ROOT_PATH . '/header.php';
-
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
 $TadUpFiles = new TadUpFiles('tad_repair');
 /*-----------function區--------------*/
 
@@ -63,19 +64,14 @@ function tad_repair_form($repair_sn = '')
     $op = (empty($repair_sn)) ? 'insert_tad_repair' : 'update_tad_repair';
     //$op="replace_tad_repair";
 
-    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-    include_once TADTOOLS_PATH . '/formValidator.php';
-    $formValidator = new formValidator('#myForm', true);
-    $formValidator_code = $formValidator->render();
+    $FormValidator = new FormValidator('#myForm', true);
+    $FormValidator->render();
 
     $unit_menu_options = get_tad_repair_unit_menu_options($unit_sn);
     if (empty($unit_menu_options)) {
         redirect_header('index.php', 3, _MD_TADREPAIR_NEED_UNIT);
     }
 
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
     $xoopsTpl->assign('PHP_SELF', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('unit_sn_menu_options', $unit_menu_options);
     $xoopsTpl->assign('repair_title', $repair_title);
@@ -100,7 +96,7 @@ function get_tad_repair_unit_menu_options($default_unit_sn = '0')
 {
     global $xoopsDB, $xoopsModule;
     $sql = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $option = '';
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
@@ -121,7 +117,7 @@ function insert_tad_repair()
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $repair_title = $myts->addSlashes($_POST['repair_title']);
     $repair_place = $myts->addSlashes($_POST['repair_place']);
     $repair_content = $myts->addSlashes($_POST['repair_content']);
@@ -139,7 +135,7 @@ function insert_tad_repair()
     $today_chk = date('Y-m-d H:i', xoops_getUserTimestamp(time()));
 
     $sql = 'select repair_sn from `' . $xoopsDB->prefix('tad_repair') . "` where repair_title='{$repair_title}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
@@ -150,7 +146,7 @@ function insert_tad_repair()
 	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
     values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
     // die($sql);
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();
@@ -187,7 +183,7 @@ function update_tad_repair($repair_sn = '')
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $repair_content = $myts->addSlashes($_POST['repair_content']);
     $repair_place = $myts->addSlashes($_POST['repair_place']);
     $repair_title = $myts->addSlashes($_POST['repair_title']);
@@ -206,7 +202,7 @@ function update_tad_repair($repair_sn = '')
     `unit_sn` = '{$unit_sn}'
 	where `repair_sn` = '$repair_sn'";
     // die($sql);
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $TadUpFiles->set_col('repair_sn', $repair_sn);
     $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
@@ -289,17 +285,13 @@ function tad_fixed_form($repair_sn = '')
         redirect_header('index.php', 3, _MD_TADREPAIR_NOT_ADMIN);
     }
 
-    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-    include_once TADTOOLS_PATH . '/formValidator.php';
-    $formValidator = new formValidator('#myForm', true);
-    $formValidator_code = $formValidator->render();
+
+    $FormValidator = new FormValidator('#myForm', true);
+    $FormValidator->render();
 
     $repair_content = nl2br($repair_content);
     $unit = get_tad_repair_unit($unit_sn);
 
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
     $xoopsTpl->assign('PHP_SELF', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('repair_title', $repair_title);
     $xoopsTpl->assign('repair_content', $repair_content);
@@ -327,7 +319,7 @@ function update_tad_fixed($repair_sn = '')
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $fixed_content = $myts->addSlashes($_POST['fixed_content']);
     $fixed_status = $myts->addSlashes($_POST['fixed_status']);
 
@@ -339,7 +331,7 @@ function update_tad_fixed($repair_sn = '')
     `fixed_status` = '{$fixed_status}' ,
     `fixed_content` = '{$fixed_content}'
 	where `repair_sn` = '$repair_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $DBV = get_tad_repair($repair_sn);
 
@@ -405,8 +397,8 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('jquery', get_jquery(true));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('jquery', Utility::get_jquery(true));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
 include_once XOOPS_ROOT_PATH . '/footer.php';

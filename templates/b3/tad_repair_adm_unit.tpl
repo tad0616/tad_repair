@@ -4,9 +4,6 @@
   <{if $op=="tad_repair_unit_form"}>
 
     <h3><{$smarty.const._MA_TAD_REPAIR_UNIT_FORM}></h3>
-
-    <{$formValidator_code}>
-
     <script type="text/javascript" src="<{$xoops_url}>/modules/tad_repair/class/tmt_core.js"></script>
     <script type="text/javascript" src="<{$xoops_url}>/modules/tad_repair/class/tmt_spry_linkedselect.js"></script>
     <script type="text/javascript">

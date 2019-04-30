@@ -1,6 +1,6 @@
 <?php
-
-use XoopsModules\Tad_repair\Utility;
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_repair\Update;
 
 function xoops_module_update_tad_repair(&$module, $old_version)
 {
@@ -11,23 +11,23 @@ function xoops_module_update_tad_repair(&$module, $old_version)
     Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_repair/image');
     Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_repair/image/.thumbs');
 
-    if (Utility::chk_uid()) {
-        Utility::go_update_uid();
+    if (Update::chk_uid()) {
+        Update::go_update_uid();
     }
 
-    if (Utility::chk_chk1()) {
-        Utility::go_update1();
+    if (Update::chk_chk1()) {
+        Update::go_update1();
     }
 
-    if (Utility::chk_chk2()) {
-        Utility::go_update2();
+    if (Update::chk_chk2()) {
+        Update::go_update2();
     }
-    Utility::update_blank_status();
-    Utility::chk_tad_repair_block();
+    Update::update_blank_status();
+    Update::chk_tad_repair_block();
 
     //新增檔案欄位
-    if (Utility::chk_fc_tag()) {
-        Utility::go_fc_tag();
+    if (Update::chk_fc_tag()) {
+        Update::go_fc_tag();
     }
 
     return true;

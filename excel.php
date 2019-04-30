@@ -1,11 +1,12 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 include_once 'header.php';
 
 $ym = mb_substr($_POST['ym'], 0, 7);
 
-require_once TADTOOLS_PATH . '/PHPExcel.php'; //引入 PHPExcel 物件庫
-require_once TADTOOLS_PATH . '/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 //----------內容-----------//
 
@@ -44,7 +45,7 @@ foreach ($col_title as $n => $title) {
 }
 
 $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
-$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
 $i = 2;
 while ($all = $xoopsDB->fetchArray($result)) {

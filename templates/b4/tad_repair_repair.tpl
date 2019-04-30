@@ -1,7 +1,6 @@
 <{$toolbar}>
 
 <{if $mode=="repair_form"}>
-  <{$formValidator_code}>
   <h2><{$repair_form_title}></h2>
   <form action="repair.php" method="post" id="myForm" enctype="multipart/form-data" role="form">
 
@@ -96,9 +95,6 @@
 
 <{else}>
   <h2><{$fixed_form_title}></h2>
-
-
-  <{$formValidator_code}>
 
   <table class="table table-striped table-bordered table-hover">
     <!--報修內容-->
