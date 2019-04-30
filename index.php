@@ -1,6 +1,8 @@
 <?php
 use XoopsModules\Tadtools\FooTable;
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 include 'header.php';
 $xoopsOption['template_main'] = 'tad_repair_index.tpl';
