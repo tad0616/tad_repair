@@ -2,6 +2,13 @@
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tad_repair\Update;
 
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+if (!class_exists('XoopsModules\Tad_repair\Update')) {
+    include dirname(__DIR__) . '/preloads/autoloader.php';
+}
+
 function xoops_module_update_tad_repair(&$module, $old_version)
 {
     global $xoopsDB;
