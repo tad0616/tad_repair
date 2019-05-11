@@ -119,7 +119,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
     $all_repair_ym = [];
 
-    while (false !== (list($repair_date) = $xoopsDB->fetchRow($result))) {
+    while (list($repair_date) = $xoopsDB->fetchRow($result)) {
         $ym = mb_substr($repair_date, 0, 7);
         $repair_ym[$ym] = $ym;
     }
@@ -191,7 +191,7 @@ function show_one_tad_repair($repair_sn = '')
     $repair_date = $myts->htmlSpecialChars($repair_date);
     $repair_name = $myts->htmlSpecialChars($repair_name);
     // $repair_status  = $myts->htmlSpecialChars($repair_status);
-    $fixed_name = $myts->htmlSpecialChars($fixed_name);
+    $fixed_name = isset($fixed_name) ? $myts->htmlSpecialChars($fixed_name):'';
     // $fixed_status   = $myts->htmlSpecialChars($fixed_status);
     $repair_content = $myts->displayTarea($repair_content, 0, 0, 0, 0, 1);
 

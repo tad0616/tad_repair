@@ -61,7 +61,7 @@ function get_tad_repair_unit_list()
     $sql = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (false !== (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result))) {
+    while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $list[$unit_sn] = $unit_title;
     }
 

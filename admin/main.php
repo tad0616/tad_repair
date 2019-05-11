@@ -53,7 +53,7 @@ function list_tad_repair()
 
         $all_content[$i]['repair_sn'] = $repair_sn;
         $all_content[$i]['repair_date'] = $repair_date;
-        $all_content[$i]['prefix'] = $prefix;
+        $all_content[$i]['prefix'] = isset($prefix) ? $prefix : '';
         $all_content[$i]['repair_title'] = $repair_title;
         $all_content[$i]['repair_name'] = $repair_name;
         $all_content[$i]['unit_title'] = $unit['unit_title'];

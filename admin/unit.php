@@ -42,7 +42,7 @@ function tad_repair_unit_form($unit_sn = '')
     $sql = 'SELECT uid,uname,name FROM ' . $xoopsDB->prefix('users') . ' ORDER BY name';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (false !== (list($uid, $uname, $name) = $xoopsDB->fetchRow($result))) {
+    while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
         $name = empty($name) ? $uname : $name;
         if (in_array($uid, $unit_admin)) {
             $option2 .= "<option value='{$uid}'>{$name}</option>";

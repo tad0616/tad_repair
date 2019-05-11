@@ -49,3 +49,4 @@ define('_MD_TADREPAIR_DONT_REPEAT', '目前已有相同資料，請勿重複報�
 define('_MD_TADREPAIR_IMG', '照片');
 define('_MD_TADREPAIR_PLACE', '報修地點');
 define('_MD_TADREPAIR_NO_PERMISSION', '您沒有修改的權限');
+define('_MD_TADREPAIR_CHANGE_DEPARTMENT', '改送其他單位');

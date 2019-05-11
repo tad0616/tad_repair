@@ -103,7 +103,7 @@ function get_tad_repair_unit_menu_options($default_unit_sn = '0')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $option = '';
-    while (false !== (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result))) {
+    while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $selected = ($unit_sn == $default_unit_sn) ? "selected='selected'" : '';
         $option .= "<option value=$unit_sn $selected>{$unit_title}</option>";
     }
@@ -140,7 +140,7 @@ function insert_tad_repair()
 
     $sql = 'select repair_sn from `' . $xoopsDB->prefix('tad_repair') . "` where repair_title='{$repair_title}' and repair_uid='{$uid}' and repair_date like '{$today_chk}%'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($repair_sn) = $xoopsDB->fetchRow($result))) {
+    while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
         redirect_header("index.php?repair_sn=$repair_sn", 3, _MD_TADREPAIR_DONT_REPEAT);
     }
 
@@ -148,7 +148,7 @@ function insert_tad_repair()
 
     $sql = 'insert into `' . $xoopsDB->prefix('tad_repair') . "`
 	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
-    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
+    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,null, '{$fixed_status}' , '')";
     // die($sql);
     $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 

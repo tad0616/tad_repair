@@ -92,7 +92,7 @@
             </select>
             <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
             <input type="hidden" name="unit_sn" value="<{$unit_sn}>">
-            <button type="submit" name="op" value="move_to_unit" class="btn btn-warning btn-sm">改送其他單位</button>
+            <button type="submit" name="op" value="move_to_unit" class="btn btn-warning btn-sm"><{$smarty.const._MD_TADREPAIR_CHANGE_DEPARTMENT}></button>
           </form>
         <{else}>
           <{$unit_title}>
