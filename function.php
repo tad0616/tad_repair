@@ -1,11 +1,8 @@
 <?php
-//引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
-    redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-}
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
 
-/********************* 自訂函數 ********************
+use XoopsModules\Tadtools\Utility;
+
+/********************* 自訂函數 *********************/
  * @param string $name
  * @return mixed
  */
@@ -42,7 +39,7 @@ function SendEmail($uid = '', $title = '', $content = '')
     // $user           = $memberHandler->getUser($uid);
     // $email          = $user->email();
     $sql = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($email) = $xoopsDB->fetchRow($result);
 
     $xoopsMailer = &getMailer();
@@ -59,7 +56,7 @@ function get_tad_repair_unit_list()
 {
     global $xoopsDB, $xoopsModule;
     $sql = 'SELECT `unit_sn` , `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($unit_sn, $unit_title) = $xoopsDB->fetchRow($result)) {
         $list[$unit_sn] = $unit_title;
@@ -73,7 +70,7 @@ function unit_admin_arr()
 {
     global $xoopsDB;
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $unit_admin_arr = [];
     while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
@@ -97,7 +94,7 @@ function get_tad_repair($repair_sn = '')
     }
 
     $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -112,7 +109,7 @@ function get_tad_repair_unit($unit_sn = '')
     }
 
     $sql = 'select * from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;

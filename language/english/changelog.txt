@@ -1,3 +1,9 @@
+Tad Repair 2.4.2 (released from 2019-05-10)
+=========================================================
+1. Support XOOPS 2.5.10
+2. No longer supports PHP 5.3
+
+
 Tad Repair 2.4.1 (2019-01-01 released)
 ====================================================
 1.Support BootStrap4

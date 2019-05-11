@@ -1,11 +1,12 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 
 $ym = mb_substr($_POST['ym'], 0, 7);
 
-require_once TADTOOLS_PATH . '/PHPExcel.php'; //引入 PHPExcel 物件庫
-require_once TADTOOLS_PATH . '/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel.php'; //引入 PHPExcel 物件庫
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/PHPExcel/IOFactory.php'; //引入 PHPExcel_IOFactory 物件庫
 $objPHPExcel = new PHPExcel(); //實體化Excel
 //----------內容-----------//
 
@@ -44,7 +45,7 @@ foreach ($col_title as $n => $title) {
 }
 
 $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
-$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
 $i = 2;
 while (false !== ($all = $xoopsDB->fetchArray($result))) {
@@ -96,10 +97,10 @@ $objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", '=CONCATENATE("' 
 $title = $ym . _MD_TADREPAIR_REPORT;
 $title = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
 header('Content-Type: application/vnd.ms-excel');
-header("Content-Disposition: attachment;filename={$title}.xls");
+header("Content-Disposition: attachment;filename={$title}.xlsx");
 header('Cache-Control: max-age=0');
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setPreCalculateFormulas(false);
 $objWriter->save('php://output');
 exit;

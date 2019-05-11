@@ -1,7 +1,6 @@
 <{$toolbar}>
 
 <{if $mode=="repair_form"}>
-  <{$formValidator_code}>
   <h2><{$repair_form_title}></h2>
   <form action="repair.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
 
@@ -41,7 +40,7 @@
 
       </div>
       <div class="col-sm-4">
-        
+
         <{if 'repair_place'|in_array:$unuse_cols}>
         <{else}>
           <!--地點-->
@@ -97,9 +96,6 @@
 <{else}>
   <h2><{$fixed_form_title}></h2>
 
-
-  <{$formValidator_code}>
-
   <table class="table table-striped table-bordered table-hover">
     <!--報修內容-->
     <tr><th nowrap style="width:80px;"><{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}></th>
@@ -140,7 +136,7 @@
 
     <!--處理狀況-->
     <div class="form-group">
-      
+
       <label class="col-sm-2 control-label">
         <{$smarty.const._MD_TADREPAIR_FIXED_STATUS}>
       </label>

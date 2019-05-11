@@ -1,6 +1,8 @@
 <?php
+use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_repair_adm_unit.tpl';
+$xoopsOption['template_main'] = 'tad_repair_adm_unit.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
@@ -31,16 +33,12 @@ function tad_repair_unit_form($unit_sn = '')
     $op = (empty($unit_sn)) ? 'insert_tad_repair_unit' : 'update_tad_repair_unit';
     //$op="replace_tad_repair_unit";
 
-    if (!file_exists(TADTOOLS_PATH . '/formValidator.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once TADTOOLS_PATH . '/formValidator.php';
-    $formValidator = new formValidator('#myForm', true);
-    $formValidator_code = $formValidator->render();
+    $FormValidator = new FormValidator('#myForm', true);
+    $FormValidator->render();
 
     $option = $option2 = '';
     $sql = 'SELECT uid,uname,name FROM ' . $xoopsDB->prefix('users') . ' ORDER BY name';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
         $name = empty($name) ? $uname : $name;
@@ -51,7 +49,6 @@ function tad_repair_unit_form($unit_sn = '')
         }
     }
 
-    $xoopsTpl->assign('formValidator_code', $formValidator_code);
     $xoopsTpl->assign('unit_sn', $unit_sn);
     $xoopsTpl->assign('unit_title', $unit_title);
     $xoopsTpl->assign('option', $option);
@@ -66,7 +63,7 @@ function insert_tad_repair_unit()
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
 
     if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
@@ -78,7 +75,7 @@ function insert_tad_repair_unit()
     $sql = 'insert into `' . $xoopsDB->prefix('tad_repair_unit') . "`
 	(`unit_title` , `unit_admin`)
 	values('{$_POST['unit_title']}' , '{$unit_admin}')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $unit_sn = $xoopsDB->getInsertId();
@@ -91,7 +88,7 @@ function update_tad_repair_unit($unit_sn = '')
 {
     global $xoopsDB, $xoopsUser;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
 
     if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
@@ -104,7 +101,7 @@ function update_tad_repair_unit($unit_sn = '')
 	 `unit_title` = '{$_POST['unit_title']}' ,
 	 `unit_admin` = '{$unit_admin}'
 	where `unit_sn` = '$unit_sn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $unit_sn;
 }
@@ -115,7 +112,7 @@ function list_tad_repair_unit()
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_content = [];
     $i = 0;
@@ -153,7 +150,7 @@ function delete_tad_repair_unit($unit_sn = '')
 {
     global $xoopsDB, $isAdmin;
     $sql = 'delete from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/

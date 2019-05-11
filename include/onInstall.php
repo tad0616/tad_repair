@@ -1,8 +1,9 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 
-use XoopsModules\Tad_repair\Utility;
-
-include dirname(__DIR__) . '/preloads/autoloader.php';
 
 function xoops_module_install_tad_repair(&$module)
 {
