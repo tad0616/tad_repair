@@ -37,7 +37,7 @@ function list_tad_repair()
 
         $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
-            $$repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
         }
 
         $fixed_name = '';

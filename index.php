@@ -181,7 +181,7 @@ function show_one_tad_repair($repair_sn = '')
 
     $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
     if (empty($repair_name)) {
-        $$repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
     }
 
     $repair_sn = (int) $repair_sn;
@@ -191,7 +191,7 @@ function show_one_tad_repair($repair_sn = '')
     $repair_date = $myts->htmlSpecialChars($repair_date);
     $repair_name = $myts->htmlSpecialChars($repair_name);
     // $repair_status  = $myts->htmlSpecialChars($repair_status);
-    $fixed_name = isset($fixed_name) ? $myts->htmlSpecialChars($fixed_name):'';
+    $fixed_name = isset($fixed_name) ? $myts->htmlSpecialChars($fixed_name) : '';
     // $fixed_status   = $myts->htmlSpecialChars($fixed_status);
     $repair_content = $myts->displayTarea($repair_content, 0, 0, 0, 0, 1);
 

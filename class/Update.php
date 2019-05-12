@@ -5,14 +5,14 @@ namespace XoopsModules\Tad_repair;
 /*
 Update Class Definition
 
- You may not change or alter any portion of this comment or credits of
- supporting developers from this source code or any supporting source code
- which is considered copyrighted (c) material of the original comment or credit
- authors.
+You may not change or alter any portion of this comment or credits of
+supporting developers from this source code or any supporting source code
+which is considered copyrighted (c) material of the original comment or credit
+authors.
 
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
@@ -44,10 +44,10 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_repair_files_center') . "
-    ADD `upload_date` DATETIME NOT NULL COMMENT '上傳時間',
-    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
-    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
-    ";
+        ADD `upload_date` DATETIME NOT NULL COMMENT '上傳時間',
+        ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+        ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+        ";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $xoopsDB->error());
     }
 
@@ -66,8 +66,7 @@ class Update
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
-    WHERE `dirname` = 'tad_repair' ORDER BY `func_num`";
+        $sql = "SELECT `bid`,`name`, `visible`, `show_func`, `template` FROM `" . $xoopsDB->prefix('newblocks') . "`  WHERE `dirname` = 'tad_repair' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
@@ -77,13 +76,13 @@ class Update
 
                 //連同樣板以及樣板實體檔案也要刪掉
                 $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
-            left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
-            where a.tpl_refid='$bid' and a.tpl_module='tad_repair' and a.tpl_type='block'";
+                left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
+                where a.tpl_refid='$bid' and a.tpl_module='tad_repair' and a.tpl_type='block'";
                 $xoopsDB->queryF($sql);
             } else {
                 $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
-            set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
-            where tpl_refid='{$bid}'";
+                set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
+                where tpl_refid='{$bid}'";
                 $xoopsDB->queryF($sql);
             }
         }
@@ -94,7 +93,7 @@ class Update
     {
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE table_name = '" . $xoopsDB->prefix('tad_repair') . "' AND COLUMN_NAME = 'repair_uid'";
+        WHERE table_name = '" . $xoopsDB->prefix('tad_repair') . "' AND COLUMN_NAME = 'repair_uid'";
         $result = $xoopsDB->query($sql);
         list($type) = $xoopsDB->fetchRow($result);
         if ('smallint' === $type) {
@@ -154,21 +153,21 @@ class Update
     {
         global $xoopsDB;
         $sql = 'CREATE TABLE `' . $xoopsDB->prefix('tad_repair_files_center') . "` (
-      `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
-      `col_name` varchar(255) NOT NULL default '' COMMENT '欄位名稱',
-      `col_sn` smallint(5) unsigned NOT NULL default 0 COMMENT '欄位編號',
-      `sort` smallint(5) unsigned NOT NULL default 0 COMMENT '排序',
-      `kind` enum('img','file') NOT NULL default 'img' COMMENT '檔案種類',
-      `file_name` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
-      `file_type` varchar(255) NOT NULL default '' COMMENT '檔案類型',
-      `file_size` int(10) unsigned NOT NULL default 0 COMMENT '檔案大小',
-      `description` text NOT NULL COMMENT '檔案說明',
-      `counter` mediumint(8) unsigned NOT NULL default 0 COMMENT '下載人次',
-      `original_filename` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
-      `hash_filename` varchar(255) NOT NULL default '' COMMENT '加密檔案名稱',
-      `sub_dir` varchar(255) NOT NULL default '' COMMENT '檔案子路徑',
-PRIMARY KEY (`files_sn`)
-    ) ENGINE=MyISAM;";
+        `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '檔案流水號',
+        `col_name` varchar(255) NOT NULL default '' COMMENT '欄位名稱',
+        `col_sn` smallint(5) unsigned NOT NULL default 0 COMMENT '欄位編號',
+        `sort` smallint(5) unsigned NOT NULL default 0 COMMENT '排序',
+        `kind` enum('img','file') NOT NULL default 'img' COMMENT '檔案種類',
+        `file_name` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
+        `file_type` varchar(255) NOT NULL default '' COMMENT '檔案類型',
+        `file_size` int(10) unsigned NOT NULL default 0 COMMENT '檔案大小',
+        `description` text NOT NULL COMMENT '檔案說明',
+        `counter` mediumint(8) unsigned NOT NULL default 0 COMMENT '下載人次',
+        `original_filename` varchar(255) NOT NULL default '' COMMENT '檔案名稱',
+        `hash_filename` varchar(255) NOT NULL default '' COMMENT '加密檔案名稱',
+        `sub_dir` varchar(255) NOT NULL default '' COMMENT '檔案子路徑',
+        PRIMARY KEY (`files_sn`)
+        ) ENGINE=MyISAM;";
         $xoopsDB->queryF($sql);
     }
 
