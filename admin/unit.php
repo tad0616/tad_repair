@@ -3,8 +3,8 @@ use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_repair_adm_unit.tpl';
-include_once 'header.php';
-include_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 //tad_repair_unit編輯表單
@@ -116,7 +116,7 @@ function list_tad_repair_unit()
 
     $all_content = [];
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $unit_sn , $unit_title , $unit_admin
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -127,9 +127,9 @@ function list_tad_repair_unit()
         $unit_admin_name = [];
         foreach ($unit_admin_arr as $uid) {
             //以uid取得使用者名稱
-            $uid_name = XoopsUser::getUnameFromId($uid, 1);
+            $uid_name = \XoopsUser::getUnameFromId($uid, 1);
             if (empty($uid_name)) {
-                $uid_name = XoopsUser::getUnameFromId($uid, 0);
+                $uid_name = \XoopsUser::getUnameFromId($uid, 0);
             }
 
             $unit_admin_name[] = $uid_name;
@@ -154,7 +154,7 @@ function delete_tad_repair_unit($unit_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
 $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
@@ -191,4 +191,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

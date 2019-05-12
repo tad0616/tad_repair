@@ -3,10 +3,10 @@ use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-include 'header.php';
-
+require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_repair_repair.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
+
 $TadUpFiles = new TadUpFiles('tad_repair');
 /*-----------function區--------------*/
 
@@ -144,7 +144,7 @@ function insert_tad_repair()
 
     $sql = 'insert into `' . $xoopsDB->prefix('tad_repair') . "`
 	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
-    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,'0000-00-00 00:00:00', '{$fixed_status}' , '')";
+    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,null, '{$fixed_status}' , '')";
     // die($sql);
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -158,15 +158,15 @@ function insert_tad_repair()
     $unit = unit_admin_arr();
     $msg = '';
 
-    $repair_name = XoopsUser::getUnameFromId($uid, 1);
+    $repair_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
-        $repair_name = XoopsUser::getUnameFromId($uid, 0);
+        $repair_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
     $title = sprintf(_MD_TADREPAIR_MAIL_TITLE, $today, $repair_title);
     //把填報詳細內容也放入 MAIL
     $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $repair_title, nl2br($repair_content) .
-        "<br /> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
+        "<br> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content);
     }
@@ -210,9 +210,9 @@ function update_tad_repair($repair_sn = '')
     $unit = unit_admin_arr();
     $msg = '';
 
-    $repair_name = XoopsUser::getUnameFromId($uid, 1);
+    $repair_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
-        $repair_name = XoopsUser::getUnameFromId($uid, 0);
+        $repair_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
     $title = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $repair_title);
@@ -339,9 +339,9 @@ function update_tad_fixed($repair_sn = '')
     $unit = get_tad_repair_unit($unit_sn);
     $msg = '';
 
-    $fixed_name = XoopsUser::getUnameFromId($uid, 1);
+    $fixed_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($fixed_name)) {
-        $fixed_name = XoopsUser::getUnameFromId($uid, 0);
+        $fixed_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
     $TadUpFiles->set_col('fixed_sn', $repair_sn);
@@ -358,7 +358,7 @@ function update_tad_fixed($repair_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
 $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
@@ -401,4 +401,4 @@ $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('jquery', Utility::get_jquery(true));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

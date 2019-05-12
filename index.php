@@ -4,9 +4,9 @@ use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-include 'header.php';
+require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_repair_index.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 
@@ -56,22 +56,22 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     $repair_color = get_color('repair_status');
     $status_color = get_color('fixed_status');
 
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
             $$k = $v;
         }
 
-        $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
-            $repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
         }
 
         $fixed_name = '';
         if (0 != $fixed_uid) {
-            $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 1);
+            $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
             if (empty($fixed_name)) {
-                $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 0);
+                $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
             }
         }
 
@@ -179,9 +179,9 @@ function show_one_tad_repair($repair_sn = '')
 
     $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
 
-    $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+    $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
     if (empty($repair_name)) {
-        $$repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+        $$repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
     }
 
     $repair_sn = (int) $repair_sn;
@@ -191,7 +191,7 @@ function show_one_tad_repair($repair_sn = '')
     $repair_date = $myts->htmlSpecialChars($repair_date);
     $repair_name = $myts->htmlSpecialChars($repair_name);
     // $repair_status  = $myts->htmlSpecialChars($repair_status);
-    $fixed_name = $myts->htmlSpecialChars($fixed_name);
+    $fixed_name = isset($fixed_name) ? $myts->htmlSpecialChars($fixed_name):'';
     // $fixed_status   = $myts->htmlSpecialChars($fixed_status);
     $repair_content = $myts->displayTarea($repair_content, 0, 0, 0, 0, 1);
 
@@ -209,9 +209,9 @@ function show_one_tad_repair($repair_sn = '')
 
     $fixed_name = '';
     if (0 != $fixed_uid) {
-        $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 1);
+        $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
         if (empty($fixed_name)) {
-            $fixed_name = XoopsUser::getUnameFromId($fixed_uid, 0);
+            $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
         }
     }
 
@@ -264,7 +264,7 @@ function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
 $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
@@ -299,5 +299,5 @@ $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('jquery', Utility::get_jquery(true));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 
-include_once XOOPS_ROOT_PATH . '/include/comment_view.php';
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

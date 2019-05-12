@@ -86,7 +86,7 @@
         <div class="row text-center">
           <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
           <input type="hidden" name="op" value="<{$op}>">
-          <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
+          <button type="submit" class="btn btn-primary"><{$smarty.const._SUBMIT}></button>
         </div>
 
       </div>
@@ -148,7 +148,7 @@
       <div class="col-sm-6">
         <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
         <input type="hidden" name="op" value="update_tad_fixed">
-        <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
+        <button type="submit" class="btn btn-primary"><{$smarty.const._SUBMIT}></button>
       </div>
     </div>
   </form>

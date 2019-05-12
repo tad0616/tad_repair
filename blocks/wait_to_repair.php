@@ -13,7 +13,7 @@ function wait_to_repair($options)
     $block = [];
     $i = 0;
     $content = [];
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -22,9 +22,9 @@ function wait_to_repair($options)
         $repair_date = mb_substr($repair_date, 0, 10);
         $unit = get_tad_repair_unit($unit_sn);
 
-        $repair_name = XoopsUser::getUnameFromId($repair_uid, 1);
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
-            $repair_name = XoopsUser::getUnameFromId($repair_uid, 0);
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
         }
 
         $content[$i]['repair_date'] = $repair_date;

@@ -1,12 +1,16 @@
 <?php
 
 use XoopsModules\Tadtools\Utility;
+
 /********************* 自訂函數 *********************/
+ * @param string $name
+ * @return mixed
+ */
 //取得顏色陣列
 function get_color($name = '')
 {
     global $xoopsConfig;
-    include_once "language/{$xoopsConfig['language']}/modinfo.php";
+    require_once __DIR__ . "/language/{$xoopsConfig['language']}/modinfo.php";
     $default = ('fixed_status' === $name) ? constant('_MI_TADREPAIR_FIXED_STATUS_VAL') : constant('_MI_TADREPAIR_REPAIR_STATUS_VAL');
 
     $def_arr = mk_arr(explode(';', $default));
@@ -31,8 +35,8 @@ function SendEmail($uid = '', $title = '', $content = '')
         return;
     }
 
-    // $member_handler = xoops_gethandler('member');
-    // $user           = $member_handler->getUser($uid);
+    // $memberHandler = xoops_getHandler('member');
+    // $user           = $memberHandler->getUser($uid);
     // $email          = $user->email();
     $sql = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -68,7 +72,7 @@ function unit_admin_arr()
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $unit_admin_arr = [];
-    while ($data = $xoopsDB->fetchArray($result)) {
+    while (false !== ($data = $xoopsDB->fetchArray($result))) {
         foreach ($data as $k => $v) {
             $$k = $v;
         }
