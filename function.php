@@ -3,6 +3,7 @@
 use XoopsModules\Tadtools\Utility;
 
 /********************* 自訂函數 *********************/
+/**
  * @param string $name
  * @return mixed
  */
