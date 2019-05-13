@@ -144,7 +144,7 @@ function insert_tad_repair()
 
     $sql = 'insert into `' . $xoopsDB->prefix('tad_repair') . "`
 	(`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`)
-    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,null, '{$fixed_status}' , '')";
+    values('{$repair_title}' , '{$repair_place}' ,'{$repair_content}' , '{$today}' , '{$repair_status}' , '{$uid}' , '{$unit_sn}' ,'', '{$fixed_status}' , '')";
     // die($sql);
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -284,7 +284,6 @@ function tad_fixed_form($repair_sn = '')
     if (!in_array($user_uid, $unit_admin_arr[$unit_sn])) {
         redirect_header('index.php', 3, _MD_TADREPAIR_NOT_ADMIN);
     }
-
 
     $FormValidator = new FormValidator('#myForm', true);
     $FormValidator->render();
