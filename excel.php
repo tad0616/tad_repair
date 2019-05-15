@@ -96,7 +96,7 @@ $objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", '=CONCATENATE("' 
 
 $title = $ym . _MD_TADREPAIR_REPORT;
 $title = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
-header('Content-Type: application/vnd.ms-excel');
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header("Content-Disposition: attachment;filename={$title}.xlsx");
 header('Cache-Control: max-age=0');
 
