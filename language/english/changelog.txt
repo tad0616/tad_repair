@@ -1,4 +1,9 @@
-Tad Repair 2.4.2 (released from 2019-05-10)
+Tad Repair 2.4.3 (2020-03-14 released)
+====================================================
+1. The person who revises the same unit can modify the maintenance notification that has been replied by the same unit
+2. corrected for 2.0 AA accessibility standards
+
+Tad Repair 2.4.2 (2019-05-10 released)
 =========================================================
 1. Support XOOPS 2.5.10
 2. No longer supports PHP 5.3

@@ -234,12 +234,16 @@ function tad_fixed_form($repair_sn = '')
     if (empty($xoopsUser)) {
         redirect_header('index.php', 3, _MD_TADREPAIR_NEED_LOGIN);
     }
-    $user_uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
+    $user_uid = ($xoopsUser) ? $xoopsUser->uid() : '';
+
+    //取得各單位的管理員陣列
+    $unit_admin_arr = unit_admin_arr();
 
     //抓取預設值
     if (!empty($repair_sn)) {
         $DBV = get_tad_repair($repair_sn);
-        if (!empty($DBV['fixed_uid']) and $user_uid != $DBV['fixed_uid']) {
+        $unit_sn=$DBV['unit_sn'];
+        if (!empty($DBV['fixed_uid']) and  !in_array($user_uid,$unit_admin_arr[$unit_sn])) {
             redirect_header('index.php', 3, _MD_TADREPAIR_NO_PERMISSION);
         }
     } else {

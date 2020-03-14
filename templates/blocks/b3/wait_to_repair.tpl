@@ -1,7 +1,7 @@
 <ul class="vertical_menu">
     <{foreach item=data from=$block.content}>
         <li>
-            <b style="font-size:12px;">
+            <b style="font-size: 0.8em;">
                 <{$data.repair_date}> <{$data.unit_title}> <{$data.repair_status}>
             </b>
 
