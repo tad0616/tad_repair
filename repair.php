@@ -168,7 +168,7 @@ function insert_tad_repair()
     $content = sprintf(_MD_TADREPAIR_MAIL_CONTENT, $repair_name, $today, $repair_title, nl2br($repair_content) .
         "<br> <a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
-        $msg .= SendEmail($uid, $title, $content);
+        $msg .= SendEmail($uid, $title, $content) . '<br>';
     }
     redirect_header("index.php?repair_sn=$repair_sn", 3, $msg);
 }
@@ -218,7 +218,7 @@ function update_tad_repair($repair_sn = '')
     $title = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $repair_title);
     $content = sprintf(_MD_TADREPAIR_MAIL_UPDATE_CONTENT, $repair_name, $today, $repair_title, "<a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
-        $msg .= SendEmail($uid, $title, $content);
+        $msg .= SendEmail($uid, $title, $content) . '<br>';
     }
     redirect_header("index.php?repair_sn=$repair_sn", 3, $msg);
 
@@ -242,8 +242,8 @@ function tad_fixed_form($repair_sn = '')
     //抓取預設值
     if (!empty($repair_sn)) {
         $DBV = get_tad_repair($repair_sn);
-        $unit_sn=$DBV['unit_sn'];
-        if (!empty($DBV['fixed_uid']) and  !in_array($user_uid,$unit_admin_arr[$unit_sn])) {
+        $unit_sn = $DBV['unit_sn'];
+        if (!empty($DBV['fixed_uid']) and !in_array($user_uid, $unit_admin_arr[$unit_sn])) {
             redirect_header('index.php', 3, _MD_TADREPAIR_NO_PERMISSION);
         }
     } else {

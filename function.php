@@ -31,23 +31,23 @@ function get_color($name = '')
 
 function SendEmail($uid = '', $title = '', $content = '')
 {
-    global $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
+    global $xoopsDB;
     if (empty($uid)) {
         return;
     }
 
-    // $memberHandler = xoops_getHandler('member');
-    // $user           = $memberHandler->getUser($uid);
-    // $email          = $user->email();
-    $sql = 'select email from `' . $xoopsDB->prefix('users') . "` where uid='{$uid}'";
+    $sql = 'select `email` from `' . $xoopsDB->prefix('users') . "` where `uid`='{$uid}'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($email) = $xoopsDB->fetchRow($result);
 
-    $xoopsMailer = &getMailer();
+    $xoopsMailer = getMailer();
     $xoopsMailer->multimailer->ContentType = 'text/html';
     $xoopsMailer->addHeaders('MIME-Version: 1.0');
+    $headers = '';
+    $sendMail = $xoopsMailer->sendMail($email, $title, $content, $headers);
+    $getErrors = $xoopsMailer->getErrors(true);
 
-    $msg .= ($xoopsMailer->sendMail($email, $title, $content, $headers)) ? sprintf(_MD_TADREPAIR_MAIL_OK, $title, $email) : sprintf(_MD_TADREPAIR_MAIL_FAIL, $title, $email);
+    $msg .= $sendMail ? sprintf(_MD_TADREPAIR_MAIL_OK, $title, $email) : sprintf(_MD_TADREPAIR_MAIL_FAIL, $title, $email) . $getErrors;
 
     return $msg;
 }

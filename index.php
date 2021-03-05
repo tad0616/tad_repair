@@ -271,12 +271,13 @@ $unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
 $unit_menu_sn = system_CleanVars($_REQUEST, 'unit_menu_sn', 0, 'int');
 $fixed_status = system_CleanVars($_REQUEST, 'fixed_status', '', 'string');
 $new_unit_sn = system_CleanVars($_REQUEST, 'new_unit_sn', 0, 'int');
+$files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
 
 switch ($op) {
     //下載檔案
     case 'tufdl':
-        $files_sn = isset($_GET['files_sn']) ? (int) $_GET['files_sn'] : '';
-        $TadUpFiles->add_file_counter($files_sn, $hash = false, $force = false);
+        $TadUpFiles = new TadUpFiles('tad_repair');
+        $TadUpFiles->add_file_counter($files_sn, false, true);
         exit;
 
     case 'move_to_unit':

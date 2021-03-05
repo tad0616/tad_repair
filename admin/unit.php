@@ -37,15 +37,15 @@ function tad_repair_unit_form($unit_sn = '')
     $FormValidator->render();
 
     $option = $option2 = '';
-    $sql = 'SELECT uid,uname,name FROM ' . $xoopsDB->prefix('users') . ' ORDER BY name';
+    $sql = 'SELECT `uid`, `uname`, `name`, `email` FROM ' . $xoopsDB->prefix('users') . ' ORDER BY name';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    while (list($uid, $uname, $name) = $xoopsDB->fetchRow($result)) {
+    while (list($uid, $uname, $name, $email) = $xoopsDB->fetchRow($result)) {
         $name = empty($name) ? $uname : $name;
         if (in_array($uid, $unit_admin)) {
-            $option2 .= "<option value='{$uid}'>{$name}</option>";
+            $option2 .= "<option value='{$uid}'>[{$uid}] {$name} ({$uname} : {$email})</option>";
         } else {
-            $option .= "<option value='{$uid}'>{$name}</option>";
+            $option .= "<option value='{$uid}'>[{$uid}] {$name} ({$uname} : {$email})</option>";
         }
     }
 
