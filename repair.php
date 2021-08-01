@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -361,10 +362,9 @@ function update_tad_fixed($repair_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
-$unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
+$op = Request::getString('op');
+$repair_sn = Request::getInt('repair_sn');
+$unit_sn = Request::getInt('unit_sn');
 
 switch ($op) {
     //新增資料
@@ -402,6 +402,5 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('jquery', Utility::get_jquery(true));
-$xoopsTpl->assign('isAdmin', $isAdmin);
 
 require_once XOOPS_ROOT_PATH . '/footer.php';

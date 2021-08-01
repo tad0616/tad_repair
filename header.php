@@ -3,11 +3,12 @@ require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/function.php';
 
 //判斷是否對該模組有管理權限
-$isAdmin = false;
+if (!isset($_SESSION['tad_repair_adm'])) {
+    $_SESSION['tad_repair_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
+}
+
 $interface_menu[_TAD_TO_MOD] = 'index.php';
 if ($xoopsUser) {
-    $module_id = $xoopsModule->getVar('mid');
-    $isAdmin = $xoopsUser->isAdmin($module_id);
     $interface_menu[_MD_TADREPAIR_SMNAME2] = 'repair.php';
 }
 

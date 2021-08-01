@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -13,7 +14,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 //列出所有tad_repair資料
 function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_function = 0, $mode = '')
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
     $FooTable = new FooTable();
     $FooTable->render();
@@ -264,14 +265,13 @@ function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
-$unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
-$unit_menu_sn = system_CleanVars($_REQUEST, 'unit_menu_sn', 0, 'int');
-$fixed_status = system_CleanVars($_REQUEST, 'fixed_status', '', 'string');
-$new_unit_sn = system_CleanVars($_REQUEST, 'new_unit_sn', 0, 'int');
-$files_sn = system_CleanVars($_REQUEST, 'files_sn', 0, 'int');
+$op = Request::getString('op');
+$repair_sn = Request::getInt('repair_sn');
+$unit_sn = Request::getInt('unit_sn');
+$unit_menu_sn = Request::getInt('unit_menu_sn');
+$fixed_status = Request::getString('fixed_status');
+$new_unit_sn = Request::getInt('new_unit_sn');
+$files_sn = Request::getInt('files_sn');
 
 switch ($op) {
     //下載檔案
@@ -298,7 +298,6 @@ switch ($op) {
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('jquery', Utility::get_jquery(true));
-$xoopsTpl->assign('isAdmin', $isAdmin);
 
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';

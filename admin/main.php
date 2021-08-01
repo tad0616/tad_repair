@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tad_repair_adm_main.tpl';
@@ -10,7 +11,7 @@ require_once dirname(__DIR__) . '/function.php';
 //列出所有tad_repair資料
 function list_tad_repair()
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsUser, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
 
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
@@ -74,16 +75,15 @@ function list_tad_repair()
 //刪除tad_repair某筆資料資料
 function delete_tad_repair($repair_sn = '')
 {
-    global $xoopsDB, $isAdmin;
+    global $xoopsDB;
     $sql = 'delete from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
-$unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
+$op = Request::getString('op');
+$repair_sn = Request::getInt('repair_sn');
+$unit_sn = Request::getInt('unit_sn');
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/
@@ -92,7 +92,7 @@ switch ($op) {
         delete_tad_repair($repair_sn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     default:
         list_tad_repair();
         break;

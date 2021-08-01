@@ -1,3 +1,10 @@
+Tad Repair 2.4.4 (released on 2021-08-01)
+================================================
+1. Fix the problem that non-photo files cannot be downloaded
+2. Comply with the new version 2021/07 AA accessibility standard
+3. Combine BootStrap3 and 4 templates
+4.Support XOOPS 2.5.11
+
 Tad Repair 2.4.3 (2020-03-14 released)
 ====================================================
 1. The person who revises the same unit can modify the maintenance notification that has been replied by the same unit

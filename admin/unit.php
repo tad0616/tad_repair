@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
@@ -109,7 +110,7 @@ function update_tad_repair_unit($unit_sn = '')
 //列出所有tad_repair_unit資料
 function list_tad_repair_unit()
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
 
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -148,16 +149,15 @@ function list_tad_repair_unit()
 //刪除tad_repair_unit某筆資料資料
 function delete_tad_repair_unit($unit_sn = '')
 {
-    global $xoopsDB, $isAdmin;
+    global $xoopsDB;
     $sql = 'delete from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$repair_sn = system_CleanVars($_REQUEST, 'repair_sn', 0, 'int');
-$unit_sn = system_CleanVars($_REQUEST, 'unit_sn', 0, 'int');
+$op = Request::getString('op');
+$repair_sn = Request::getInt('repair_sn');
+$unit_sn = Request::getInt('unit_sn');
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/
@@ -167,22 +167,24 @@ switch ($op) {
         $unit_sn = insert_tad_repair_unit();
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //更新資料
     case 'update_tad_repair_unit':
         update_tad_repair_unit($unit_sn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //輸入表格
     case 'tad_repair_unit_form':
         tad_repair_unit_form($unit_sn);
         break;
+
     //刪除資料
     case 'delete_tad_repair_unit':
         delete_tad_repair_unit($unit_sn);
         header("location: {$_SERVER['PHP_SELF']}");
         break;
+
     //預設動作
     default:
         list_tad_repair_unit();
