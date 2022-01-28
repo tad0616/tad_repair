@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-sm-8">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
           <label class="col-sm-2 col-form-label text-sm-right control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
           </label>
@@ -17,7 +17,7 @@
 
         <{if 'repair_status'|in_array:$unuse_cols}>
         <{else}>
-          <div class="form-group row">
+          <div class="form-group row mb-3">
             <label class="col-sm-2 col-form-label text-sm-right control-label">
               <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
             </label>
@@ -29,7 +29,7 @@
 
 
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
           <label class="col-sm-2 col-form-label text-sm-right control-label">
             <{$smarty.const._MD_TADREPAIR_IMG}>
           </label>
@@ -44,7 +44,7 @@
         <{if 'repair_place'|in_array:$unuse_cols}>
         <{else}>
           <!--地點-->
-          <div class="form-group row">
+          <div class="form-group row mb-3">
             <label class="col-sm-4 col-form-label text-sm-right control-label">
               <{$smarty.const._MD_TADREPAIR_PLACE}>
             </label>
@@ -56,7 +56,7 @@
 
 
         <!--通知單位-->
-        <div class="form-group row">
+        <div class="form-group row mb-3">
           <label class="col-sm-4 col-form-label text-sm-right control-label">
             <{$smarty.const._MD_TADREPAIR_UNIT_SN}>
           </label>
@@ -70,7 +70,7 @@
         <{if 'repair_status'|in_array:$unuse_cols}>
         <{else}>
           <!--嚴重程度-->
-          <div class="form-group row">
+          <div class="form-group row mb-3">
             <label class="col-sm-4 col-form-label text-sm-right control-label">
               <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
             </label>
@@ -119,13 +119,13 @@
 
   <form action="repair.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
     <!--回覆內容-->
-    <div class="form-group row">
+    <div class="form-group row mb-3">
       <div class="col-sm-12">
       <textarea name="fixed_content" class="form-control" rows=4 id="fixed_content" placeholder="<{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}>" ><{$fixed_content}></textarea>
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
       <label class="col-sm-2 col-form-label text-sm-right control-label">
         <{$smarty.const._MD_TADREPAIR_IMG}>
       </label>
@@ -135,7 +135,7 @@
     </div>
 
     <!--處理狀況-->
-    <div class="form-group row">
+    <div class="form-group row mb-3">
 
       <label class="col-sm-2 col-form-label text-sm-right control-label">
         <{$smarty.const._MD_TADREPAIR_FIXED_STATUS}>

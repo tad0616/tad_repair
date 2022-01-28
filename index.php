@@ -176,9 +176,9 @@ function show_one_tad_repair($repair_sn = '')
         $$k = $v;
     }
 
-    $modify_link = ($uid == $repair_uid and _MD_TADREPAIR_REPAIRED != $fixed_status) ? "<a href='repair.php?op=tad_repair_form&repair_sn=$repair_sn' class='btn btn-warning pull-right'>" . _TAD_EDIT . '</a>' : '';
+    $modify_link = ($uid == $repair_uid and _MD_TADREPAIR_REPAIRED != $fixed_status) ? "<a href='repair.php?op=tad_repair_form&repair_sn=$repair_sn' class='btn btn-warning pull-right float-right pull-end'>" . _TAD_EDIT . '</a>' : '';
 
-    $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
+    $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right float-right pull-end'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
 
     $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
     if (empty($repair_name)) {

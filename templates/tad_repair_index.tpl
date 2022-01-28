@@ -114,12 +114,12 @@
 
 <{if $now_op=="list_tad_repair"}>
   <{$FooTableJS}>
-  <h2 class="sr-only">List Repair</h2>
+  <h2 class="sr-only visually-hidden">List Repair</h2>
 
   <div class="row">
     <div class="col-sm-6">
       <form action="index.php" method="get" id="myForm" enctype="multipart/form-data" class="form-horizontal"  role="form">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
           <div class="col-sm-6">
             <{html_options name='unit_menu_sn' title='select unit' options=$unit_menu  selected=$def_unit_menu_sn  class="form-control" onchange="submit();"}>
           </div>
@@ -132,7 +132,7 @@
 
     <div class="col-sm-6">
       <form action="excel.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
           <div class="col-sm-6">
             <select name="ym" class="form-control" title="select year">
               <{foreach item=report from=$repair_ym}>
