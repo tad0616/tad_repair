@@ -196,7 +196,7 @@
             <{if 'repair_date'|in_array:$show_cols}>
               <td nowrap><{$repair.repair_date}></td>
             <{/if}>
-              <td><span class="badge badge-success"><{$repair.repair_sn}></span> <{$repair.repair_title}></a></td>
+              <td><span class="badge badge-success bg-success"><{$repair.repair_sn}></span> <{$repair.repair_title}></a></td>
 
             <{if 'repair_place'|in_array:$unuse_cols}>
             <{elseif 'repair_place'|in_array:$show_cols and 'repair_place'|in_array:$unuse_cols}>

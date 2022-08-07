@@ -1,6 +1,7 @@
-Tad Repair 2.4.6 (released on 2022-01-28)
+Tad Repair 2.4.6 (released on 2022-02-03)
 ====================================
 1.Support BootStrap5
+2.Let the block without content not appear
 
 Tad Repair 2.4.5 (released on 2021-08-24)
 ====================================
