@@ -183,7 +183,7 @@ switch ($op) {
     case 'delete_tad_repair_unit':
         delete_tad_repair_unit($unit_sn);
         header("location: {$_SERVER['PHP_SELF']}");
-        break;
+        exit;
 
     //預設動作
     default:
@@ -193,4 +193,6 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
+$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
 require_once __DIR__ . '/footer.php';

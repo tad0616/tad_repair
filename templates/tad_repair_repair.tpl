@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-sm-8">
         <div class="form-group row mb-3">
-          <label class="col-sm-2 col-form-label text-sm-right control-label">
+          <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
           </label>
           <div class="col-sm-10">
@@ -15,10 +15,10 @@
           </div>
         </div>
 
-        <{if 'repair_status'|in_array:$unuse_cols}>
+        <{if 'repair_content'|in_array:$unuse_cols}>
         <{else}>
           <div class="form-group row mb-3">
-            <label class="col-sm-2 col-form-label text-sm-right control-label">
+            <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
               <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
             </label>
             <div class="col-sm-10">
@@ -30,7 +30,7 @@
 
 
         <div class="form-group row mb-3">
-          <label class="col-sm-2 col-form-label text-sm-right control-label">
+          <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
             <{$smarty.const._MD_TADREPAIR_IMG}>
           </label>
           <div class="col-sm-10">
@@ -45,7 +45,7 @@
         <{else}>
           <!--地點-->
           <div class="form-group row mb-3">
-            <label class="col-sm-4 col-form-label text-sm-right control-label">
+            <label class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
               <{$smarty.const._MD_TADREPAIR_PLACE}>
             </label>
             <div class="col-sm-8">
@@ -57,7 +57,7 @@
 
         <!--通知單位-->
         <div class="form-group row mb-3">
-          <label class="col-sm-4 col-form-label text-sm-right control-label">
+          <label class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
             <{$smarty.const._MD_TADREPAIR_UNIT_SN}>
           </label>
           <div class="col-sm-8">
@@ -71,7 +71,7 @@
         <{else}>
           <!--嚴重程度-->
           <div class="form-group row mb-3">
-            <label class="col-sm-4 col-form-label text-sm-right control-label">
+            <label class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
               <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
             </label>
             <div class="col-sm-8">
@@ -126,7 +126,7 @@
     </div>
 
     <div class="form-group row mb-3">
-      <label class="col-sm-2 col-form-label text-sm-right control-label">
+      <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
         <{$smarty.const._MD_TADREPAIR_IMG}>
       </label>
       <div class="col-sm-10">
@@ -137,7 +137,7 @@
     <!--處理狀況-->
     <div class="form-group row mb-3">
 
-      <label class="col-sm-2 col-form-label text-sm-right control-label">
+      <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
         <{$smarty.const._MD_TADREPAIR_FIXED_STATUS}>
       </label>
       <div class="col-sm-4">

@@ -6,7 +6,7 @@ $modversion = [];
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADREPAIR_NAME;
-$modversion['version'] = 2.46;
+$modversion['version'] = 2.47;
 $modversion['description'] = _MI_TADREPAIR_DESC;
 $modversion['author'] = _MI_TADREPAIR_AUTHOR;
 $modversion['credits'] = _MI_TADREPAIR_CREDITS;
@@ -17,7 +17,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2022-02-03';
+$modversion['release_date'] = '2022-09-12';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -80,27 +80,30 @@ $modversion['blocks'][1]['show_func'] = 'wait_to_repair';
 $modversion['blocks'][1]['template'] = 'wait_to_repair.tpl';
 
 //---偏好設定---//
-$modversion['config'][0]['name'] = 'repair_status';
-$modversion['config'][0]['title'] = '_MI_TADREPAIR_REPAIR_STATUS';
-$modversion['config'][0]['description'] = '_MI_TADREPAIR_REPAIR_STATUS_DESC';
-$modversion['config'][0]['formtype'] = 'textbox';
-$modversion['config'][0]['valuetype'] = 'text';
-$modversion['config'][0]['default'] = _MI_TADREPAIR_REPAIR_STATUS_VAL;
+$i = 0;
+$modversion['config'][$i]['name'] = 'repair_status';
+$modversion['config'][$i]['title'] = '_MI_TADREPAIR_REPAIR_STATUS';
+$modversion['config'][$i]['description'] = '_MI_TADREPAIR_REPAIR_STATUS_DESC';
+$modversion['config'][$i]['formtype'] = 'textbox';
+$modversion['config'][$i]['valuetype'] = 'text';
+$modversion['config'][$i]['default'] = _MI_TADREPAIR_REPAIR_STATUS_VAL;
 
-$modversion['config'][1]['name'] = 'fixed_status';
-$modversion['config'][1]['title'] = '_MI_TADREPAIR_FIXED_STATUS';
-$modversion['config'][1]['description'] = '_MI_TADREPAIR_FIXED_STATUS_DESC';
-$modversion['config'][1]['formtype'] = 'textbox';
-$modversion['config'][1]['valuetype'] = 'text';
-$modversion['config'][1]['default'] = _MI_TADREPAIR_FIXED_STATUS_VAL;
+$i++;
+$modversion['config'][$i]['name'] = 'fixed_status';
+$modversion['config'][$i]['title'] = '_MI_TADREPAIR_FIXED_STATUS';
+$modversion['config'][$i]['description'] = '_MI_TADREPAIR_FIXED_STATUS_DESC';
+$modversion['config'][$i]['formtype'] = 'textbox';
+$modversion['config'][$i]['valuetype'] = 'text';
+$modversion['config'][$i]['default'] = _MI_TADREPAIR_FIXED_STATUS_VAL;
 
-$modversion['config'][2]['name'] = 'show_cols';
-$modversion['config'][2]['title'] = '_MI_TADREPAIR_SHOW_COLS';
-$modversion['config'][2]['description'] = '_MI_TADREPAIR_SHOW_COLS_DESC';
-$modversion['config'][2]['formtype'] = 'select_multi';
-$modversion['config'][2]['valuetype'] = 'array';
-$modversion['config'][2]['default'] = ['repair_date', 'repair_place', 'repair_uid', 'unit_sn', 'repair_status', 'fixed_uid', 'fixed_date', 'fixed_status'];
-$modversion['config'][2]['options'] = [
+$i++;
+$modversion['config'][$i]['name'] = 'show_cols';
+$modversion['config'][$i]['title'] = '_MI_TADREPAIR_SHOW_COLS';
+$modversion['config'][$i]['description'] = '_MI_TADREPAIR_SHOW_COLS_DESC';
+$modversion['config'][$i]['formtype'] = 'select_multi';
+$modversion['config'][$i]['valuetype'] = 'array';
+$modversion['config'][$i]['default'] = ['repair_date', 'repair_place', 'repair_uid', 'unit_sn', 'repair_status', 'fixed_uid', 'fixed_date', 'fixed_status'];
+$modversion['config'][$i]['options'] = [
     '_MI_TADREPAIR_SHOW_DATE' => 'repair_date',
     '_MI_TADREPAIR_PLACE' => 'repair_place',
     '_MI_TADREPAIR_SHOW_UID' => 'repair_uid',
@@ -111,17 +114,26 @@ $modversion['config'][2]['options'] = [
     '_MI_TADREPAIR_SHOW_FIXED_STATUS' => 'fixed_status',
 ];
 
-$modversion['config'][3]['name'] = 'unuse_cols';
-$modversion['config'][3]['title'] = '_MI_TADREPAIR_UNUSE_COLS';
-$modversion['config'][3]['description'] = '_MI_TADREPAIR_UNUSE_COLS_DESC';
-$modversion['config'][3]['formtype'] = 'select_multi';
-$modversion['config'][3]['valuetype'] = 'array';
-$modversion['config'][3]['default'] = [];
-$modversion['config'][3]['options'] = [
+$i++;
+$modversion['config'][$i]['name'] = 'unuse_cols';
+$modversion['config'][$i]['title'] = '_MI_TADREPAIR_UNUSE_COLS';
+$modversion['config'][$i]['description'] = '_MI_TADREPAIR_UNUSE_COLS_DESC';
+$modversion['config'][$i]['formtype'] = 'select_multi';
+$modversion['config'][$i]['valuetype'] = 'array';
+$modversion['config'][$i]['default'] = [];
+$modversion['config'][$i]['options'] = [
     '_MI_TADREPAIR_PLACE' => 'repair_place',
     '_MI_TADREPAIR_STATUS' => 'repair_status',
     '_MI_TADREPAIR_CONTENT' => 'repair_content',
 ];
+
+$i++;
+$modversion['config'][$i]['name'] = 'text_replace';
+$modversion['config'][$i]['title'] = '_MI_TADREPAIR_TEXT_REPLACE';
+$modversion['config'][$i]['description'] = '_MI_TADREPAIR_TEXT_REPLACE_DESC';
+$modversion['config'][$i]['formtype'] = 'textarea';
+$modversion['config'][$i]['valuetype'] = 'text';
+$modversion['config'][$i]['default'] = "";
 
 //---搜尋設定---//
 $modversion['hasSearch'] = 1;

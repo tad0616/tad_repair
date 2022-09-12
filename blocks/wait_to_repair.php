@@ -34,6 +34,7 @@ function wait_to_repair($options)
         $content[$i]['repair_sn'] = $repair_sn;
         $content[$i]['repair_title'] = $repair_title;
         $content[$i]['repair_name'] = $repair_name;
+        $content[$i]['repair_place'] = $repair_place;
         $i++;
     }
     $block['content'] = $content;

@@ -42,3 +42,6 @@ define('_MI_TADREPAIR_CONTENT', 'Details');
 define('_MI_TADREPAIR_UNUSE_COLS', 'choose not to use field');
 define('_MI_TADREPAIR_UNUSE_COLS_DESC', 'do not use the field does not appear in the form, it will not appear in the list');
 define('_MD_TADREPAIR_NOT_USER', 'This notification is not your notification, without modification');
+
+define('_MI_TADREPAIR_TEXT_REPLACE', 'Word replacement');
+define('_MI_TADREPAIR_TEXT_REPLACE_DESC', 'Format: "Original word 1=New word 1;Original word 2=New word 2"');

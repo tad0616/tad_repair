@@ -7,7 +7,7 @@ if (!isset($_SESSION['tad_repair_adm'])) {
     $_SESSION['tad_repair_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 
-$interface_menu[_TAD_TO_MOD] = 'index.php';
+$interface_menu[_MD_TADREPAIR_HOME] = 'index.php';
 if ($xoopsUser) {
     $interface_menu[_MD_TADREPAIR_SMNAME2] = 'repair.php';
 }

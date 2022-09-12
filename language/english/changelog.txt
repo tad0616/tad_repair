@@ -1,3 +1,9 @@
+Tad Repair 2.4.7 (Released on 2022-09-12)
+====================================
+1.Add word replacement function
+2. Fix the problem that the venue menu does not appear even when "Level" is closed in Preferences.
+
+
 Tad Repair 2.4.6 (released on 2022-02-03)
 ====================================
 1.Support BootStrap5
