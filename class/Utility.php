@@ -33,13 +33,13 @@ class Utility
         global $xoopsModuleConfig;
         if (!isset($xoopsModuleConfig['text_replace'])) {
             $modhandler = xoops_gethandler('module');
-            $xoopsModule = $modhandler->getByDirname("tad_repair");
+            $RepairModule = $modhandler->getByDirname("tad_repair");
             $config_handler = xoops_gethandler('config');
-            $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+            $RepairModuleConfig = $config_handler->getConfigsByCat(0, $RepairModule->getVar('mid'));
         }
 
-        if ($xoopsModuleConfig['text_replace'] != '') {
-            $items = explode(';', $xoopsModuleConfig['text_replace']);
+        if ($RepairModuleConfig['text_replace'] != '') {
+            $items = explode(';', $RepairModuleConfig['text_replace']);
             foreach ($items as $item) {
                 list($old_text, $new_text) = explode('=', trim($item));
                 if (strpos($text, $old_text) !== false) {
