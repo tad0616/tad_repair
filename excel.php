@@ -1,12 +1,13 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 
-$ym = mb_substr($_POST['ym'], 0, 7);
-
+$ym = Request::getString('ym');
+$ym = mb_substr($ym, 0, 7);
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel.php'; //引入 PHPExcel 物件庫
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php'; //引入 
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php'; //引入
 $objPHPExcel = new PHPExcel(); //實體化Excel
 //----------內容-----------//
 
@@ -95,14 +96,14 @@ $n = $i - 1;
 $objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", '=CONCATENATE("' . _MD_TADREPAIR_REPORT_TOTAL . " \" , COUNTA(A2:A{$n}) , \" " . _MD_TADREPAIR_REPORT_TOTAL2 . '")');
 
 $title = $ym . _MD_TADREPAIR_REPORT;
-$title = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header("Content-Disposition: attachment;filename={$title}.xlsx");
-header('Cache-Control: max-age=0');
 
+// $title = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Cache-Control: max-age=0');
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setPreCalculateFormulas(false);
-$objWriter->save('php://output');
+$objWriter->save(XOOPS_ROOT_PATH . "/uploads/tad_repair/{$title}.xlsx");
+header("location:" . XOOPS_URL . "/uploads/tad_repair/{$title}.xlsx");
 exit;
 
 function num2alpha($n)

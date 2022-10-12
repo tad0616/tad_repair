@@ -12,6 +12,6 @@ if ($xoopsUser) {
     $interface_menu[_MD_TADREPAIR_SMNAME2] = 'repair.php';
 }
 
-if ($isAdmin) {
+if ($_SESSION['tad_repair_adm']) {
     $interface_menu[_TAD_TO_ADMIN] = 'admin/main.php';
 }
