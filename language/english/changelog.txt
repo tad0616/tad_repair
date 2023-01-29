@@ -1,3 +1,7 @@
+Tad Repair 2.4.8 (Released on 2023-01-29)
+====================================
+1.excel to save to the host and then download (to avoid some environments not being able to download)
+
 Tad Repair 2.4.7 (Released on 2022-09-12)
 ====================================
 1.Add word replacement function
