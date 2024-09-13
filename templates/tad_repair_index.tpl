@@ -237,7 +237,7 @@
     </div>
 
   <{else}>
-    <div class="jumbotron">
+    <div class="jumbotron bg-light p-5 rounded-lg m-3">
       <{$smarty.const._MD_TADREPAIR_EMPTY}>
     </div>
 

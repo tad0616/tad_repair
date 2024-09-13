@@ -49,7 +49,7 @@
       </tr>
     </table>
   <{else}>
-    <div class="jumbotron">
+    <div class="jumbotron bg-light p-5 rounded-lg m-3">
       <{$smarty.const._MA_TADREPAIR_EMPTY}>
     </div>
   <{/if}>
