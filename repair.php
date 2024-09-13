@@ -118,11 +118,10 @@ function insert_tad_repair()
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
 
-    $myts = \MyTextSanitizer::getInstance();
-    $repair_title = $myts->addSlashes($_POST['repair_title']);
-    $repair_place = $myts->addSlashes($_POST['repair_place']);
-    $repair_content = $myts->addSlashes($_POST['repair_content']);
-    $repair_status = $myts->addSlashes($_POST['repair_status']);
+    $repair_title = $xoopsDB->escape($_POST['repair_title']);
+    $repair_place = $xoopsDB->escape($_POST['repair_place']);
+    $repair_content = $xoopsDB->escape($_POST['repair_content']);
+    $repair_status = $xoopsDB->escape($_POST['repair_status']);
 
     $arr = explode(';', $xoopsModuleConfig['fixed_status']);
     // die(var_export($arr));
@@ -184,11 +183,10 @@ function update_tad_repair($repair_sn = '')
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
 
-    $myts = \MyTextSanitizer::getInstance();
-    $repair_content = $myts->addSlashes($_POST['repair_content']);
-    $repair_place = $myts->addSlashes($_POST['repair_place']);
-    $repair_title = $myts->addSlashes($_POST['repair_title']);
-    $repair_status = $myts->addSlashes($_POST['repair_status']);
+    $repair_content = $xoopsDB->escape($_POST['repair_content']);
+    $repair_place = $xoopsDB->escape($_POST['repair_place']);
+    $repair_title = $xoopsDB->escape($_POST['repair_title']);
+    $repair_status = $xoopsDB->escape($_POST['repair_status']);
     $unit_sn = (int) $_POST['unit_sn'];
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
@@ -229,7 +227,7 @@ function update_tad_repair($repair_sn = '')
 //tad_repair編輯表單
 function tad_fixed_form($repair_sn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl, $TadUpFiles;
+    global $xoopsUser, $xoopsTpl, $TadUpFiles;
     //include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
     //include_once(XOOPS_ROOT_PATH."/class/xoopseditor/xoopseditor.php");
     if (empty($xoopsUser)) {
@@ -323,9 +321,8 @@ function update_tad_fixed($repair_sn = '')
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
-    $myts = \MyTextSanitizer::getInstance();
-    $fixed_content = $myts->addSlashes($_POST['fixed_content']);
-    $fixed_status = $myts->addSlashes($_POST['fixed_status']);
+    $fixed_content = $xoopsDB->escape($_POST['fixed_content']);
+    $fixed_status = $xoopsDB->escape($_POST['fixed_status']);
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 

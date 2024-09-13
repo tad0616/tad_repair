@@ -11,7 +11,11 @@
             <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
           </label>
           <div class="col-sm-10">
+          <{if 'repair_content'|in_array:$unuse_cols}>
+            <textarea name="repair_title" rows=4 class="form-control validate[required] col-sm-12" id="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>"><{$repair_title}></textarea>
+          <{else}>
             <input type="text" name="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>" value="<{$repair_title}>" id="repair_title" class="form-control validate[required]">
+          <{/if}>
           </div>
         </div>
 

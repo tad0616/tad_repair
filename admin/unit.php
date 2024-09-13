@@ -62,10 +62,9 @@ function tad_repair_unit_form($unit_sn = '')
 //新增資料到tad_repair_unit中
 function insert_tad_repair_unit()
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
+    $_POST['unit_title'] = $xoopsDB->escape($_POST['unit_title']);
 
     if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
         $unit_admin = '1';
@@ -87,10 +86,9 @@ function insert_tad_repair_unit()
 //更新tad_repair_unit某一筆資料
 function update_tad_repair_unit($unit_sn = '')
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $_POST['unit_title'] = $myts->addSlashes($_POST['unit_title']);
+    $_POST['unit_title'] = $xoopsDB->escape($_POST['unit_title']);
 
     if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
         $unit_admin = '1';
