@@ -1,4 +1,4 @@
-<{if $block.content}>
+<{if $block.content|default:false}>
     <ul class="vertical_menu">
         <{foreach from=$block.content item=data}>
             <li>
@@ -9,7 +9,7 @@
                 <div>
                     <span class="badge badge-success bg-success"><{$data.repair_name}></span>
                     <a href="<{$xoops_url}>/modules/tad_repair/index.php?repair_sn=<{$data.repair_sn}>"><{$data.repair_title}></a>
-                    <{if $data.repair_place}> (<{$data.repair_place}>)<{/if}>
+                    <{if $data.repair_place|default:false}> (<{$data.repair_place}>)<{/if}>
                 </div>
             </li>
         <{/foreach}>

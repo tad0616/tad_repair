@@ -61,7 +61,7 @@
       </div>
     </form>
   <{else}>
-    <{if $all_content}>
+    <{if $all_content|default:false}>
     <script type="text/javascript">
     function delete_tad_repair_unit_func(unit_sn){
       var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");

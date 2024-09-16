@@ -1,6 +1,6 @@
 <link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 <div class="container-fluid">
-  <{if $all_content}>
+  <{if $all_content|default:false}>
     <script>
     function delete_tad_repair_func(repair_sn){
       var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");

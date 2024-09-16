@@ -147,7 +147,7 @@
       </form>
     </div>
   </div>
-  <{if $content}>
+  <{if $content|default:false}>
 
     <div class="row">
       <div class="col-sm-12">
