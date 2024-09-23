@@ -44,7 +44,7 @@
 
       <tr>
         <td colspan=12 class="bar">
-        <{$bar}>
+        <{$bar|default:''}>
         </td>
       </tr>
     </table>

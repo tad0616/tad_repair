@@ -23,7 +23,7 @@
       <div class="form-group row mb-3">
         <div class="col-sm-9">
           <!--單位名稱-->
-          <input type="text" name="unit_title" value="<{$unit_title}>" id="unit_title" class="form-control validate[required]" placeholder="<{$smarty.const._MA_TADREPAIR_UNIT_TITLE}>">
+          <input type="text" name="unit_title" value="<{$unit_title|default:''}>" id="unit_title" class="form-control validate[required]" placeholder="<{$smarty.const._MA_TADREPAIR_UNIT_TITLE}>">
         </div>
       </div>
 
@@ -34,7 +34,7 @@
       <div class="row">
         <div class="col-sm-4">
           <select name="repository" id="repository" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
-            <{$option}>
+            <{$option|default:''}>
           </select>
         </div>
         <div class="col-sm-1 text-center">
@@ -46,16 +46,16 @@
 
           <!--單位編號-->
           <div class="text-center" style="margin-top: 20px;">
-            <input type="hidden" name="unit_sn" value="<{$unit_sn}>">
-            <input type="hidden" name="op" value="<{$next_op}>">
-            <input type="hidden" name="unit_admin" id="unit_admin" value=",<{$unit_admin}>">
+            <input type="hidden" name="unit_sn" value="<{$unit_sn|default:''}>">
+            <input type="hidden" name="op" value="<{$next_op|default:''}>">
+            <input type="hidden" name="unit_admin" id="unit_admin" value=",<{$unit_admin|default:''}>">
             <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
           </div>
         </div>
 
         <div class="col-sm-4">
           <select id="destination" size="12" multiple="multiple" tmt:linkedselect="true" class="form-control">
-           <{$option2}>
+           <{$option2|default:''}>
           </select>
         </div>
       </div>

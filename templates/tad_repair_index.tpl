@@ -1,10 +1,10 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 
 <{if $now_op=="show_one"}>
 
-    <{$modify_link}>
+    <{$modify_link|default:''}>
 
-    <h2>[<{$repair_sn}>] <{$smarty.const._MD_TADREPAIR_FIXED_NOTICE}></h2>
+    <h2>[<{$repair_sn|default:''}>] <{$smarty.const._MD_TADREPAIR_FIXED_NOTICE}></h2>
 
       <table class="table table-striped table-bordered table-hover">
         <tr>
@@ -12,7 +12,7 @@
             <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
           </th>
           <td>
-            <{$repair_title}>
+            <{$repair_title|default:''}>
           </td>
         </tr>
 
@@ -23,7 +23,7 @@
                 <{$smarty.const._MD_TADREPAIR_PLACE}>
               </th>
               <td>
-                <{$repair_place}>
+                <{$repair_place|default:''}>
               </td>
             </tr>
           <{/if}>
@@ -34,7 +34,7 @@
             <{$smarty.const._MD_TADREPAIR_REPAIR_DATE}>
           </th>
           <td>
-            <{$repair_date}>
+            <{$repair_date|default:''}>
           </td>
         </tr>
 
@@ -45,7 +45,7 @@
               <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
             </th>
             <td>
-              <{$repair_status}>
+              <{$repair_status|default:''}>
             </td>
           </tr>
         <{/if}>
@@ -56,7 +56,7 @@
             <{$smarty.const._MD_TADREPAIR_REPAIR_UID}>
           </th>
           <td>
-            <{$repair_name}>
+            <{$repair_name|default:''}>
           </td>
         </tr>
         <tr>
@@ -64,7 +64,7 @@
             <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
           </th>
           <td>
-            <{$repair_content}>
+            <{$repair_content|default:''}>
           </td>
         </tr>
         <tr>
@@ -72,13 +72,13 @@
             <{$smarty.const._MD_TADREPAIR_IMG}>
           </th>
           <td>
-            <{$show_files}>
+            <{$show_files|default:''}>
           </td>
         </tr>
       </table>
 
 
-    <{$fixed_link}>
+    <{$fixed_link|default:''}>
     <h2><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></h2>
 
     <table class="table table-striped table-bordered table-hover">
@@ -87,33 +87,33 @@
           <form action="index.php" method="post">
             <select name="new_unit_sn" id="new_unit_sn">
               <{foreach from=$unit_menu key=sn item=title}>
-                <option value="<{$sn}>" <{if $unit_sn==$sn}>selected<{/if}>><{$title}></option>
+                <option value="<{$sn|default:''}>" <{if $unit_sn==$sn}>selected<{/if}>><{$title|default:''}></option>
               <{/foreach}>
             </select>
-            <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
-            <input type="hidden" name="unit_sn" value="<{$unit_sn}>">
+            <input type="hidden" name="repair_sn" value="<{$repair_sn|default:''}>">
+            <input type="hidden" name="unit_sn" value="<{$unit_sn|default:''}>">
             <button type="submit" name="op" value="move_to_unit" class="btn btn-warning btn-sm btn-xs"><{$smarty.const._MD_TADREPAIR_CHANGE_DEPARTMENT}></button>
           </form>
         <{else}>
-          <{$unit_title}>
+          <{$unit_title|default:''}>
         <{/if}>
       </td></tr>
-      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></th><td><{$fixed_status}></td></tr>
-      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}></th><td><{$fixed_content}></td></tr>
-      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th><td><{$fixed_date}></td></tr>
-      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th><td><{$fixed_name}></td></tr><tr>
+      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_STATUS}></th><td><{$fixed_status|default:''}></td></tr>
+      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}></th><td><{$fixed_content|default:''}></td></tr>
+      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_DATE}></th><td><{$fixed_date|default:''}></td></tr>
+      <tr><th nowrap><{$smarty.const._MD_TADREPAIR_FIXED_UID}></th><td><{$fixed_name|default:''}></td></tr><tr>
       <th nowrap>
         <{$smarty.const._MD_TADREPAIR_IMG}>
       </th>
       <td>
-        <{$show_fixed}>
+        <{$show_fixed|default:''}>
       </td>
     </tr>
     </table>
 <{/if}>
 
 <{if $now_op=="list_tad_repair"}>
-  <{$FooTableJS}>
+  <{$FooTableJS|default:''}>
   <h2 class="sr-only visually-hidden">List Repair</h2>
 
   <div class="row">
@@ -232,8 +232,8 @@
     </div>
 
     <div class="text-center">
-      <{$add_button}>
-      <{$bar}>
+      <{$add_button|default:''}>
+      <{$bar|default:''}>
     </div>
 
   <{else}>

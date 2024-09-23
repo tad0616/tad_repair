@@ -1,7 +1,7 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 
 <{if $mode=="repair_form"}>
-  <h2><{$repair_form_title}></h2>
+  <h2><{$repair_form_title|default:''}></h2>
   <form action="repair.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
 
     <div class="row">
@@ -12,9 +12,9 @@
           </label>
           <div class="col-sm-10">
           <{if 'repair_content'|in_array:$unuse_cols}>
-            <textarea name="repair_title" rows=4 class="form-control validate[required] col-sm-12" id="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>"><{$repair_title}></textarea>
+            <textarea name="repair_title" rows=4 class="form-control validate[required] col-sm-12" id="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>"><{$repair_title|default:''}></textarea>
           <{else}>
-            <input type="text" name="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>" value="<{$repair_title}>" id="repair_title" class="form-control validate[required]">
+            <input type="text" name="repair_title" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>" value="<{$repair_title|default:''}>" id="repair_title" class="form-control validate[required]">
           <{/if}>
           </div>
         </div>
@@ -26,7 +26,7 @@
               <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
             </label>
             <div class="col-sm-10">
-              <textarea name="repair_content" rows=4 class="form-control validate[required] col-sm-12" id="repair_content" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT_PRETEXT}>"><{$repair_content}></textarea>
+              <textarea name="repair_content" rows=4 class="form-control validate[required] col-sm-12" id="repair_content" placeholder="<{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT_PRETEXT}>"><{$repair_content|default:''}></textarea>
             </div>
           </div>
         <{/if}>
@@ -38,7 +38,7 @@
             <{$smarty.const._MD_TADREPAIR_IMG}>
           </label>
           <div class="col-sm-10">
-            <{$upform}>
+            <{$upform|default:''}>
           </div>
         </div>
 
@@ -53,7 +53,7 @@
               <{$smarty.const._MD_TADREPAIR_PLACE}>
             </label>
             <div class="col-sm-8">
-              <input type="text" name="repair_place" placeholder="<{$smarty.const._MD_TADREPAIR_PLACE}>" value="<{$repair_place}>" id="repair_place" class="form-control validate[required]">
+              <input type="text" name="repair_place" placeholder="<{$smarty.const._MD_TADREPAIR_PLACE}>" value="<{$repair_place|default:''}>" id="repair_place" class="form-control validate[required]">
             </div>
           </div>
         <{/if}>
@@ -66,7 +66,7 @@
           </label>
           <div class="col-sm-8">
             <select name="unit_sn" size=1 class="form-control">
-              <{$unit_sn_menu_options}>
+              <{$unit_sn_menu_options|default:''}>
             </select>
           </div>
         </div>
@@ -80,7 +80,7 @@
             </label>
             <div class="col-sm-8">
               <select name="repair_status" size=1 class="form-control">
-                <{$repair_status}>
+                <{$repair_status|default:''}>
               </select>
             </div>
           </div>
@@ -88,8 +88,8 @@
 
 
         <div class="row text-center">
-          <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
-          <input type="hidden" name="op" value="<{$op}>">
+          <input type="hidden" name="repair_sn" value="<{$repair_sn|default:''}>">
+          <input type="hidden" name="op" value="<{$op|default:''}>">
           <button type="submit" class="btn btn-primary"><{$smarty.const._SUBMIT}></button>
         </div>
 
@@ -98,26 +98,26 @@
   </form>
 
 <{else}>
-  <h2><{$fixed_form_title}></h2>
+  <h2><{$fixed_form_title|default:''}></h2>
 
   <table class="table table-striped table-bordered table-hover">
     <!--報修內容-->
     <tr><th nowrap style="width:80px;"><{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}></th>
-    <td><{$repair_title}></td></tr>
+    <td><{$repair_title|default:''}></td></tr>
 
     <!--詳細說明-->
     <tr><th><{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}></th>
-    <td><{$repair_content}></td></tr>
+    <td><{$repair_content|default:''}></td></tr>
 
     <!--嚴重程度-->
     <tr><th><{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}></th>
     <td>
-    <{$repair_status}>
+    <{$repair_status|default:''}>
     </td></tr>
 
     <!--通知單位-->
     <tr><th><{$smarty.const._MD_TADREPAIR_UNIT_SN}></th>
-    <td><{$unit_title}>
+    <td><{$unit_title|default:''}>
     </td></tr>
   </table>
 
@@ -125,7 +125,7 @@
     <!--回覆內容-->
     <div class="form-group row mb-3">
       <div class="col-sm-12">
-      <textarea name="fixed_content" class="form-control" rows=4 id="fixed_content" placeholder="<{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}>" ><{$fixed_content}></textarea>
+      <textarea name="fixed_content" class="form-control" rows=4 id="fixed_content" placeholder="<{$smarty.const._MD_TADREPAIR_FIXED_CONTENT}>" ><{$fixed_content|default:''}></textarea>
       </div>
     </div>
 
@@ -134,7 +134,7 @@
         <{$smarty.const._MD_TADREPAIR_IMG}>
       </label>
       <div class="col-sm-10">
-        <{$upform}>
+        <{$upform|default:''}>
       </div>
     </div>
 
@@ -146,11 +146,11 @@
       </label>
       <div class="col-sm-4">
         <select name="fixed_status" size=1 class="form-control">
-          <{$fixed_status}>
+          <{$fixed_status|default:''}>
         </select>
       </div>
       <div class="col-sm-6">
-        <input type="hidden" name="repair_sn" value="<{$repair_sn}>">
+        <input type="hidden" name="repair_sn" value="<{$repair_sn|default:''}>">
         <input type="hidden" name="op" value="update_tad_fixed">
         <button type="submit" class="btn btn-primary"><{$smarty.const._SUBMIT}></button>
       </div>
