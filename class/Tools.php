@@ -3,7 +3,7 @@
 namespace XoopsModules\Tad_repair;
 
 /*
-Utility Class Definition
+Tools Class Definition
 
 You may not change or alter any portion of this comment or credits of
 supporting developers from this source code or any supporting source code
@@ -22,9 +22,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
- * Class Utility
+ * Class Tools
  */
-class Utility
+class Tools
 {
 
     //新增檔案欄位

@@ -1,5 +1,5 @@
 <?php
-use XoopsModules\Tad_repair\Utility;
+use XoopsModules\Tad_repair\Tools;
 xoops_loadLanguage('modinfo_common', 'tadtools');
 define('_MI_TADREPAIR_NAME', '維修通報');
 define('_MI_TADREPAIR_AUTHOR', '維修通報');
@@ -44,3 +44,6 @@ define('_MI_TADREPAIR_UNUSE_COLS_DESC', '不使用欄位不會出現在表單，
 
 define('_MI_TADREPAIR_TEXT_REPLACE', '字詞替換');
 define('_MI_TADREPAIR_TEXT_REPLACE_DESC', '格式：「原字詞1=新字詞1;原字詞2=新字詞2」');
+
+define('_MI_TADREPAIR_CAN_SEND_MAIL', '是否寄發通知信？');
+define('_MI_TADREPAIR_CAN_SEND_MAIL_DESC', '若系統無法寄信請關閉');

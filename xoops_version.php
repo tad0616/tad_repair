@@ -136,6 +136,14 @@ $modversion['config'] = [
         'valuetype' => 'text',
         'default' => "",
     ],
+    [
+        'name' => 'can_send_mail',
+        'title' => '_MI_TADREPAIR_CAN_SEND_MAIL',
+        'description' => '_MI_TADREPAIR_CAN_SEND_MAIL_DESC',
+        'formtype' => 'yesno',
+        'valuetype' => 'int',
+        'default' => 1,
+    ],
 ];
 
 //---搜尋設定---//

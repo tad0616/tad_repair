@@ -45,3 +45,6 @@ define('_MD_TADREPAIR_NOT_USER', 'This notification is not your notification, wi
 
 define('_MI_TADREPAIR_TEXT_REPLACE', 'Word replacement');
 define('_MI_TADREPAIR_TEXT_REPLACE_DESC', 'Format: "Original word 1=New word 1;Original word 2=New word 2"');
+
+define('_MI_TADREPAIR_CAN_SEND_MAIL', 'Are notification letters sent?');
+define('_MI_TADREPAIR_CAN_SEND_MAIL_DESC', 'Close the system if you can\'t send mail.');

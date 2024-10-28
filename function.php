@@ -31,26 +31,28 @@ function get_color($name = '')
 
 function SendEmail($uid = '', $title = '', $content = '')
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoopsModuleConfig;
     if (empty($uid)) {
         return;
     }
+    $msg = '';
+    if ($xoopsModuleConfig['can_send_mail']) {
+        $sql = 'SELECT `email` FROM `' . $xoopsDB->prefix('users') . '` WHERE `uid`=?';
+        $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $sql = 'SELECT `email` FROM `' . $xoopsDB->prefix('users') . '` WHERE `uid`=?';
-    $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+        list($email) = $xoopsDB->fetchRow($result);
 
-    list($email) = $xoopsDB->fetchRow($result);
+        $xoopsMailer = getMailer();
+        $xoopsMailer->multimailer->ContentType = 'text/html';
+        $xoopsMailer->addHeaders('MIME-Version: 1.0');
+        $headers = '';
+        $sendMail = $xoopsMailer->sendMail($email, $title, $content, $headers);
+        $getErrors = $xoopsMailer->getErrors(true);
 
-    $xoopsMailer = getMailer();
-    $xoopsMailer->multimailer->ContentType = 'text/html';
-    $xoopsMailer->addHeaders('MIME-Version: 1.0');
-    $headers = '';
-    $sendMail = $xoopsMailer->sendMail($email, $title, $content, $headers);
-    $getErrors = $xoopsMailer->getErrors(true);
+        $msg .= $sendMail ? sprintf(_MD_TADREPAIR_MAIL_OK, $title, $email) : sprintf(_MD_TADREPAIR_MAIL_FAIL, $title, $email) . $getErrors;
 
-    $msg .= $sendMail ? sprintf(_MD_TADREPAIR_MAIL_OK, $title, $email) : sprintf(_MD_TADREPAIR_MAIL_FAIL, $title, $email) . $getErrors;
-
-    return $msg;
+        return $msg;
+    }
 }
 
 //取得tad_repair_unit
