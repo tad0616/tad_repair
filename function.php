@@ -106,22 +106,6 @@ function get_tad_repair($repair_sn = '')
     return $data;
 }
 
-//以流水號取得某筆tad_repair_unit資料
-function get_tad_repair_unit($unit_sn = '')
-{
-    global $xoopsDB;
-    if (empty($unit_sn)) {
-        return;
-    }
-
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` WHERE `unit_sn` =?';
-    $result = Utility::query($sql, 'i', [$unit_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    $data = $xoopsDB->fetchArray($result);
-
-    return $data;
-}
-
 //把模組設定項目轉為選項
 function mc2arr($name = '', $def = '', $v_as_k = true, $type = 'option', $other = '', $nl = true)
 {

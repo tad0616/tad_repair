@@ -4,6 +4,7 @@ use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Tmt;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_repair\Tools;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_repair_admin.tpl';
 require_once __DIR__ . '/header.php';
@@ -59,7 +60,7 @@ function tad_repair_unit_form($unit_sn = '')
 
     //抓取預設值
     if (!empty($unit_sn)) {
-        $DBV = get_tad_repair_unit($unit_sn);
+        $DBV = Tools::get_tad_repair_unit($unit_sn);
     } else {
         $DBV = [];
     }

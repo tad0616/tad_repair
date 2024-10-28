@@ -2,6 +2,8 @@
 
 namespace XoopsModules\Tad_repair;
 
+use XoopsModules\Tadtools\Utility;
+
 /*
 Tools Class Definition
 
@@ -53,6 +55,21 @@ class Tools
             return $text;
         }
 
+    }
+
+    //以流水號取得某筆tad_repair_unit資料
+    public static function get_tad_repair_unit($unit_sn = '')
+    {
+        global $xoopsDB;
+        if (empty($unit_sn)) {
+            return;
+        }
+
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` WHERE `unit_sn` =?';
+        $result = Utility::query($sql, 'i', [$unit_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+        $data = $xoopsDB->fetchArray($result);
+
+        return $data;
     }
 
 }

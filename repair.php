@@ -3,6 +3,7 @@ use Xmf\Request;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_repair\Tools;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_repair_index.tpl';
@@ -336,7 +337,7 @@ function tad_fixed_form($repair_sn = '')
     $FormValidator->render();
 
     $repair_content = nl2br($repair_content);
-    $unit = get_tad_repair_unit($unit_sn);
+    $unit = Tools::get_tad_repair_unit($unit_sn);
 
     $xoopsTpl->assign('PHP_SELF', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('repair_title', $repair_title);
@@ -381,7 +382,6 @@ function update_tad_fixed($repair_sn = '')
     $DBV = get_tad_repair($repair_sn);
 
     $unit_sn = $DBV['unit_sn'];
-    $unit = get_tad_repair_unit($unit_sn);
     $msg = '';
 
     $fixed_name = \XoopsUser::getUnameFromId($uid, 1);

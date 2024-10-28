@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_repair\Tools;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 
@@ -72,7 +73,7 @@ while (false !== ($all = $xoopsDB->fetchArray($result))) {
 
     $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
 
-    $unit = get_tad_repair_unit($unit_sn);
+    $unit = Tools::get_tad_repair_unit($unit_sn);
 
     $col_value = [$repair_sn, $repair_date, $repair_title, $repair_place, $repair_name, $unit['unit_title'], $repair_status, $fixed_name, $fixed_date, $fixed_status, $fixed_content, $repair_content];
     $z = 0;

@@ -1,5 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_repair\Tools;
 //區塊主函式 (待修通報(wait_to_repair))
 function wait_to_repair($options)
 {
@@ -19,7 +20,7 @@ function wait_to_repair($options)
         }
 
         $repair_date = mb_substr($repair_date, 0, 10);
-        $unit = get_tad_repair_unit($unit_sn);
+        $unit = Tools::get_tad_repair_unit($unit_sn);
 
         $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
         if (empty($repair_name)) {
@@ -39,21 +40,4 @@ function wait_to_repair($options)
     $block['content'] = $content;
 
     return $block;
-}
-
-if (!function_exists('get_tad_repair_unit')) {
-    //以流水號取得某筆tad_repair_unit資料
-    function get_tad_repair_unit($unit_sn = '')
-    {
-        global $xoopsDB;
-        if (empty($unit_sn)) {
-            return;
-        }
-
-        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` WHERE `unit_sn` = ?';
-        $result = Utility::query($sql, 'i', [$unit_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
-        $data = $xoopsDB->fetchArray($result);
-
-        return $data;
-    }
 }

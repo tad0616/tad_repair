@@ -3,6 +3,7 @@ use Xmf\Request;
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_repair\Tools;
 
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
@@ -120,11 +121,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
         $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
 
-        $unit = get_tad_repair_unit($unit_sn);
-
-        // $content = $myts->displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1);
-        // $content = $myts->displayTarea($content, 1, 0, 0, 0, 0);
-        // $title   = $myts->htmlSpecialChars($title);
+        $unit = Tools::get_tad_repair_unit($unit_sn);
 
         $repair_sn = (int) $repair_sn;
         $repair_title = empty($repair_title) ? '---' : $myts->htmlSpecialChars($repair_title);
@@ -257,12 +254,9 @@ function show_one_tad_repair($repair_sn = '')
     }
 
     $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : $fixed_date;
-    $unit = get_tad_repair_unit($unit_sn);
+    $unit = Tools::get_tad_repair_unit($unit_sn);
 
     $fixed_content = nl2br($fixed_content);
-
-    //raised,corners,inset
-    //$main.=div_3d(_MD_TADREPAIR_FIXED_STATUS.$fixed_link,$data,"corners","width:100%;");
 
     $xoopsTpl->assign('unit_title', $unit['unit_title']);
     $xoopsTpl->assign('fixed_status', $fixed_status);
