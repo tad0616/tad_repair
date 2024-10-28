@@ -6,9 +6,8 @@ function wait_to_repair($options)
     global $xoopsDB, $xoTheme;
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . "` WHERE fixed_status!='" . _MB_TADREPAIR_REPAIRED . "' ORDER BY `repair_date` DESC";
-
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `fixed_status` != ? ORDER BY `repair_date` DESC';
+    $result = Utility::query($sql, 's', [_MB_TADREPAIR_REPAIRED]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $block = [];
     $i = 0;
@@ -51,8 +50,8 @@ if (!function_exists('get_tad_repair_unit')) {
             return;
         }
 
-        $sql = 'select * from `' . $xoopsDB->prefix('tad_repair_unit') . "` where `unit_sn` = '{$unit_sn}'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` WHERE `unit_sn` = ?';
+        $result = Utility::query($sql, 'i', [$unit_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
         $data = $xoopsDB->fetchArray($result);
 
         return $data;

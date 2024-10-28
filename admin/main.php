@@ -1,20 +1,48 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_repair_adm_main.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_repair_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
+
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$repair_sn = Request::getInt('repair_sn');
+$unit_sn = Request::getInt('unit_sn');
+
+switch ($op) {
+
+    //刪除資料
+    case 'delete_tad_repair':
+        delete_tad_repair($repair_sn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    default:
+        list_adm_tad_repair();
+        $op = 'list_adm_tad_repair';
+        break;
+
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('now_op', $op);
+require_once __DIR__ . '/footer.php';
 
 /*-----------function區--------------*/
 
 //列出所有tad_repair資料
-function list_tad_repair()
+function list_adm_tad_repair()
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl;
+    global $xoopsDB, $xoopsUser, $xoopsTpl;
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render("delete_tad_repair_func", "main.php?op=delete_tad_repair&repair_sn=", 'repair_sn');
 
     //取得使用者編號
-    $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
+    $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . '` ORDER BY `repair_date` DESC';
 
     //取得各單位的管理員陣列
@@ -76,30 +104,7 @@ function list_tad_repair()
 function delete_tad_repair($repair_sn = '')
 {
     global $xoopsDB;
-    $sql = 'delete from `' . $xoopsDB->prefix('tad_repair') . "` where `repair_sn` = '{$repair_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_sn` =?';
+    Utility::query($sql, 'i', [$repair_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$repair_sn = Request::getInt('repair_sn');
-$unit_sn = Request::getInt('unit_sn');
-
-switch ($op) {
-    /*---判斷動作請貼在下方---*/
-    //刪除資料
-    case 'delete_tad_repair':
-        delete_tad_repair($repair_sn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    default:
-        list_tad_repair();
-        break;
-        /*---判斷動作請貼在上方---*/
-}
-
-/*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
-require_once __DIR__ . '/footer.php';

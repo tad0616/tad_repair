@@ -45,12 +45,11 @@ foreach ($col_title as $n => $title) {
     $z++;
 }
 
-$sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "` where repair_date like '{$ym}%' order by `repair_date`,`repair_sn`";
-$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+$sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_date` LIKE ? ORDER BY `repair_date`, `repair_sn`';
+$result = Utility::query($sql, 's', [$ym . '%']) or Utility::web_error($sql, __FILE__, __LINE__);
 
 $i = 2;
 while (false !== ($all = $xoopsDB->fetchArray($result))) {
-    //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
     foreach ($all as $k => $v) {
         $$k = $v;
     }

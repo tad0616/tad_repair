@@ -36,6 +36,8 @@ class Utility
             $RepairModule = $modhandler->getByDirname("tad_repair");
             $config_handler = xoops_gethandler('config');
             $RepairModuleConfig = $config_handler->getConfigsByCat(0, $RepairModule->getVar('mid'));
+        } else {
+            $RepairModuleConfig = $xoopsModuleConfig;
         }
 
         if ($RepairModuleConfig['text_replace'] != '') {
