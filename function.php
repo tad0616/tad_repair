@@ -1,5 +1,4 @@
 <?php
-
 use XoopsModules\Tadtools\Utility;
 
 /********************* 自訂函數 *********************/
