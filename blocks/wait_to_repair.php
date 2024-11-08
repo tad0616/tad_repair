@@ -1,6 +1,12 @@
 <?php
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
 use XoopsModules\Tad_repair\Tools;
+if (!class_exists('XoopsModules\Tad_repair\Tools')) {
+    require XOOPS_ROOT_PATH . '/modules/tad_repair/preloads/autoloader.php';
+}
 //區塊主函式 (待修通報(wait_to_repair))
 function wait_to_repair($options)
 {
@@ -14,7 +20,6 @@ function wait_to_repair($options)
     $i = 0;
     $content = [];
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
-        //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
             $$k = $v;
         }

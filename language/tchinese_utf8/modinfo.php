@@ -1,5 +1,4 @@
 <?php
-use XoopsModules\Tad_repair\Tools;
 xoops_loadLanguage('modinfo_common', 'tadtools');
 define('_MI_TADREPAIR_NAME', '維修通報');
 define('_MI_TADREPAIR_AUTHOR', '維修通報');

@@ -1,5 +1,8 @@
 <?php
 use XoopsModules\Tad_repair\Tools;
+if (!class_exists('XoopsModules\Tad_repair\Tools')) {
+    require XOOPS_ROOT_PATH . '/modules/tad_repair/preloads/autoloader.php';
+}
 xoops_loadLanguage('main', 'tadtools');
 
 define('_MD_TADREPAIR_SMNAME2', Tools::text_replace('填寫維修單'));

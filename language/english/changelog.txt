@@ -1,3 +1,10 @@
+Tad Repair 3.0 (released on 2024-11-11)
+====================================
+1. Support XOOPS 2.5.11
+2. Support PHP8.1.x
+3. Use $xoopsDB->escape() instead of $myts->addSlashes()
+4. Database syntax parameterization
+
 Tad Repair 2.4.8 (Released on 2023-01-29)
 ====================================
 1.excel to save to the host and then download (to avoid some environments not being able to download)
@@ -10,7 +17,7 @@ Tad Repair 2.4.7 (Released on 2022-09-12)
 
 Tad Repair 2.4.6 (released on 2022-02-03)
 ====================================
-1.Support BootStrap5
+1. Support BootStrap5
 2.Let the block without content not appear
 
 Tad Repair 2.4.5 (released on 2021-08-24)
@@ -37,9 +44,9 @@ Tad Repair 2.4.2 (2019-05-10 released)
 
 Tad Repair 2.4.1 (2019-01-01 released)
 ====================================================
-1.Support BootStrap4
+1. Support BootStrap4
 2.Attached support panoramic picture
-3.Support PHP 7.3
+3. Support PHP 7.3
 4.Fix XSS vulnerability
 
 
@@ -98,7 +105,7 @@ Tad Repair 2.3.2 (2016-12-05 released)
 
 Tad Repair 2.3.1 (2016-11-18 released)
 =================================================
- 1.Support XOOPS 2.5.8
+ 1. Support XOOPS 2.5.8
  2.Fix some bug
 
 
