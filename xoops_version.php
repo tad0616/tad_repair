@@ -1,7 +1,4 @@
 <?php
-
-global $xoopsConfig;
-
 $modversion = [];
 global $xoopsConfig;
 
@@ -68,9 +65,9 @@ $modversion['templates'] = [
     ['file' => 'tad_repair_admin.tpl', 'description' => 'tad_repair_admin.tpl'],
 ];
 
-//---區塊設定---//
+//---區塊設定 (索引為固定值，若欲刪除區塊記得補上索引，避免區塊重複)---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'wait_to_repair.php',
         'name' => _MI_TADREPAIR_BNAME1,
         'description' => _MI_TADREPAIR_BDESC1,
