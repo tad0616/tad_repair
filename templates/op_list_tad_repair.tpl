@@ -19,7 +19,7 @@
     <form action="excel.php" method="post" class="form-horizontal" role="form">
       <div class="form-group row mb-3">
         <div class="col-sm-6">
-          <select name="ym" class="form-select" title="select year">
+          <select name="ym" class="form-control form-select" title="select year">
             <{foreach item=report from=$repair_ym}>
               <option value="<{$report.ym}>"><{$report.ym}></option>
             <{/foreach}>

@@ -10,5 +10,5 @@ $interface_icon[_MD_TADREPAIR_HOME] = 'fa-wrench';
 
 if (isset($xoopsUser) or $_SERVER['PHP_SELF'] == '/admin.php') {
     $interface_menu[_MD_TADREPAIR_SMNAME2] = 'repair.php';
-    $interface_icon[_MD_TADREPAIR_SMNAME2] = 'fa-pencil-square-o';
+    $interface_icon[_MD_TADREPAIR_SMNAME2] = 'fa-pencil';
 }

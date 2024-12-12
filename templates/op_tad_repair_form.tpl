@@ -62,7 +62,7 @@
           <{$smarty.const._MD_TADREPAIR_UNIT_SN}>
         </label>
         <div class="col-sm-8">
-          <select name="unit_sn" size=1 class="form-select">
+          <select name="unit_sn" size=1 class="form-control form-select">
             <{$unit_sn_menu_options|default:''}>
           </select>
         </div>
@@ -76,7 +76,7 @@
             <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
           </label>
           <div class="col-sm-8">
-            <select name="repair_status" size=1 class="form-select">
+            <select name="repair_status" size=1 class="form-control form-select">
               <{$repair_status|default:''}>
             </select>
           </div>

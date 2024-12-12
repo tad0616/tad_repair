@@ -166,10 +166,10 @@ function insert_tad_repair()
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
-    $repair_title = $_POST['repair_title'];
-    $repair_place = $_POST['repair_place'];
-    $repair_content = $_POST['repair_content'];
-    $repair_status = $_POST['repair_status'];
+    $repair_title = (string) $_POST['repair_title'];
+    $repair_place = (string) $_POST['repair_place'];
+    $repair_content = (string) $_POST['repair_content'];
+    $repair_status = (string) $_POST['repair_status'];
 
     $arr = explode(';', $xoopsModuleConfig['fixed_status']);
     // die(var_export($arr));
@@ -192,7 +192,7 @@ function insert_tad_repair()
     $unit_sn = empty($_POST['unit_sn']) ? '1' : $_POST['unit_sn'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_repair') . '` (`repair_title`, `repair_place`, `repair_content` , `repair_date` , `repair_status` , `repair_uid` , `unit_sn` , `fixed_date`, `fixed_status` , `fixed_content`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    Utility::query($sql, 'sssssiisss', [$repair_title, $repair_place, $repair_content, $today, $repair_status, $uid, $unit_sn, '', $fixed_status, '']) or Utility::web_error($sql, __FILE__, __LINE__);
+    Utility::query($sql, 'sssssiisss', [(string) $repair_title, (string) $repair_place, (string) $repair_content, (string) $today, (string) $repair_status, $uid, $unit_sn, '', $fixed_status, '']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $repair_sn = $xoopsDB->getInsertId();
@@ -200,7 +200,7 @@ function insert_tad_repair()
     $TadUpFiles->set_col('repair_sn', $repair_sn);
     $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
 
-    $unit_sn = $_POST['unit_sn'];
+    $unit_sn = (int) $_POST['unit_sn'];
     $unit = unit_admin_arr();
     $msg = '';
 
@@ -229,10 +229,10 @@ function update_tad_repair($repair_sn = '')
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
-    $repair_content = $_POST['repair_content'];
-    $repair_place = $_POST['repair_place'];
-    $repair_title = $_POST['repair_title'];
-    $repair_status = $_POST['repair_status'];
+    $repair_content = (string) $_POST['repair_content'];
+    $repair_place = (string) $_POST['repair_place'];
+    $repair_title = (string) $_POST['repair_title'];
+    $repair_status = (string) $_POST['repair_status'];
     $unit_sn = (int) $_POST['unit_sn'];
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
@@ -366,8 +366,8 @@ function update_tad_fixed($repair_sn = '')
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
-    $fixed_content = $_POST['fixed_content'];
-    $fixed_status = $_POST['fixed_status'];
+    $fixed_content = (string) $_POST['fixed_content'];
+    $fixed_status = (string) $_POST['fixed_status'];
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 

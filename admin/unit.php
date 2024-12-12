@@ -120,7 +120,7 @@ function insert_tad_repair_unit()
     if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
         $unit_admin = '1';
     } else {
-        $unit_admin = $_POST['unit_admin'];
+        $unit_admin = (string) $_POST['unit_admin'];
     }
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_repair_unit') . '` (`unit_title`, `unit_admin`) VALUES (?, ?)';
@@ -140,7 +140,7 @@ function update_tad_repair_unit($unit_sn = '')
     if (empty($_POST['unit_admin']) or ',' === $_POST['unit_admin']) {
         $unit_admin = '1';
     } else {
-        $unit_admin = $_POST['unit_admin'];
+        $unit_admin = (string) $_POST['unit_admin'];
     }
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_repair_unit') . '` SET `unit_title` = ?, `unit_admin` = ? WHERE `unit_sn` = ?';

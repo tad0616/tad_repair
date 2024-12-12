@@ -45,7 +45,7 @@
       <{$smarty.const._MD_TADREPAIR_FIXED_STATUS}>
     </label>
     <div class="col-sm-4">
-      <select name="fixed_status" size=1 class="form-select">
+      <select name="fixed_status" size=1 class="form-control form-select">
         <{$fixed_status|default:''}>
       </select>
     </div>
