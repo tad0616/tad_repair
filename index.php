@@ -11,13 +11,13 @@ $xoopsOption['template_main'] = 'tad_repair_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$repair_sn = Request::getInt('repair_sn');
-$unit_sn = Request::getInt('unit_sn');
+$op           = Request::getString('op');
+$repair_sn    = Request::getInt('repair_sn');
+$unit_sn      = Request::getInt('unit_sn');
 $unit_menu_sn = Request::getInt('unit_menu_sn');
 $fixed_status = Request::getString('fixed_status');
-$new_unit_sn = Request::getInt('new_unit_sn');
-$files_sn = Request::getInt('files_sn');
+$new_unit_sn  = Request::getInt('new_unit_sn');
+$files_sn     = Request::getInt('files_sn');
 
 switch ($op) {
     //下載檔案
@@ -64,7 +64,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     $fixed_status_list = mc2arr('fixed_status', $def_fixed_status, true, 'return');
     array_unshift($fixed_status_list, _MD_TADREPAIR_REPAIR_FIXED_FILTER);
 
-    $unit_menu = get_tad_repair_unit_list();
+    $unit_menu    = get_tad_repair_unit_list();
     $unit_menu[0] = _MD_TADREPAIR_REPAIR_UNIT_FILTER;
 
     //顯示條件
@@ -77,7 +77,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $and_unit = "  and  unit_sn = '{$def_unit_menu_sn}'   ";
     }
 
-    $uid = ($xoopsUser) ? (int) $xoopsUser->uid() : '';
+    $uid = ($xoopsUser) ? (int) $xoopsUser->uid() : 0;
     $sql = 'select * from `' . $xoopsDB->prefix('tad_repair') . "`   where 1   $and_fixed    $and_unit    order by `repair_date` desc";
 
     //取得各單位的管理員陣列
@@ -85,14 +85,14 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
+    $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_content = [];
-    $i = 0;
+    $i           = 0;
 
     $repair_color = get_color('repair_status');
     $status_color = get_color('fixed_status');
@@ -109,7 +109,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         }
 
         $fixed_name = '';
-        if (0 != $fixed_uid) {
+        if (!empty($fixed_uid)) {
             $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
             if (empty($fixed_name)) {
                 $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
@@ -117,31 +117,31 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         }
 
         $repair_date = mb_substr($repair_date, 0, 10);
-        $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
+        $fixed_date  = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
         $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
 
         $unit = Tools::get_tad_repair_unit($unit_sn);
 
-        $repair_sn = (int) $repair_sn;
+        $repair_sn    = (int) $repair_sn;
         $repair_title = empty($repair_title) ? '---' : $myts->htmlSpecialChars($repair_title);
         $repair_place = $myts->htmlSpecialChars($repair_place);
-        $repair_name = $myts->htmlSpecialChars($repair_name);
+        $repair_name  = $myts->htmlSpecialChars($repair_name);
         // $repair_status = $myts->htmlSpecialChars($repair_status);
         $fixed_name = $myts->htmlSpecialChars($fixed_name);
         $fixed_date = $myts->htmlSpecialChars($fixed_date);
         // $fixed_status  = $myts->htmlSpecialChars($fixed_status);
 
-        $all_content[$i]['repair_sn'] = $repair_sn;
-        $all_content[$i]['repair_date'] = $myts->htmlSpecialChars($repair_date);
-        $all_content[$i]['repair_title'] = "<a href='{$_SERVER['PHP_SELF']}?repair_sn={$repair_sn}'>{$repair_title}</a>";
-        $all_content[$i]['repair_place'] = $repair_place;
-        $all_content[$i]['repair_name'] = $repair_name;
-        $all_content[$i]['unit_title'] = $unit['unit_title'];
+        $all_content[$i]['repair_sn']     = $repair_sn;
+        $all_content[$i]['repair_date']   = $myts->htmlSpecialChars($repair_date);
+        $all_content[$i]['repair_title']  = "<a href='{$_SERVER['PHP_SELF']}?repair_sn={$repair_sn}'>{$repair_title}</a>";
+        $all_content[$i]['repair_place']  = $repair_place;
+        $all_content[$i]['repair_name']   = $repair_name;
+        $all_content[$i]['unit_title']    = $unit['unit_title'];
         $all_content[$i]['repair_status'] = "<span style='color:{$repair_color[$repair_status]}'>$repair_status</span>";
-        $all_content[$i]['fixed_name'] = $fixed_name;
-        $all_content[$i]['fixed_date'] = $fixed_date;
-        $all_content[$i]['fixed_status'] = $fixed_status;
+        $all_content[$i]['fixed_name']    = $fixed_name;
+        $all_content[$i]['fixed_date']    = $fixed_date;
+        $all_content[$i]['fixed_status']  = $fixed_status;
         $i++;
     }
 
@@ -151,13 +151,13 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
     $add_button = ($show_function) ? "<a href='{$_SERVER['PHP_SELF']}?op=tad_repair_form' class='link_button_r'>" . _TAD_ADD . '</a>' : '';
 
-    $sql = 'SELECT `repair_date` FROM `' . $xoopsDB->prefix('tad_repair') . '` ORDER BY `repair_date` DESC';
+    $sql    = 'SELECT `repair_date` FROM `' . $xoopsDB->prefix('tad_repair') . '` ORDER BY `repair_date` DESC';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_repair_ym = [];
 
     while (list($repair_date) = $xoopsDB->fetchRow($result)) {
-        $ym = mb_substr($repair_date, 0, 7);
+        $ym             = mb_substr($repair_date, 0, 7);
         $repair_ym[$ym] = $ym;
     }
 
@@ -203,7 +203,7 @@ function show_one_tad_repair($repair_sn = '')
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_sn` =?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_sn` =?';
     $result = Utility::query($sql, 'i', [$repair_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all = $xoopsDB->fetchArray($result);
@@ -222,12 +222,12 @@ function show_one_tad_repair($repair_sn = '')
         $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
     }
 
-    $repair_sn = (int) $repair_sn;
-    $unit_sn = (int) $unit_sn;
+    $repair_sn    = (int) $repair_sn;
+    $unit_sn      = (int) $unit_sn;
     $repair_title = $myts->htmlSpecialChars($repair_title);
     $repair_place = $myts->htmlSpecialChars($repair_place);
-    $repair_date = $myts->htmlSpecialChars($repair_date);
-    $repair_name = $myts->htmlSpecialChars($repair_name);
+    $repair_date  = $myts->htmlSpecialChars($repair_date);
+    $repair_name  = $myts->htmlSpecialChars($repair_name);
     // $repair_status  = $myts->htmlSpecialChars($repair_status);
     $fixed_name = isset($fixed_name) ? $myts->htmlSpecialChars($fixed_name) : '';
     // $fixed_status   = $myts->htmlSpecialChars($fixed_status);
@@ -254,7 +254,7 @@ function show_one_tad_repair($repair_sn = '')
     }
 
     $fixed_date = ('0000-00-00 00:00:00' === $fixed_date) ? '' : $fixed_date;
-    $unit = Tools::get_tad_repair_unit($unit_sn);
+    $unit       = Tools::get_tad_repair_unit($unit_sn);
 
     $fixed_content = nl2br($fixed_content);
 
