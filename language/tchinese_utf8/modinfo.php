@@ -46,3 +46,6 @@ define('_MI_TADREPAIR_TEXT_REPLACE_DESC', '格式：「原字詞1=新字詞1;原
 
 define('_MI_TADREPAIR_CAN_SEND_MAIL', '是否寄發通知信？');
 define('_MI_TADREPAIR_CAN_SEND_MAIL_DESC', '若系統無法寄信請關閉');
+
+define('_MI_TADREPAIR_REPAIR_GROUP', '可進行維修通報者');
+define('_MI_TADREPAIR_REPAIR_GROUP_DESC', '可進行維修通報之群組');

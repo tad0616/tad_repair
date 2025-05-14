@@ -54,3 +54,8 @@ define('_MD_TADREPAIR_NO_PERMISSION', 'You do not have permission to edit');
 define('_MD_TADREPAIR_CHANGE_DEPARTMENT', 'Change Department');
 
 define('_MD_TADREPAIR_HOME', 'Maintenance List');
+
+define('_MD_TADREPAIR_NO_DATA', 'No content');
+define('_MD_TADREPAIR_NEED_SETUP', 'If you have not set up notification groups, please go to "Preferences" in the Maintenance Notification backend to set them up.');
+define('_MD_TADREPAIR_NOT_ALLOW_GROUP', 'Your group is not in the notifiable groups, please contact the administrator!');
+define('_MD_TADREPAIR_ERROR_FORMAT', 'Date format error');

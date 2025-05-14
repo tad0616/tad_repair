@@ -48,3 +48,6 @@ define('_MI_TADREPAIR_TEXT_REPLACE_DESC', 'Format: "Original word 1=New word 1;O
 
 define('_MI_TADREPAIR_CAN_SEND_MAIL', 'Are notification letters sent?');
 define('_MI_TADREPAIR_CAN_SEND_MAIL_DESC', 'Close the system if you can\'t send mail.');
+
+define('_MI_TADREPAIR_REPAIR_GROUP', 'Fillable groups for maintenance');
+define('_MI_TADREPAIR_REPAIR_GROUP_DESC', 'Fillable groups for maintenance');

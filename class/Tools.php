@@ -34,9 +34,9 @@ class Tools
     {
         global $xoopsModuleConfig;
         if (!isset($xoopsModuleConfig['text_replace'])) {
-            $modhandler = xoops_gethandler('module');
-            $RepairModule = $modhandler->getByDirname("tad_repair");
-            $config_handler = xoops_gethandler('config');
+            $modhandler         = xoops_gethandler('module');
+            $RepairModule       = $modhandler->getByDirname("tad_repair");
+            $config_handler     = xoops_gethandler('config');
             $RepairModuleConfig = $config_handler->getConfigsByCat(0, $RepairModule->getVar('mid'));
         } else {
             $RepairModuleConfig = $xoopsModuleConfig;
@@ -65,11 +65,31 @@ class Tools
             return;
         }
 
-        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` WHERE `unit_sn` =?';
+        $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` WHERE `unit_sn` =?';
         $result = Utility::query($sql, 'i', [$unit_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
-        $data = $xoopsDB->fetchArray($result);
+        $data   = $xoopsDB->fetchArray($result);
 
         return $data;
+    }
+
+    //取得session
+    public static function get_session()
+    {
+        global $xoopsUser, $xoopsModuleConfig;
+
+        //判斷是否對該模組有管理權限
+        if (!isset($_SESSION['tad_repair_adm'])) {
+            $_SESSION['tad_repair_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
+        }
+
+        if (!isset($_SESSION['can_repair'])) {
+            $_SESSION['can_repair'] = isset($xoopsUser) && \is_object($xoopsUser) ? array_intersect($_SESSION['xoopsUserGroups'], (array) $xoopsModuleConfig['repair_group']) : false;
+        }
+
+        if (!isset($_SESSION['now_user'])) {
+            $_SESSION['now_user'] = ($xoopsUser) ? $xoopsUser->toArray() : [];
+        }
+
     }
 
 }

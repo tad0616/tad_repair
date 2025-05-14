@@ -56,3 +56,8 @@ define('_MD_TADREPAIR_NO_PERMISSION', Tools::text_replace('您沒有修改的權
 define('_MD_TADREPAIR_CHANGE_DEPARTMENT', Tools::text_replace('改送其他單位'));
 
 define('_MD_TADREPAIR_HOME', Tools::text_replace('維修通報一覽'));
+
+define('_MD_TADREPAIR_NO_DATA', Tools::text_replace('無內容'));
+define('_MD_TADREPAIR_NEED_SETUP', Tools::text_replace('未設定可通報群組，請管理員至維修通報後台的「偏好設定」設定之'));
+define('_MD_TADREPAIR_NOT_ALLOW_GROUP', Tools::text_replace('您的所屬群組不在可通報群組內，請聯絡管理員！'));
+define('_MD_TADREPAIR_ERROR_FORMAT', Tools::text_replace('日期格式錯誤'));

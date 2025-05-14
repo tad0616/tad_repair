@@ -8,13 +8,20 @@ use XoopsModules\Tad_repair\Tools;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_repair_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-
+if (!$_SESSION['can_repair']) {
+    if (empty($xoopsModuleConfig['repair_group'])) {
+        $error = _MD_TADREPAIR_NEED_SETUP;
+    } else {
+        $error = _MD_TADREPAIR_NOT_ALLOW_GROUP;
+    }
+    redirect_header(XOOPS_URL . '/modules/tad_repair/index.php', 10, $error);
+}
 $TadUpFiles = new TadUpFiles('tad_repair');
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op        = Request::getString('op');
 $repair_sn = Request::getInt('repair_sn');
-$unit_sn = Request::getInt('unit_sn');
+$unit_sn   = Request::getInt('unit_sn');
 
 switch ($op) {
     //新增資料
@@ -144,7 +151,7 @@ function tad_repair_form($repair_sn = '')
 function get_tad_repair_unit_menu_options($default_unit_sn = '0')
 {
     global $xoopsDB;
-    $sql = 'SELECT `unit_sn`, `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
+    $sql    = 'SELECT `unit_sn`, `unit_title` FROM `' . $xoopsDB->prefix('tad_repair_unit') . '` ORDER BY `unit_sn`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $option = '';
@@ -166,23 +173,23 @@ function insert_tad_repair()
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
-    $repair_title = (string) $_POST['repair_title'];
-    $repair_place = (string) $_POST['repair_place'];
+    $repair_title   = (string) $_POST['repair_title'];
+    $repair_place   = (string) $_POST['repair_place'];
     $repair_content = (string) $_POST['repair_content'];
-    $repair_status = (string) $_POST['repair_status'];
+    $repair_status  = (string) $_POST['repair_status'];
 
     $arr = explode(';', $xoopsModuleConfig['fixed_status']);
     // die(var_export($arr));
     if (false !== mb_strpos($arr[0], '=')) {
-        $status = explode('=', $arr[0]);
+        $status       = explode('=', $arr[0]);
         $fixed_status = $status[1];
     } else {
         $fixed_status = $arr[0];
     }
-    $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+    $today     = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     $today_chk = date('Y-m-d H:i', xoops_getUserTimestamp(time()));
 
-    $sql = 'SELECT `repair_sn` FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_title` =? AND `repair_uid` =? AND `repair_date` LIKE ?';
+    $sql    = 'SELECT `repair_sn` FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_title` =? AND `repair_uid` =? AND `repair_date` LIKE ?';
     $result = Utility::query($sql, 'sis', [$repair_title, $uid, $today_chk . '%']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($repair_sn) = $xoopsDB->fetchRow($result)) {
@@ -201,8 +208,8 @@ function insert_tad_repair()
     $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
 
     $unit_sn = (int) $_POST['unit_sn'];
-    $unit = unit_admin_arr();
-    $msg = '';
+    $unit    = unit_admin_arr();
+    $msg     = '';
 
     $repair_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
@@ -230,10 +237,10 @@ function update_tad_repair($repair_sn = '')
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
     $repair_content = (string) $_POST['repair_content'];
-    $repair_place = (string) $_POST['repair_place'];
-    $repair_title = (string) $_POST['repair_title'];
-    $repair_status = (string) $_POST['repair_status'];
-    $unit_sn = (int) $_POST['unit_sn'];
+    $repair_place   = (string) $_POST['repair_place'];
+    $repair_title   = (string) $_POST['repair_title'];
+    $repair_status  = (string) $_POST['repair_status'];
+    $unit_sn        = (int) $_POST['unit_sn'];
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
@@ -252,14 +259,14 @@ function update_tad_repair($repair_sn = '')
     $TadUpFiles->upload_file('repair_img', 1280, 550, null, $repair_title, true);
 
     $unit = unit_admin_arr();
-    $msg = '';
+    $msg  = '';
 
     $repair_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($repair_name)) {
         $repair_name = \XoopsUser::getUnameFromId($uid, 0);
     }
 
-    $title = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $repair_title);
+    $title   = sprintf(_MD_TADREPAIR_MAIL_UPDATE_TITLE, $today, $repair_title);
     $content = sprintf(_MD_TADREPAIR_MAIL_UPDATE_CONTENT, $repair_name, $today, $repair_title, "<a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
     foreach ($unit[$unit_sn] as $uid) {
         $msg .= SendEmail($uid, $title, $content) . '<br>';
@@ -285,7 +292,7 @@ function tad_fixed_form($repair_sn = '')
 
     //抓取預設值
     if (!empty($repair_sn)) {
-        $DBV = get_tad_repair($repair_sn);
+        $DBV     = get_tad_repair($repair_sn);
         $unit_sn = $DBV['unit_sn'];
         if (!empty($DBV['fixed_uid']) and !in_array($user_uid, $unit_admin_arr[$unit_sn])) {
             redirect_header('index.php', 3, _MD_TADREPAIR_NO_PERMISSION);
@@ -315,7 +322,7 @@ function tad_fixed_form($repair_sn = '')
     $unit_sn = (!isset($DBV['unit_sn'])) ? '' : $DBV['unit_sn'];
 
     //設定「fixed_uid」欄位預設值
-    $user_uid = ($xoopsUser) ? $xoopsUser->uid() : '';
+    $user_uid  = ($xoopsUser) ? $xoopsUser->uid() : '';
     $fixed_uid = (!isset($DBV['fixed_uid'])) ? $user_uid : $DBV['fixed_uid'];
 
     //設定「fixed_date」欄位預設值
@@ -337,7 +344,7 @@ function tad_fixed_form($repair_sn = '')
     $FormValidator->render();
 
     $repair_content = nl2br($repair_content);
-    $unit = Tools::get_tad_repair_unit($unit_sn);
+    $unit           = Tools::get_tad_repair_unit($unit_sn);
 
     $xoopsTpl->assign('PHP_SELF', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('repair_title', $repair_title);
@@ -367,7 +374,7 @@ function update_tad_fixed($repair_sn = '')
     $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
 
     $fixed_content = (string) $_POST['fixed_content'];
-    $fixed_status = (string) $_POST['fixed_status'];
+    $fixed_status  = (string) $_POST['fixed_status'];
 
     $today = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
@@ -382,7 +389,7 @@ function update_tad_fixed($repair_sn = '')
     $DBV = get_tad_repair($repair_sn);
 
     $unit_sn = $DBV['unit_sn'];
-    $msg = '';
+    $msg     = '';
 
     $fixed_name = \XoopsUser::getUnameFromId($uid, 1);
     if (empty($fixed_name)) {
@@ -392,7 +399,7 @@ function update_tad_fixed($repair_sn = '')
     $TadUpFiles->set_col('fixed_sn', $repair_sn);
     $TadUpFiles->upload_file('fixed_img', 1280, 550, null, $fixed_content, true);
 
-    $title = sprintf(_MD_TADREPAIR_MAIL_FIXED_TITLE, $today, $DBV['repair_title']);
+    $title   = sprintf(_MD_TADREPAIR_MAIL_FIXED_TITLE, $today, $DBV['repair_title']);
     $content = sprintf(_MD_TADREPAIR_MAIL_FIXED_CONTENT, $fixed_name, $today, $DBV['repair_title'], "<a href='" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}'>" . XOOPS_URL . "/modules/tad_repair/index.php?repair_sn={$repair_sn}</a>");
 
     $msg = SendEmail($DBV['repair_uid'], $title, $content);

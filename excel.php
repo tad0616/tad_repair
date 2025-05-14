@@ -6,6 +6,10 @@ use XoopsModules\Tad_repair\Tools;
 require_once __DIR__ . '/header.php';
 
 $ym = Request::getString('ym');
+if (!isValidFormat($ym)) {
+    redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_TADREPAIR_ERROR_FORMAT);
+    exit;
+}
 $ym = mb_substr($ym, 0, 7);
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel.php'; //引入 PHPExcel 物件庫
 require_once XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php'; //引入
@@ -52,7 +56,8 @@ $unit_admin_arr = unit_admin_arr();
 $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair') . '` WHERE `repair_date` LIKE ? ORDER BY `repair_date`, `repair_sn`';
 $result = Utility::query($sql, 's', [$ym . '%']) or Utility::web_error($sql, __FILE__, __LINE__);
 
-$i = 2;
+$i  = 2;
+$ok = false;
 while (false !== ($all = $xoopsDB->fetchArray($result))) {
     foreach ($all as $k => $v) {
         $$k = $v;
@@ -91,23 +96,33 @@ while (false !== ($all = $xoopsDB->fetchArray($result))) {
         $objActSheet->setCellValue("{$alpha}{$i}", $val);
         $z++;
     }
-
+    $ok = true;
     $i++;
 }
 
-$n = $i - 1;
-$objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", '=CONCATENATE("' . _MD_TADREPAIR_REPORT_TOTAL . " \" , COUNTA(A2:A{$n}) , \" " . _MD_TADREPAIR_REPORT_TOTAL2 . '")');
+if ($ok) {
+    $n = $i - 1;
+    $objActSheet->mergeCells("A{$i}:K{$i}")->setCellValue("A{$i}", '=CONCATENATE("' . _MD_TADREPAIR_REPORT_TOTAL . " \" , COUNTA(A2:A{$n}) , \" " . _MD_TADREPAIR_REPORT_TOTAL2 . '")');
 
-$title = $ym . _MD_TADREPAIR_REPORT;
+    $title = $ym . _MD_TADREPAIR_REPORT;
 
-// $title = (_CHARSET === 'UTF-8') ? iconv('UTF-8', 'Big5', $title) : $title;
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Cache-Control: max-age=0');
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->setPreCalculateFormulas(false);
-$objWriter->save(XOOPS_ROOT_PATH . "/uploads/tad_repair/{$title}.xlsx");
-header("location:" . XOOPS_URL . "/uploads/tad_repair/{$title}.xlsx");
-exit;
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Cache-Control: max-age=0');
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    $objWriter->setPreCalculateFormulas(false);
+    $objWriter->save(XOOPS_ROOT_PATH . "/uploads/tad_repair/{$title}.xlsx");
+    header("location:" . XOOPS_URL . "/uploads/tad_repair/{$title}.xlsx");
+    exit;
+
+} else {
+    redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_TADREPAIR_NO_DATA);
+    exit;
+}
+
+function isValidFormat($input)
+{
+    return preg_match('/^\d{4}-\d{2}$/', $input);
+}
 
 function num2alpha($n)
 {
