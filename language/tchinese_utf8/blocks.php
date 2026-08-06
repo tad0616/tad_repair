@@ -5,3 +5,5 @@ if (!class_exists('XoopsModules\Tad_repair\Tools')) {
 }
 
 define('_MB_TADREPAIR_REPAIRED', Tools::text_replace('已修復'));
+
+define('_MB_TADREPAIR_MORE', Tools::text_replace('點此觀看完整維修通報'));

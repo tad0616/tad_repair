@@ -8,7 +8,7 @@ use XoopsModules\Tad_repair\Tools;
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_repair_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-if (!$_SESSION['can_repair']) {
+if (Tools::can_repair() === false) {
     if (empty($xoopsModuleConfig['repair_group'])) {
         $error = _MD_TADREPAIR_NEED_SETUP;
     } else {

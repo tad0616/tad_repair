@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
@@ -35,6 +36,8 @@ switch ($op) {
     default:
         if (empty($repair_sn)) {
             list_tad_repair($unit_menu_sn, $fixed_status);
+            BootstrapTable::render();
+            $xoopsTpl->assign('xoops_pagetitle', _MD_TADREPAIR_HOME);
             $op = 'list_tad_repair';
         } else {
             show_one_tad_repair($repair_sn);
@@ -47,6 +50,7 @@ switch ($op) {
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
 $xoopsTpl->assign('jquery', Utility::get_jquery(true));
 $xoopsTpl->assign('now_op', $op);
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_repair/css/module.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------function區--------------*/
@@ -70,11 +74,13 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
     //顯示條件
     $and_fixed = $and_unit = '';
     if ($def_fixed_status) {
-        $and_fixed = "  and  fixed_status = '$def_fixed_status'  ";
+        $def_fixed_status = $xoopsDB->escape($def_fixed_status);
+        $and_fixed        = "  and `fixed_status` = '$def_fixed_status'  ";
     }
 
     if ($def_unit_menu_sn > 0) {
-        $and_unit = "  and  unit_sn = '{$def_unit_menu_sn}'   ";
+        $def_unit_menu_sn = $xoopsDB->escape($def_unit_menu_sn);
+        $and_unit         = "  and  unit_sn = '{$def_unit_menu_sn}'   ";
     }
 
     $uid = ($xoopsUser) ? (int) $xoopsUser->uid() : 0;
@@ -82,7 +88,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
-
+    Utility::test($unit_admin_arr, 'unit_admin_arr', 'dd');
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
     $bar     = $PageBar['bar'];
@@ -103,13 +109,16 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
             $$k = $v;
         }
 
-        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
-        if (empty($repair_name)) {
-            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+        $repair_name = '';
+        if ($repair_uid) {
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
+            if (empty($repair_name)) {
+                $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+            }
         }
 
         $fixed_name = '';
-        if (!empty($fixed_uid)) {
+        if ($fixed_uid) {
             $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
             if (empty($fixed_name)) {
                 $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
@@ -119,7 +128,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
         $repair_date = mb_substr($repair_date, 0, 10);
         $fixed_date  = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
-        $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
+        $fixed_status = (isset($unit_admin_arr[$unit_sn]) && in_array($uid, $unit_admin_arr[$unit_sn])) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' style='color: {$status_color[$fixed_status]};'>$fixed_status</a>" : "<span style='color: {$status_color[$fixed_status]};'>$fixed_status</span>";
 
         $unit = Tools::get_tad_repair_unit($unit_sn);
 
@@ -189,7 +198,7 @@ function list_tad_repair($def_unit_menu_sn = '', $def_fixed_status = '', $show_f
 //以流水號秀出某筆tad_repair資料內容
 function show_one_tad_repair($repair_sn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
+    global $xoopsDB, $xoopsUser, $xoopsTpl, $xoopsModuleConfig;
 
     if (empty($repair_sn)) {
         return;
@@ -215,11 +224,14 @@ function show_one_tad_repair($repair_sn = '')
 
     $modify_link = ($uid == $repair_uid and _MD_TADREPAIR_REPAIRED != $fixed_status) ? "<a href='repair.php?op=tad_repair_form&repair_sn=$repair_sn' class='btn btn-warning pull-right float-right pull-end'>" . _TAD_EDIT . '</a>' : '';
 
-    $fixed_link = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right float-right pull-end'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
+    $fixed_link = (isset($unit_admin_arr[$unit_sn]) && in_array($uid, $unit_admin_arr[$unit_sn])) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn' class='btn btn-info pull-right float-right pull-end'>" . _MD_TAD_FIXED_FORM . '</a>' : '';
 
-    $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
-    if (empty($repair_name)) {
-        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+    $repair_name = '';
+    if ($repair_uid) {
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
+        if (empty($repair_name)) {
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+        }
     }
 
     $repair_sn    = (int) $repair_sn;
@@ -245,8 +257,9 @@ function show_one_tad_repair($repair_sn = '')
     $xoopsTpl->assign('unit_sn', $unit_sn);
     $xoopsTpl->assign('fixed_uid', $fixed_uid);
 
+    $xoopsTpl->assign('xoops_pagetitle', "[{$repair_sn}]" . _MD_TADREPAIR_FIXED_NOTICE);
     $fixed_name = '';
-    if (0 != $fixed_uid) {
+    if ($fixed_uid) {
         $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
         if (empty($fixed_name)) {
             $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
@@ -290,7 +303,7 @@ function move_to_unit($repair_sn, $unit_sn, $new_unit_sn)
     //取得各單位的管理員陣列
     $unit_admin_arr = unit_admin_arr();
 
-    if (in_array($uid, $unit_admin_arr[$unit_sn])) {
+    if (isset($unit_admin_arr[$unit_sn]) && in_array($uid, $unit_admin_arr[$unit_sn])) {
         $sql = 'UPDATE `' . $xoopsDB->prefix('tad_repair') . '` SET `unit_sn` = ? WHERE `repair_sn` = ?';
         Utility::query($sql, 'ii', [$new_unit_sn, $repair_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 

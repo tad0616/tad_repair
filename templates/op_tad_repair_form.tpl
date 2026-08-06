@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-sm-8">
       <div class="form-group row mb-3">
-        <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
+        <label for="repair_title" class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
           <{$smarty.const._MD_TADREPAIR_REPAIR_TITLE}>
         </label>
         <div class="col-sm-10">
@@ -19,7 +19,7 @@
       <{if 'repair_content'|in_array:$unuse_cols}>
       <{else}>
         <div class="form-group row mb-3">
-          <label class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
+          <label for="repair_content" class="col-sm-2 col-form-label text-sm-right  text-sm-end control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_CONTENT}>
           </label>
           <div class="col-sm-10">
@@ -46,7 +46,7 @@
       <{else}>
         <!--地點-->
         <div class="form-group row mb-3">
-          <label class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
+          <label for="repair_place" class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
             <{$smarty.const._MD_TADREPAIR_PLACE}>
           </label>
           <div class="col-sm-8">
@@ -58,11 +58,12 @@
 
       <!--通知單位-->
       <div class="form-group row mb-3">
-        <label class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
+        <label for="unit_sn" class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
           <{$smarty.const._MD_TADREPAIR_UNIT_SN}>
         </label>
         <div class="col-sm-8">
-          <select name="unit_sn" size=1 class="form-control form-select">
+          <select name="unit_sn" id="unit_sn" size=1 class="form-control form-select validate[required]">
+            <option value=""></option>
             <{$unit_sn_menu_options|default:''}>
           </select>
         </div>
@@ -72,11 +73,11 @@
       <{else}>
         <!--嚴重程度-->
         <div class="form-group row mb-3">
-          <label class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
+          <label for="repair_status" class="col-sm-4 col-form-label text-sm-right  text-sm-end control-label">
             <{$smarty.const._MD_TADREPAIR_REPAIR_STATUS}>
           </label>
           <div class="col-sm-8">
-            <select name="repair_status" size=1 class="form-control form-select">
+            <select name="repair_status" id="repair_status" size=1 class="form-control form-select">
               <{$repair_status|default:''}>
             </select>
           </div>
@@ -87,7 +88,7 @@
       <div class="row text-center">
         <input type="hidden" name="repair_sn" value="<{$repair_sn|default:''}>">
         <input type="hidden" name="op" value="<{$op|default:''}>">
-        <button type="submit" class="btn btn-primary"><{$smarty.const._SUBMIT}></button>
+        <button type="submit" class="btn btn-primary" aria-label="<{$smarty.const._SUBMIT}>"><{$smarty.const._SUBMIT}></button>
       </div>
 
     </div>

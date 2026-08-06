@@ -82,14 +82,27 @@ class Tools
             $_SESSION['tad_repair_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
         }
 
-        if (!isset($_SESSION['can_repair'])) {
-            $_SESSION['can_repair'] = isset($xoopsUser) && \is_object($xoopsUser) ? array_intersect($_SESSION['xoopsUserGroups'], (array) $xoopsModuleConfig['repair_group']) : false;
-        }
+        self::can_repair();
 
         if (!isset($_SESSION['now_user'])) {
             $_SESSION['now_user'] = ($xoopsUser) ? $xoopsUser->toArray() : [];
         }
 
+    }
+
+    public static function can_repair()
+    {
+        global $xoopsUser, $xoopsModuleConfig;
+        $can_repair = false;
+        if (!isset($_SESSION['can_repair'])) {
+            if (!isset($_SESSION['xoopsUserGroups'])) {
+                $_SESSION['xoopsUserGroups'] = ($xoopsUser) ? $xoopsUser->getGroups() : [];
+            }
+            $_SESSION['can_repair'] = $can_repair = isset($xoopsUser) && \is_object($xoopsUser) ? array_intersect($_SESSION['xoopsUserGroups'], (array) $xoopsModuleConfig['repair_group']) : false;
+        } else {
+            $can_repair = $_SESSION['can_repair'];
+        }
+        return $can_repair;
     }
 
 }

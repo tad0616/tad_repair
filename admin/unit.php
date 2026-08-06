@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Tmt;
@@ -11,9 +12,9 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op        = Request::getString('op');
 $repair_sn = Request::getInt('repair_sn');
-$unit_sn = Request::getInt('unit_sn');
+$unit_sn   = Request::getInt('unit_sn');
 
 switch ($op) {
 
@@ -43,6 +44,7 @@ switch ($op) {
     //預設動作
     default:
         list_tad_repair_unit();
+        BootstrapTable::render();
         $op = 'list_tad_repair_unit';
         break;
 
@@ -83,7 +85,7 @@ function tad_repair_unit_form($unit_sn = '')
     $FormValidator->render();
 
     $to_arr = $from_arr = $hidden_arr = [];
-    $sql = 'SELECT `uid`, `uname`, `name`, `email` FROM `' . $xoopsDB->prefix('users') . '` ORDER BY `name`';
+    $sql    = 'SELECT `uid`, `uname`, `name`, `email` FROM `' . $xoopsDB->prefix('users') . '` ORDER BY `name`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($uid, $uname, $name, $email) = $xoopsDB->fetchRow($result)) {
@@ -99,8 +101,8 @@ function tad_repair_unit_form($unit_sn = '')
         $new_to_arr[$uid] = $to_arr[$uid];
     }
     $hidden_arr['unit_sn'] = $unit_sn;
-    $hidden_arr['op'] = $op;
-    $tmt_box = Tmt::render('unit_admin', $from_arr, $new_to_arr, $hidden_arr, false, true);
+    $hidden_arr['op']      = $op;
+    $tmt_box               = Tmt::render('unit_admin', $from_arr, $new_to_arr, $hidden_arr, false, true);
     $xoopsTpl->assign('tmt_box', $tmt_box);
 
     $xoopsTpl->assign('unit_sn', $unit_sn);
@@ -157,18 +159,18 @@ function list_tad_repair_unit()
     $SweetAlert = new SweetAlert();
     $SweetAlert->render("delete_tad_repair_unit_func", "unit.php?op=delete_tad_repair_unit&unit_sn=", 'unit_sn');
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_repair_unit') . '`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_content = [];
-    $i = 0;
+    $i           = 0;
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $unit_sn , $unit_title , $unit_admin
         foreach ($all as $k => $v) {
             $$k = $v;
         }
 
-        $unit_admin_arr = explode(',', $unit_admin);
+        $unit_admin_arr  = explode(',', $unit_admin);
         $unit_admin_list = '';
         $unit_admin_name = [];
         foreach ($unit_admin_arr as $uid) {
@@ -182,8 +184,8 @@ function list_tad_repair_unit()
         }
         $unit_admin_list = implode(_AND, $unit_admin_name);
 
-        $all_content[$i]['unit_sn'] = $unit_sn;
-        $all_content[$i]['unit_title'] = $unit_title;
+        $all_content[$i]['unit_sn']         = $unit_sn;
+        $all_content[$i]['unit_title']      = $unit_title;
         $all_content[$i]['unit_admin_list'] = $unit_admin_list;
         $i++;
     }

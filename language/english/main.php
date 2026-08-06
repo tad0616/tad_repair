@@ -7,6 +7,7 @@ define('_MD_TADREPAIR_REPORT', 'Monthly Report');
 define('_MD_TADREPAIR_REPORT_TOTAL', 'Total information');
 define('_MD_TADREPAIR_REPORT_TOTAL2', 'Pen');
 
+define('_MD_TADREPAIR_JUMP_TO', Tools::text_replace('After making your selection, you will be automatically redirected to the next page:'));
 define('_MD_TADREPAIR_REPAIR_SN', 'Number');
 define('_MD_TADREPAIR_REPAIR_TITLE', 'Title');
 define('_MD_TADREPAIR_REPAIR_CONTENT', 'Details');

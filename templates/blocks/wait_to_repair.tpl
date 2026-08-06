@@ -15,6 +15,6 @@
         <{/foreach}>
     </ul>
     <div class="text-right text-end">
-        <a href="<{$xoops_url}>/modules/tad_repair/index.php" class="btn btn-sm btn-xs btn-info">more...</a>
+        <a href="<{$xoops_url}>/modules/tad_repair/index.php" class="btn btn-sm btn-xs btn-info"><{$smarty.const._MB_TADREPAIR_MORE}></a>
     </div>
 <{/if}>

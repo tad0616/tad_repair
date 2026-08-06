@@ -11,6 +11,7 @@ define('_MD_TADREPAIR_REPORT', Tools::text_replace('月報表'));
 define('_MD_TADREPAIR_REPORT_TOTAL', Tools::text_replace('資料共計'));
 define('_MD_TADREPAIR_REPORT_TOTAL2', Tools::text_replace('筆'));
 
+define('_MD_TADREPAIR_JUMP_TO', Tools::text_replace('選擇後會自動跳轉頁面：'));
 define('_MD_TADREPAIR_REPAIR_SN', Tools::text_replace('編號'));
 define('_MD_TADREPAIR_REPAIR_TITLE', Tools::text_replace('報修內容'));
 define('_MD_TADREPAIR_REPAIR_CONTENT', Tools::text_replace('詳細說明'));
@@ -59,5 +60,5 @@ define('_MD_TADREPAIR_HOME', Tools::text_replace('維修通報一覽'));
 
 define('_MD_TADREPAIR_NO_DATA', Tools::text_replace('無內容'));
 define('_MD_TADREPAIR_NEED_SETUP', Tools::text_replace('未設定可通報群組，請管理員至維修通報後台的「偏好設定」設定之'));
-define('_MD_TADREPAIR_NOT_ALLOW_GROUP', Tools::text_replace('您的所屬群組不在可通報群組內，請聯絡管理員！'));
+define('_MD_TADREPAIR_NOT_ALLOW_GROUP', Tools::text_replace('您的所屬群組不在可通報群組內，請聯繫管理員至維修通報後台的「偏好設定」設定之'));
 define('_MD_TADREPAIR_ERROR_FORMAT', Tools::text_replace('日期格式錯誤'));

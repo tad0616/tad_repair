@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tad_repair\Tools;
@@ -9,9 +10,9 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op        = Request::getString('op');
 $repair_sn = Request::getInt('repair_sn');
-$unit_sn = Request::getInt('unit_sn');
+$unit_sn   = Request::getInt('unit_sn');
 
 switch ($op) {
 
@@ -23,6 +24,7 @@ switch ($op) {
 
     default:
         list_adm_tad_repair();
+        BootstrapTable::render();
         $op = 'list_adm_tad_repair';
         break;
 
@@ -51,27 +53,30 @@ function list_adm_tad_repair()
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
+    $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_content = [];
-    $i = 0;
+    $i           = 0;
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： $repair_sn , $repair_title , $repair_content , $repair_date , $repair_status , $repair_uid , $unit_sn , $fixed_uid , $fixed_date , $fixed_status , $fixed_content
         foreach ($all as $k => $v) {
             $$k = $v;
         }
 
-        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
-        if (empty($repair_name)) {
-            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+        $repair_name = '';
+        if ($repair_uid) {
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
+            if (empty($repair_name)) {
+                $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+            }
         }
 
         $fixed_name = '';
-        if (0 != $fixed_uid) {
+        if ($fixed_uid) {
             $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
             if (empty($fixed_name)) {
                 $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
@@ -82,16 +87,16 @@ function list_adm_tad_repair()
 
         $unit = Tools::get_tad_repair_unit($unit_sn);
 
-        $all_content[$i]['repair_sn'] = $repair_sn;
-        $all_content[$i]['repair_date'] = $repair_date;
-        $all_content[$i]['prefix'] = isset($prefix) ? $prefix : '';
-        $all_content[$i]['repair_title'] = $repair_title;
-        $all_content[$i]['repair_name'] = $repair_name;
-        $all_content[$i]['unit_title'] = $unit['unit_title'];
+        $all_content[$i]['repair_sn']     = $repair_sn;
+        $all_content[$i]['repair_date']   = $repair_date;
+        $all_content[$i]['prefix']        = isset($prefix) ? $prefix : '';
+        $all_content[$i]['repair_title']  = $repair_title;
+        $all_content[$i]['repair_name']   = $repair_name;
+        $all_content[$i]['unit_title']    = $unit['unit_title'];
         $all_content[$i]['repair_status'] = $repair_status;
-        $all_content[$i]['fixed_name'] = $fixed_name;
-        $all_content[$i]['fixed_date'] = $fixed_date;
-        $all_content[$i]['fixed_status'] = $fixed_status;
+        $all_content[$i]['fixed_name']    = $fixed_name;
+        $all_content[$i]['fixed_date']    = $fixed_date;
+        $all_content[$i]['fixed_status']  = $fixed_status;
         $i++;
     }
 

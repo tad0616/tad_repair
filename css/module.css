@@ -1,0 +1,12 @@
+/* 自訂一個名為 .thead-style 的類別 */
+.thead-style {
+    background-color: #d2ddf0 !important; /* 使用您剛才提到的「已修復」藍色 */
+}
+
+/* 確保裡面的文字顏色與對比度 */
+.thead-style th {
+    color: #000000 !important;
+    background-color: transparent !important;
+    border-bottom: none;
+    vertical-align: middle;
+}

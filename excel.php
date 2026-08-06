@@ -63,13 +63,16 @@ while (false !== ($all = $xoopsDB->fetchArray($result))) {
         $$k = $v;
     }
 
-    $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
-    if (empty($repair_name)) {
-        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+    $repair_name = '';
+    if ($repair_uid) {
+        $repair_name = \XoopsUser::getUnameFromId($repair_uid, 1);
+        if (empty($repair_name)) {
+            $repair_name = \XoopsUser::getUnameFromId($repair_uid, 0);
+        }
     }
 
     $fixed_name = '';
-    if (0 != $fixed_uid) {
+    if ($fixed_uid) {
         $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 1);
         if (empty($fixed_name)) {
             $fixed_name = \XoopsUser::getUnameFromId($fixed_uid, 0);
@@ -79,7 +82,7 @@ while (false !== ($all = $xoopsDB->fetchArray($result))) {
     $repair_date = mb_substr($repair_date, 0, 10);
     $fixed_date  = ('0000-00-00 00:00:00' === $fixed_date) ? '' : mb_substr($fixed_date, 0, 10);
 
-    $fixed_status = in_array($uid, $unit_admin_arr[$unit_sn]) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
+    $fixed_status = (isset($unit_admin_arr[$unit_sn]) && in_array($uid, $unit_admin_arr[$unit_sn])) ? "<a href='repair.php?op=tad_fixed_form&repair_sn=$repair_sn'>$fixed_status</a>" : $fixed_status;
 
     $unit = Tools::get_tad_repair_unit($unit_sn);
 
